@@ -5,8 +5,8 @@
 #---------------------------------
 LS_COLORS="no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32::*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31::*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31::*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:"
 export LSCOLORS=exfxcxdxbxegedabagacad
-export PS1="\[\e[1;38m\][\u@iMac:\w]\$\[\e[00m\] "    #Mac 
-#export PS1="\[\e[1;32m\][\u@\h:\w]\$\[\e[00m\] "     #ホスト名
+export PS1="\[\e[1;38m\][\u@Mac:\w]\$\[\e[00m\] "       #ユーザ@Mac:カレントディレクトリ 
+#export PS1="\[\e[1;32m\][\u@\h:\w]\$\[\e[00m\] "       #ユーザ@ホスト名:カレントディレクトリ
 TERM=xterm; export TERM
 
 
@@ -27,20 +27,20 @@ alias rm='rm -i'
 #alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
 #alias dir='ls --color=auto --format=vertical'
 #alias vdir='ls --color=auto --format=long'
-alias grep='grep --color'                       # show differences in colour
+alias grep='grep --color'                               # show differences in colour
 alias vi='/usr/local/bin/vim'
 alias vim='/usr/local/bin/vim'
 #alias vi='vim'
 alias view='/usr/local/bin/vim -R'
 alias rvim='/usr/local/bin/vim -R'
-#alias view='rvim'
-#alias svi="sudo vim"
+#alias view='vim -R'
 alias svi='sudo /usr/local/bin/vim'
 alias svim='sudo /usr/local/bin/vim'
+#alias svi="sudo vim"
+#alias svim="sudo vim"
 alias less='less -cr -x4 -RM'
-# alias whence='type -a'                        # where, of a sort
-#alias s='sudo'
-alias sedd='sed -e '/^$/d' -e '/^#/d''          #ファイルの空行/コメント行を除いて表示
+# alias whence='type -a'                                # where, of a sort
+alias sedd='sed -e '/^$/d' -e '/^#/d''                  #ファイルの空行/コメント行を除いて表示
 alias psa='ps auxww'
 alias dirs='dirs -p'
 alias pd='pushd'
@@ -48,11 +48,10 @@ alias ppd='popd'
 alias cvs='svn'
 alias scr='screen -UxR'
 alias tm='tmux'
-alias pathlist='echo -e ${PATH//:/\\n}'         # display PATH List
+alias pathlist='echo -e ${PATH//:/\\n}'                 # display PATH List
 alias ka='killall'
 alias df='df -h'
 alias du='du -h'
-alias cdd='cd ~/Desktop'
 alias sum="awk '{sum+=\$1} END {print sum}'"
 alias mcpan='sudo perl -MCPAN -e shell'
 #alias bell="echo '\a'"
@@ -61,6 +60,9 @@ alias mcpan='sudo perl -MCPAN -e shell'
 #alias g='grep'
 #alias c='cat'
 #alias j='jobs'
+alias cdd='cd ~/Desktop'
+alias cdp='cd /Volumes/Pogoplug'                        #My Mac
+alias cdh='cd /Volumes/My\ Book\ Thunderbolt\ Duo'      #My Mac
 
 
 #---------------------------------
@@ -146,7 +148,7 @@ function awp() {
 
 
 # cdしたらlsしないと気がすまない人用
-function cd() { builtin cd $@ && ls; }
+#function cd() { builtin cd $@ && ls; }
 
 
 # pushd-dirsを表示して番号を入力するとcdする
