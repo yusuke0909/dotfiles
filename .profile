@@ -215,3 +215,5 @@ function exit() {
 #	php -d open_basedir=/ -r 'array_shift($argv);foreach($argv as $f){$c=file_get_contents($f);$c=mb_convert_kana($c,"ak");file_put_contents($f,$c);}' $*
 #}
 
+
+
