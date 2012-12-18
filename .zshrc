@@ -211,7 +211,7 @@ WHITE="%{${fg[white]}%}"
 #   %U,%u : under line (%U word %u)
 #   %{,%} : escape sequence (%{ escape %})
 ###################################################
-PROMPT="%F{yellow}[%m@%n] %f%# "
+PROMPT="%F{yellow}[%m @%n] %f%# "
 RPROMPT="%F{green}[%1(v|%F{yellow}%1v%F{green} |)%~]%f"
 #RPROMPT="%(?..%F{red}-%?-)%F{green}[%1(v|%F{yellow}%1v%F{green} |)%~]%f"     _### 直前のコマンドのリターンコード表示
 
