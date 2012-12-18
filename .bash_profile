@@ -19,3 +19,6 @@ export LESSOPEN="|/usr/bin/lesspipe.sh  %s"
 
 . ~/.profile
 
+# keychain設定
+#/usr/local/bin/keychain ~/.ssh/id_dsa
+# source ~/.keychain/`hostname`-sh

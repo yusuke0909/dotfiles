@@ -201,6 +201,22 @@ function ssha() {
 }
 
 
+# SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
+# SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
+# SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
+agent="$HOME/tmp/ssh-agent-$USER"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+        /tmp/*/agent.[0-9]*)
+            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+    esac
+elif [ -S $agent ]; then
+    export SSH_AUTH_SOCK=$agent
+else
+    echo "no ssh-agent"
+fi
+
+
 # exit (kill ssh-agent)
 function exit() {
 	if [ -n "$SSH_AGENT_PID" ]; then
@@ -216,4 +232,5 @@ function exit() {
 #}
 
 
-
+#ssh-agent実行
+#ssha
