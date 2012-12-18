@@ -46,6 +46,7 @@ alias dirs='dirs -p'
 alias pd='pushd'
 alias ppd='popd'
 alias cvs='svn'
+alias ssh='ssh -A'
 alias scr='screen -UxR'
 alias tm='tmux'
 alias pathlist='echo -e ${PATH//:/\\n}'                 # display PATH List
