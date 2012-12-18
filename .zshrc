@@ -410,6 +410,23 @@ function ssha() {
 	ssh-add;
 }
 
+
+# SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
+# SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
+# SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
+agent="$HOME/tmp/ssh-agent-$USER"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+        /tmp/*/agent.[0-9]*)
+            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+    esac
+elif [ -S $agent ]; then
+    export SSH_AUTH_SOCK=$agent
+else
+    echo "no ssh-agent"
+fi
+
+
 # 半角カナへ変換
 function zh() {
 	php -d open_basedir=/ -r 'array_shift($argv);foreach($argv as $f){$c=file_get_contents($f);$c=mb_convert_kana($c,"ak");file_put_contents($f,$c);}' $*
@@ -442,17 +459,3 @@ alias ggl=google
 
 #ssh-agent実行
 #ssha
-
-
-
-agent="$HOME/tmp/ssh-agent-$USER"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-   case $SSH_AUTH_SOCK in
-    /tmp/*/agent.[0-9]*)
-      ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-       elif [ -S $agent ]; then
-          export SSH_AUTH_SOCK=$agent
-       else
-     echo "no ssh-agent"
-fi
