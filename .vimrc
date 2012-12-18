@@ -175,7 +175,10 @@ set backspace=indent,eol,start           " バックスペースを強化する�
 set textwidth=0                          " Don't wrap words by default
 set history=1000                         " コマンド履歴数
 set ruler                                " show the cursor position all the time
-set guioptions-=T                        "ツールバーを表示しない
+set guioptions-=T                        " ツールバーを表示しない
+"set paste                               " pasteモードに入る
+"set nopaste                             " pasteモードから抜ける
+set pastetoggle=<F1>                     " pasteモードの切替え(set paste or set nopaste でも可)
 set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
 if has('migemo')
     set migemo                           " Migemo用検索
@@ -958,10 +961,10 @@ endfunction
 " Envroiments: 環境固有設定 =========================================== {{{1
 
 "Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
-if &term =~ "screen"
-	autocmd VimLeave * call SetScreenTabName('shell')
-	autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif
-endif
+"if &term =~ "screen"
+"	autocmd VimLeave * call SetScreenTabName('shell')
+"	autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif
+"endif
 
 " 公開できない設定やローカルマシンごとの固有設定を読み込む
 "if filereadable("$HOME/.private/.vimrc_private")
