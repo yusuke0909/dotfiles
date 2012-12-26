@@ -235,3 +235,63 @@ function exit() {
 
 #ssh-agent実行
 #ssha
+
+
+# Attache tmux 
+#if ( ! test $TMUX ) && ( ! expr $TERM : "^screen" > /dev/null ) && which tmux > /dev/null; then
+#    if ( tmux has-session ); then
+#        session=`tmux list-sessions | grep -e '^[0-9].*]$' | head -n 1 | sed -e 's/^\([0-9]\+\).*$/\1/'`
+#        if [ -n "$session" ]; then
+#            echo "Attache tmux session $session."
+#            tmux a
+#        else
+#            echo "Session has been already attached."
+#            tmux list-sessions
+#        fi
+#    else
+#        echo "Create new tmux session."
+#        tmux
+#    fi
+#fi
+
+## Create or Attache tmux
+# tmux-sessionがあれば自動的にattache,すでにattachしている場合は対話式で確認
+# tmux-sessionがなければ自動実行
+#    tmux ls > /dev/null 2>&1
+#    if [ $? = 0 ]; then
+#        while :
+#        do
+#            tmux ls | grep attached > /dev/null 2>&1
+#            if [ $? = 0 ]; then
+#            echo " "
+#            echo "Session has been already attached."
+#            echo -n "Attache tmux session?   press [y/n]:"
+#                read line
+#                case $line in
+#                [yY])
+#                    echo " "
+#                    echo "Attache tmux session."
+#                    tmux a
+#                    return 0
+#                    ;;
+#                [nN])
+#                    echo " "
+#                    echo "Display tmux session."
+#                    tmux ls
+#                    return 1
+#                    ;;
+#                esac
+#            else 
+#                echo " "
+#                echo "tmux session has exists."
+#                echo "Attache tmux session."
+#                tmux a
+#                return 0
+#            fi
+#        done
+#    else    
+#            echo " "
+#            echo "There is no tmux session."
+#            echo "Create new tmux session."
+#            tmux
+#    fi

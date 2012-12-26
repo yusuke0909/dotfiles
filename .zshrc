@@ -459,3 +459,15 @@ alias ggl=google
 
 #ssh-agent実行
 #ssha
+
+
+# Attache tmux 
+# tmux-sessionがあれば自動的にattache
+# tmux-sessionがなければ自動実行
+#if [ -z $TMUX ]; then
+#  if $(tmux has-session); then
+#    tmux attach
+#  else
+#    tmux
+#  fi
+#fi

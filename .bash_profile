@@ -12,13 +12,15 @@ export MANPATH=$MANPATH:/opt/local/share/man:/opt/local/man
 export LESSOPEN="|/usr/bin/lesspipe.sh  %s"
  
 
+# ログ自動取得
 #timestamp=`date "+%Y%m%d-%H%M%S"`
 #logfile="$HOME/Desktop/log/terminal-$timestamp.log"
 #script $logfile
 
 
-. ~/.profile
-
 # keychain設定
-#/usr/local/bin/keychain ~/.ssh/id_dsa
-# source ~/.keychain/`hostname`-sh
+/usr/local/bin/keychain ~/.ssh/id_dsa
+ source ~/.keychain/`hostname`-sh
+
+
+ . ~/.profile
