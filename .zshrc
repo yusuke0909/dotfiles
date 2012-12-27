@@ -259,9 +259,12 @@ alias -g L="| $PAGER"
 alias -g M="| $PAGER"
 alias make="make -j1"
 #alias make="make -j3"
+alias rpmi="rpm -qilvv --changelog --scripts"           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+alias rpmip="rpm -qpilvv --changelog --scripts"         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
 alias psa='ps auxww'
 alias bell="echo '\a'"
 alias scr="screen -R"
+alias tm="tmux a"
 alias vi="vim"
 alias view="vim -R"
 alias svi="sudo vim"
@@ -457,14 +460,15 @@ function google() {
 alias ggl=google
 
 
-#ssh-agent実行
+# ssh-agent実行
 #ssha
 
 
-# Attache tmux 
-# tmux-sessionがあれば自動的にattache
-# tmux-sessionがなければ自動実行
-#if [ -z $TMUX ]; then
+export LANG=ja_JP.utf8
+
+# Attache tmux
+#env | grep -i TMUX > /dev/null 2>&1
+#if [ $? -ne 0 ]; then
 #  if $(tmux has-session); then
 #    tmux attach
 #  else

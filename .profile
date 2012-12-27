@@ -54,6 +54,8 @@ alias ka='killall'
 alias df='df -h'
 alias du='du -h'
 alias sum="awk '{sum+=\$1} END {print sum}'"
+alias rpmi="rpm -qilvv --changelog --scripts"           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+alias rpmip="rpm -qpilvv --changelog --scripts"         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
 alias mcpan='sudo perl -MCPAN -e shell'
 #alias bell="echo '\a'"
 #alias h='head'
