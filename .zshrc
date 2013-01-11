@@ -2,9 +2,158 @@
 # .zshrc
 #
 
+#---------------------------------
+# Environment variable configuration
+#---------------------------------
+# LANG
+export LANG=ja_JP.UTF-8
+export LESSCHARSET=utf-8
+#PAGER
+export PAGER="less -c -x4 -RM"
+
 # screen を自動的に起動
 #if [ ! $TERM = "screen" -a -z "$YROOT_NAME" ]; then; screen -R; fi
 #if [ -n $YROOT_NAME ]; then; builtin cd $HOME; fi
+
+
+#---------------------------------
+# Default shell configuration
+# colors enables us to idenfity color by $fg[red].
+#---------------------------------
+autoload colors
+colors
+case ${UID} in
+    0)
+        PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
+        PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
+        SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+            PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+        ;;
+    *)
+        #
+        # Color
+        #
+        DEFAULT=$'%{\e[1;0m%}'
+        RESET="%{${reset_color}%}"
+        GREEN="%{${fg[green]}%}"
+        BLUE="%{${fg[blue]}%}"
+        RED="%{${fg[red]}%}"
+        CYAN="%{${fg[cyan]}%}"
+        WHITE="%{${fg[white]}%}"
+        #POH="( ꒪⌓꒪) $"
+        POH="$"
+
+        #
+        # Prompt
+        #
+        PROMPT='%{$fg_bold[blue]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}'
+        RPROMPT='${RESET}${WHITE}[${BLUE}%(5~,%-2~/.../%2~,%~)% ${WHITE}]${RESET}'
+
+        #
+        # Vi入力モードでPROMPTの色を変える
+        # http://memo.officebrook.net/20090226.html
+        function zle-line-init zle-keymap-select {
+        case $KEYMAP in
+            vicmd)
+                PROMPT="%{$fg_bold[cyan]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}"
+                ;;
+            main|viins)
+                PROMPT="%{$fg_bold[blue]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}"
+                ;;
+        esac
+        zle reset-prompt
+    }
+    zle -N zle-line-init
+    zle -N zle-keymap-select
+
+    # Show git branch when you are in git repository
+    # http://d.hatena.ne.jp/mollifier/20100906/p1
+
+    autoload -Uz add-zsh-hook
+    autoload -Uz vcs_info
+
+    zstyle ':vcs_info:*' enable git svn hg bzr
+    zstyle ':vcs_info:*' formats '(%s)-[%b]'
+    zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
+    zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
+    zstyle ':vcs_info:bzr:*' use-simple true
+
+    autoload -Uz is-at-least
+    if is-at-least 4.3.10; then
+        # この check-for-changes が今回の設定するところ
+        zstyle ':vcs_info:git:*' check-for-changes true
+        zstyle ':vcs_info:git:*' stagedstr "+"    # 適当な文字列に変更する
+        zstyle ':vcs_info:git:*' unstagedstr "-"  # 適当の文字列に変更する
+        zstyle ':vcs_info:git:*' formats '(%s)-[%c%u%b]'
+        zstyle ':vcs_info:git:*' actionformats '(%s)-[%c%u%b|%a]'
+    fi
+
+    function _update_vcs_info_msg() {
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    psvar[2]=$(_git_not_pushed)
+    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
+}
+add-zsh-hook precmd _update_vcs_info_msg
+
+# show status of git pushed to HEAD in prompt
+function _git_not_pushed()
+{
+    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
+        head="$(git rev-parse HEAD)"
+        for x in $(git rev-parse --remotes)
+        do
+            if [ "$head" = "$x" ]; then
+                return 0
+            fi
+        done
+        echo "|?"
+    fi
+    return 0
+}
+
+# git のブランチ名 *と作業状態* を zsh の右プロンプトに表示＋ status に応じて色もつけてみた - Yarukidenized:ヤルキデナイズド :
+# http://d.hatena.ne.jp/uasi/20091025/1256458798
+autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
+
+function rprompt-git-current-branch {
+local name st color gitdir action pushed
+if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+    return
+fi
+
+name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
+if [[ -z $name ]]; then
+    return
+fi
+
+gitdir=`git rev-parse --git-dir 2> /dev/null`
+action=`VCS_INFO_git_getaction "$gitdir"` && action="|$action"
+pushed="`_git_not_pushed`"
+
+st=`git status 2> /dev/null`
+if [[ "$st" =~ "(?m)^nothing to" ]]; then
+    color=%F{green}
+elif [[ "$st" =~ "(?m)^nothing added" ]]; then
+    color=%F{yellow}
+elif [[ "$st" =~ "(?m)^# Untracked" ]]; then
+    color=%B%F{red}
+else
+    color=%F{red}
+fi
+
+echo "[$color$name$action$pushed%f%b]"
+    }
+
+    # PCRE 互換の正規表現を使う
+    setopt re_match_pcre
+#
+#    RPROMPT='`rprompt-git-current-branch`${RESET}${WHITE}[${BLUE}%(5~,%-2~/.../%2~,%~)${WHITE}]${RESET}'
+#
+    ;;
+esac
+
 
 #---------------------------------
 # set options
@@ -12,46 +161,76 @@
 setopt extended_history         # コマンドの開始時刻と経過時間を登録
 setopt hist_ignore_dups         # 直前のコマンドと同一ならば登録しない
 setopt hist_ignore_all_dups     # 登録済コマンド行は古い方を削除
-setopt hist_reduce_blanks       # 余分な空白は詰めて登録(空白数違い登録を防ぐ)
-setopt share_history            # ヒストリの共有
-setopt hist_no_store            # historyコマンドは登録しない
 setopt hist_ignore_space        # コマンド行先頭が空白の時登録しない(直後ならば呼べる)
+setopt hist_reduce_blanks       # 余分な空白は詰めて登録(空白数違い登録を防ぐ)
+setopt share_history            # historyの共有
+setopt hist_no_store            # historyコマンドは登録しない
+#setopt hist_verify             # historyを呼び出してから実行する間に一旦編集できる状態になる
+setopt inc_append_history       # add history when command executed.
+#setopt auto_resume             # サスペンド中のプロセスと同じコマンド名を実行した場合はリジュームする
+#setopt equals                  # =command を command のパス名に展開する
+#setopt NO_flow_control         # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
+#setopt hash_cmds               # 各コマンドが実行されるときにパスをハッシュに入れる
 
+setopt auto_list                # 補完候補が複数ある時に、一覧表示する
+setopt list_types               # auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示
 setopt list_packed              # 補完候補リストを詰めて表示
 setopt print_eight_bit          # 補完候補リストの日本語を適正表示
 #setopt menu_complete           # 1回目のTABで補完候補を挿入
-setopt auto_menu                # 2回目のTABで補完候補を挿入
+setopt auto_menu                # 補完キー（Tab,  Ctrl+I) を連打するだけで順に補完候補を自動で補完する
 #setopt auto_remove_slash       # 引数の最後のスラッシュを取り除いて実行する
+setopt noautoremoveslash        # 最後がディレクトリ名で終わっている場合末尾の / を自動的に取り除かない
 setopt no_clobber               # 上書きリダイレクトの禁止
 setopt no_unset                 # 未定義変数の使用の禁止
-setopt no_hup                   # logout時にバックグラウンドジョブを kill しない
+setopt no_hup                   # logout時にバックグラウンドジョブを kill -HUP しない
 setopt no_beep                  # コマンド入力エラーでBEEPを鳴らさない
+#setopt nolistbeep              # beepを鳴らさないようにする
 
 setopt extended_glob            # 拡張グロブ
 setopt numeric_glob_sort        # 数字を数値と解釈して昇順ソートで出力
 setopt auto_cd                  # 第1引数がディレクトリだと cd を実行
-setopt autopushd                # cdしたら勝手にpushdする
+setopt auto_pushd               # cd でTabを押すとdir list を表示
 setopt pushd_to_home            # 引数なしpushdで$HOMEに戻る(直前dirへは cd - で)
 setopt pushd_ignore_dups        # ディレクトリスタックに重複する物は古い方を削除
 #setopt pushd_silent            # pushd, popd の度にディレクトリスタックの中身を表示しない
 setopt correct                  # スペルミス補完
+#setopt correct_all              # コマンドライン全てのスペルチェックをする
 setopt no_checkjobs             # exit 時にバックグラウンドジョブを確認しない
 setopt notify                   # バックグラウンドジョブが終了したらすぐに知らせる
-setopt ignore_eof              # C-dでlogoutしない(C-dを補完で使う人用)
+setopt ignore_eof               # C-dでlogoutしない(C-dを補完で使う人用)
 setopt interactive_comments     # コマンド入力中のコメントを認める
-#setopt rm_star_silent          # rm * で本当に良いか聞かずに実行
-#setopt rm_star_wait            # rm * の時に 10秒間何もしない
-#setopt chase_links             # リンク先のパスに変換してから実行。
+#setopt rm_star_silent          # rm * などの際、本当に全てのファイルを消して良いかの確認しないようになる
+#setopt rm_star_wait            # rm_star_silent の逆で、10 秒間反応しなくなり、頭を冷ます時間が与えられる
 setopt sh_word_split            # 変数内のスペースを単語の区切りとして解釈する
 setopt cdable_vars              # 先頭に~が必要なディレクトリ名を~なしで展開
 setopt auto_param_keys          # 変数名を補完
-#setopt list_types              # ファイル種別を表す文字を末尾に表示(default)
-#setopt always_last_prompt      # 補完候補リスト表示で無駄なスクロールをしない(dafault)
+setopt auto_param_slash         # ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+setopt brace_ccl                # {a-c} を a b c に展開する機能を使えるようにする
+#setopt chase_links             # シンボリックリンクは実体を追うようになる
+setopt multios                  # 複数のリダイレクトやパイプなど、必要に応じて tee や cat の機能が使われる
 
+#setopt interactive_comments    # コマンドラインでも # 以降をコメントと見なす
+#setopt mail_warning            # メールスプール $MAIL が読まれていたらワーニングを表示する
+#setopt mark_dirs               # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
+setopt path_dirs                # コマンド名に / が含まれているとき PATH 中のサブディレクトリを探す
+#setopt numeric_glob_sort       # ファイル名の展開で、辞書順ではなく数値的にソートされるようになる
+#setopt print_exit_value        # 戻り値が 0 以外の場合終了コードを表示する           
+#setopt pushd_to_home           # pushd を引数なしで実行した場合 pushd $HOME と見なされる
+#setopt short_loops             # for, repeat, select, if, function などで簡略文法が使えるようになる
+#setopt single_line_zle         # デフォルトの複数行コマンドライン編集ではなく、１行編集モードになる
+#setopt xtrace                  # コマンドラインがどのように展開され実行されたかを表示するようになる
+
+#setopt always_last_prompt      # 補完候補リスト表示で無駄なスクロールをしない(dafault)
 setopt promptcr                 # 改行のない出力をプロンプトで上書きする
 setopt prompt_subst             # プロンプト内で変数を展開
-
 limit   coredumpsize    0       # コアファイルを吐かないようにする
+
+# sudoも補完の対象
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+# 色付きで補完する
+zstyle ':completion:*' list-colors di=34 fi=0
+#zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
 
 
 #---------------------------------
@@ -62,6 +241,7 @@ stty    erase   '^?'
 stty    intr    '^C'
 stty    susp    '^Z'
 bindkey -e    # emacs mode キーバインド
+bindkey "^?" backward-delete-char   # Backspace key
 
 # tcsh風先頭マッチのヒストリサーチ(カーソルが行末)
 autoload history-search-end
@@ -69,30 +249,59 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
+bindkey "\\ep" history-beginning-search-backward-end
+bindkey "\\en" history-beginning-search-forward-end
 
-# 単語単位で前後移動
-#bindkey '^F' forward-word
-#bindkey '^B' backward-word
+# ctrl-f, ctrl-bキーで単語移動
+bindkey '^F' forward-word
+bindkey '^B' backward-word
+ 
 
 # 単語単位移動での単語に含める文字
 export WORDCHARS='*?_.[]~=&;!#$%^(){}<>'
 
-bindkey "^?" backward-delete-char
+# glob(*)によるインクリメンタルサーチ
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^S' history-incremental-pattern-search-forward
+
+## Command history configuration
+HISTFILE=~/.zsh_history
+#HISTFILE="$HOME/.zhistory.$HOST" # 履歴ファイル
+HISTSIZE=100000
+SAVEHIST=100000
+
+# ^でcd ..する
+function cdup() {
+echo
+cd ..
+zle reset-prompt
+}
+zle -N cdup
+# bindkey '\^' cdup
+
+
+# back-wordでの単語境界の設定
+autoload -Uz select-word-style
+select-word-style default
+zstyle ':zle:*' word-chars " _-./;@"
+zstyle ':zle:*' word-style unspecified
+
+# URLをコピペしたときに自動でエスケープ
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
+
 
 #---------------------------------
-# history
-#---------------------------------
-HISTFILE="$HOME/.zhistory.$HOST" # 履歴ファイル
-HISTSIZE=100000                   # メモリ上に保存される $HISTFILE の最大サイズ？
-SAVEHIST=100000                   # 保存される最大履歴数
-
-
-#---------------------------------
-# completion
+# Completion configuration
 #---------------------------------
 autoload -U compinit; compinit -u
 autoload -U colors
 colors
+
+fpath=(~/.zsh/functions/Completion ${fpath})
+
+# zsh editor
+autoload zed
 
 # ホスト名補完候補を ~/.ssh/known_hosts から自動的に取得する
 if [ -e ~/.ssh/known_hosts ]; then
@@ -131,105 +340,20 @@ zle -C dabbrev-complete menu-complete dabbrev-complete
 #bindkey '^o' dabbrev-complete
 #bindkey '^o^_' reverse-menu-complete
 
+# エラーメッセージ本文出力に色付け
+e_normal=`echo -e "¥033[0;30m"`
+e_RED=`echo -e "¥033[1;31m"`
+e_BLUE=`echo -e "¥033[1;36m"`
 
-#---------------------------------
-# prompt
-#---------------------------------
+#function make() {
+#LANG=C command make "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
+#}
+#function cwaf() {
+#LANG=C command ./waf "$@" 2>&1 | sed -e "s@[Ee]rror:.*@$e_RED&$e_normal@g" -e "s@cannot¥sfind.*@$e_RED&$e_normal@g" -e "s@[Ww]arning:.*@$e_BLUE&$e_normal@g"
+#}
 
-# 色の定義
-DEFAULT=$"%{\e[0;0m%}"
-RESET="%{${reset_color}%}"
-GREEN="%{${fg[green]}%}"
-BLUE="%{${fg[blue]}%}"
-RED="%{${fg[red]}%}"
-CYAN="%{${fg[cyan]}%}"
-YELLOW="%{${fg[yellow]}%}"
-MAGENTA="%{${fg[magenta]}%}"
-WHITE="%{${fg[white]}%}"
-
-#C00=$'%{\e[00m%}' # 初期状態
-#CFK=$'%{\e[0;30m%}' # 文字色 - 黒
-#CFR=$'%{\e[0;31m%}' # 文字色 - 赤
-#CFG=$'%{\e[0;32m%}' # 文字色 - 緑
-#CFY=$'%{\e[0;33m%}' # 文字色 - 黄
-#CFB=$'%{\e[0;34m%}' # 文字色 - 青
-#CFM=$'%{\e[0;35m%}' # 文字色 - 紫
-#CFC=$'%{\e[0;36m%}' # 文字色 - 空
-#CFW=$'%{\e[0;37m%}' # 文字色 - 白
-#CBK=$'%{\e[40m%}' # 背景色 - 黒
-#CBR=$'%{\e[41m%}' # 背景色 - 赤
-#CBG=$'%{\e[42m%}' # 背景色 - 緑
-#CBY=$'%{\e[43m%}' # 背景色 - 黄
-#CBB=$'%{\e[44m%}' # 背景色 - 青
-#CBM=$'%{\e[45m%}' # 背景色 - 紫
-#CBC=$'%{\e[46m%}' # 背景色 - 空
-#CBW=$'%{\e[47m%}' # 背景色 - 白
-#CTB=$'%{\e[01m%}' # 装飾 - 太字
-#CTU=$'%{\e[04m%}' # 装飾 - 下線
-#CTL=$'%{\e[05m%}' # 装飾 - 点滅
-#CTI=$'%{\e[07m%}' # 装飾 - 反転
-
-# zshのプロンプト
-#
-#   PROMPT  : 通常のプロンプト
-#   PROMPT2 : forやwhile文使用時の複数行入力プロンプト
-#   RPROMPT : 右側に表示されるプロンプト, 入力が被ると自動的に消える
-#   SPROMPT : 入力ミス時のコマンド訂正プロンプト
-#
-# コマンド訂正プロンプト
-#   y: 訂正コマンドを実行
-#   n: 入力したコマンドが実行
-#   a: 実行を中断 abort
-#   e: コマンドライン編集 edit
-#
-# プロンプト文字列
-#   %% : %文字
-#   %# : #文字(一般ユーザなら %，スーパユーザなら #)
-#   %l : tty名
-#   %M : ホスト名（全部）
-#   %m : ホスト名（最初のドットまで）
-#   %n : ユーザ名
-#   %? : 直前のコマンドの終了値($?)
-#   %/ : カレントディレクトリ(フルパス)
-#   %~ : 同上,ただし~記号などで可能な限り短縮する
-#   %1~ or %1/ : カレントディレクトリ(ベースネーム)
-#   %B : 太字開始
-#   %b : 太字解除
-#   %(1j,(%j),) : 実行中のジョブ数が1つ以上ある場合ジョブ数を表示
-#   %C :    base of current directory
-#   %c :    base of current directory (print home directory as '~')
-#   %h,%! : history number
-#   %y :    year (2 digit)
-#   %Y :    year (4 digit)
-#   %w :    month (word)
-#   %W :    month (number)
-#   %d :    week day
-#   %T :    time (24 HH:MM)
-#   %t :    time (12 HH:MM)
-#   %P :    time (24 HH:MM:SS)
-#   %p :    time (12 HH:MM:SS)
-#   %U,%u : under line (%U word %u)
-#   %{,%} : escape sequence (%{ escape %})
-###################################################
-PROMPT="%F{yellow}[%m @%n] %f%# "
-RPROMPT="%F{green}[%1(v|%F{yellow}%1v%F{green} |)%~]%f"
-#RPROMPT="%(?..%F{red}-%?-)%F{green}[%1(v|%F{yellow}%1v%F{green} |)%~]%f"     _### 直前のコマンドのリターンコード表示
-
-# 時刻更新 (時刻表時した際の更新用)
-#TRAPALRM () { zle reset-prompt }
-#TMOUT=30
-
-## 右プロンプト
-#RPS1=$'${CFW}[%(8~,%-2~/.../%5~,%~)]${C00}'
-## 左プロンプト
-#export TITLE="-"
-#export PSHOST=`hostname|sed "s/mbga/${CFB}mbga${CFG}/"|sed "s/mixi/${CFY}mixi${CFG}/"`
-#PS1=$'%{\e]2;%M: $TITLE\a'$'\e]1;%M: $TITLE\a%}'$'${CFG}${PSHOST}${CTB}[${WINDOW:+"${CFG}$WINDOW${CTB}:"}${CFG}%!${CTB}]%(?..[${CFR}%?${CFG}${CTB}])>${C00} '
-
-
-#---------------------------------
-# other autoloads
-#---------------------------------
+# Command Line Stack [Esc]-[q]
+bindkey -a 'q' push-line
 
 # build-in コマンドのヘルプ
 [ -n "`alias run-help`" ] && unalias run-help
@@ -241,58 +365,306 @@ alias mmv='noglob zmv -W'
 
 
 #---------------------------------
-# alias
+# Alias configuration
+#
+# expand aliases before completing
 #---------------------------------
+setopt complete_aliases     # aliased ls needs if file/dir completions work
 
-# for fileutils (required yinst-ports/fileutils)
-alias ls="ls -CF --color=auto --show-control-char"
-alias ll="ls -alF --color=auto --show-control-char"
-alias rm 'rm -i'
-alias del 'rm -rf *~ .*~'
-alias cp='cp -iv'
+alias where="command -v"
 
-# other command
-alias help="run-help" # builtin command help
-alias less="$PAGER"
-alias more="$PAGER"
-alias -g L="| $PAGER"
-alias -g M="| $PAGER"
-alias make="make -j1"
-#alias make="make -j3"
-alias rpmi="rpm -qilvv --changelog --scripts"           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
-alias rpmip="rpm -qpilvv --changelog --scripts"         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
-alias psa='ps auxww'
-alias bell="echo '\a'"
-alias scr="screen -R"
-alias tm="tmux a"
-alias vi="vim"
-alias view="vim -R"
-alias svi="sudo vim"
-alias dirs='dirs -p'
-alias mcpan='sudo perl -MCPAN -e shell'
-alias pd='pushd'
-alias ppd='popd'
-alias cvs='svn'
-alias grep='grep --color=auto'
-alias ssh='ssh -A'
-alias sum="awk '{sum+=\$1} END {print sum}'"
-#alias h='head'
-#alias t='tail'
-#alias g='grep'
-#alias c='cat'
-#alias j='jobs'
-alias -g H='| head'
-alias -g T='| tail'
-alias -g G='| grep'
-alias -g C='| cat -n'
-alias -g W='| wc'
-alias -g V='| view -'
+case "${OSTYPE}" in
+    freebsd*|darwin*)
+        alias ls="ls -alG"
+        zle -N expand-to-home-or-insert
+        bindkey "@"  expand-to-home-or-insert
+        ;;
+    linux*)
+        alias la="ls -al"
+        ;;
+esac
 
-# ls colors
-if [ -x `which dircolors` ]; then
-	eval `dircolors $HOME/.dircolors`
+
+case "${OSTYPE}" in
+    # MacOSX
+    darwin*)
+    export PATH=$PATH:/opt/local/bin:/opt/local/sbin/
+    export PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/
+    ;;
+freebsd*)
+    case ${UID} in
+        0)
+            updateports()
+            {
+                if [ -f /usr/ports/.portsnap.INDEX ]
+                then
+                    portsnap fetch update
+                else
+                    portsnap fetch extract update
+                fi
+                (cd /usr/ports/; make index)
+
+                portversion -v -l \<
+            }
+            alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
+            ;;
+    esac
+    ;;
+esac
+
+
+## terminal configuration
+# http://journal.mycom.co.jp/column/zsh/009/index.html
+unset LSCOLORS
+
+case "${TERM}" in
+    xterm)
+        export TERM=xterm-color
+
+        ;;
+    kterm)
+        export TERM=kterm-color
+        # set BackSpace control character
+
+        stty erase
+        ;;
+
+    cons25)
+        unset LANG
+        export LSCOLORS=ExFxCxdxBxegedabagacad
+
+        export LS_COLORS='di=01;32:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
+        zstyle ':completion:*' list-colors \
+            'di=;36;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
+        ;;
+
+    kterm*|xterm*)
+        # Terminal.app
+        #    precmd() {
+        #        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+        #    }
+        # export LSCOLORS=exfxcxdxbxegedabagacad
+        # export LSCOLORS=gxfxcxdxbxegedabagacad
+        # export LS_COLORS='di=1;34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
+
+        export CLICOLOR=1
+        export LSCOLORS=ExFxCxDxBxegedabagacad
+
+        zstyle ':completion:*' list-colors \
+            'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
+        ;;
+
+    dumb)
+        echo "Welcome Emacs Shell"
+        ;;
+esac
+
+
+
+export EDITOR=vim
+export PATH=$PATH:$HOME/local/bin:/usr/local/git/bin
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$PATH:/sbin:/usr/local/bin
+export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
+
+expand-to-home-or-insert () {
+    if [ "$LBUFFER" = "" -o "$LBUFFER[-1]" = " " ]; then
+        LBUFFER+="~/"
+    else
+        zle self-insert
+    fi
+}
+
+# C-M-h でチートシートを表示する
+cheat-sheet () { zle -M "`cat ~/dotfiles/.zsh/cheat-sheet`" }
+zle -N cheat-sheet
+# bindkey "^[^h" cheat-sheet
+
+# zsh の exntended_glob と HEAD^^^ を共存させる。
+# http://subtech.g.hatena.ne.jp/cho45/20080617/1213629154
+typeset -A abbreviations
+abbreviations=(
+"L"    "| $PAGER"
+"G"    "| grep"
+
+"HEAD^"     "HEAD\\^"
+"HEAD^^"    "HEAD\\^\\^"
+"HEAD^^^"   "HEAD\\^\\^\\^"
+"HEAD^^^^"  "HEAD\\^\\^\\^\\^\\^"
+"HEAD^^^^^" "HEAD\\^\\^\\^\\^\\^"
+)
+
+magic-abbrev-expand () {
+    local MATCH
+    LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9^]#}
+    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+}
+
+magic-abbrev-expand-and-insert () {
+    magic-abbrev-expand
+    zle self-insert
+}
+
+magic-abbrev-expand-and-accept () {
+    magic-abbrev-expand
+    zle accept-line
+}
+
+no-magic-abbrev-expand () {
+    LBUFFER+=' '
+}
+
+zle -N magic-abbrev-expand
+zle -N magic-abbrev-expand-and-insert
+zle -N magic-abbrev-expand-and-accept
+zle -N no-magic-abbrev-expand
+bindkey "\r"  magic-abbrev-expand-and-accept # M-x RET はできなくなる
+bindkey "^J"  accept-line # no magic
+bindkey " "   magic-abbrev-expand-and-insert
+bindkey "."   magic-abbrev-expand-and-insert
+bindkey "^x " no-magic-abbrev-expand
+
+# Incremental completion on zsh
+# http://mimosa-pudica.net/src/incr-0.2.zsh
+# やっぱりauto_menu使いたいのでoff
+# source ~/.zsh/incr*.zsh
+
+# auto-fuの設定。^PとかのHistory検索と相性が悪いのでひとまず無効に。
+# http://d.hatena.ne.jp/tarao/20100531/1275322620
+# incremental completion
+# if is-at-least 4.3.10; then
+# function () { # precompile
+# local A
+# A=~/.zsh/auto-fu.zsh/auto-fu.zsh
+# [[ -e "${A:r}.zwc" ]] && [[ "$A" -ot "${A:r}.zwc" ]] ||
+    # zsh -c "source $A; auto-fu-zcompile $A ${A:h}" >/dev/null 2>&1
+# }
+# source ~/.zsh/auto-fu.zsh/auto-fu; auto-fu-install
+# function zle-line-init () { auto-fu-init }
+# zle -N zle-line-init
+# zstyle ':auto-fu:highlight' input bold
+# zstyle ':auto-fu:highlight' completion fg=white
+# zstyle ':auto-fu:var' postdisplay ''
+# function afu+cancel () {
+# afu-clearing-maybe
+# ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur"; }
+# }
+# function bindkey-advice-before () {
+# local key="$1"
+# local advice="$2"
+# local widget="$3"
+# [[ -z "$widget" ]] && {
+# local -a bind
+# bind=(`bindkey -M main "$key"`)
+# widget=$bind[2]
+# }
+# local fun="$advice"
+# if [[ "$widget" != "undefined-key" ]]; then
+# local code=${"$(<=(cat <<"EOT"
+# function $advice-$widget () {
+# zle $advice
+# zle $widget
+# }
+# fun="$advice-$widget"
+# EOT
+# ))"}
+# eval "${${${code//\$widget/$widget}//\$key/$key}//\$advice/$advice}"
+# fi
+# zle -N "$fun"
+# bindkey -M afu "$key" "$fun"
+# }
+# bindkey-advice-before "^G" afu+cancel
+# bindkey-advice-before "^[" afu+cancel
+# bindkey-advice-before "^J" afu+cancel afu+accept-line
+
+# # delete unambiguous prefix when accepting line
+# function afu+delete-unambiguous-prefix () {
+# afu-clearing-maybe
+# local buf; buf="$BUFFER"
+# local bufc; bufc="$buffer_cur"
+# [[ -z "$cursor_new" ]] && cursor_new=-1
+# [[ "$buf[$cursor_new]" == ' ' ]] && return
+# [[ "$buf[$cursor_new]" == '/' ]] && return
+# ((afu_in_p == 1)) && [[ "$buf" != "$bufc" ]] && {
+# # there are more than one completion candidates
+# zle afu+complete-word
+# [[ "$buf" == "$BUFFER" ]] && {
+# # the completion suffix was an unambiguous prefix
+# afu_in_p=0; buf="$bufc"
+# }
+# BUFFER="$buf"
+# buffer_cur="$bufc"
+# }
+# }
+# zle -N afu+delete-unambiguous-prefix
+# function afu-ad-delete-unambiguous-prefix () {
+# local afufun="$1"
+# local code; code=$functions[$afufun]
+# eval "function $afufun () { zle afu+delete-unambiguous-prefix; $code }"
+# }
+# afu-ad-delete-unambiguous-prefix afu+accept-line
+# afu-ad-delete-unambiguous-prefix afu+accept-line-and-down-history
+# afu-ad-delete-unambiguous-prefix afu+accept-and-hold
+# fi
+
+
+function rmf(){
+for file in $*
+do
+    __rm_single_file $file
+done
+}
+
+function __rm_single_file(){
+if ! [ -d ~/.Trash/ ]
+then
+    command /bin/mkdir ~/.Trash
 fi
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+if ! [ $# -eq 1 ]
+then
+    echo "__rm_single_file: 1 argument required but $# passed."
+    exit
+fi
+
+if [ -e $1 ]
+then
+    BASENAME=`basename $1`
+    NAME=$BASENAME
+    COUNT=0
+    while [ -e ~/.Trash/$NAME ]
+    do
+        COUNT=$(($COUNT+1))
+        NAME="$BASENAME.$COUNT"
+    done
+
+    command /bin/mv $1 ~/.Trash/$NAME
+else
+    echo "No such file or directory: $file"
+fi
+}
+
+# alias設定
+[ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
+#[ -f ~/dotfiles/.zshrc.alias ] && source ~/dotfiles/.zshrc.alias
+
+case "${OSTYPE}" in
+    # Mac(Unix)
+    darwin*)
+    # ここに設定
+    [ -f ~/.zshrc.osx ] && source ~/.zshrc.osx
+    #[ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
+    ;;
+    # Linux
+    linux*)
+    # ここに設定
+    [ -f ~/.zshrc.linux ] && source ~/.zshrc.linux
+    #[ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
+    ;;
+esac
+
+## local固有設定
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 
 #---------------------------------
@@ -463,8 +835,6 @@ alias ggl=google
 # ssh-agent実行
 #ssha
 
-
-export LANG=ja_JP.utf8
 
 # Attache tmux
 #env | grep -i TMUX > /dev/null 2>&1

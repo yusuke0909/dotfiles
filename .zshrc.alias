@@ -1,0 +1,180 @@
+###---------------------------------
+### alias
+###---------------------------------
+
+##---------------------------------
+# for fileutils (required yinst-ports/fileutils)
+##---------------------------------
+# ls
+alias la='ls -aF'
+alias lf='ls -F'
+alias ll='ls -alF'
+#alias ls='ls -CF --color=auto --show-control-char'
+#alias ll='ls -alF --color=auto --show-control-char'
+alias rm 'rm -i'
+alias del 'rm -rf *~ .*~'
+alias cp='cp -iv'
+# du/df
+alias du='du -h'
+alias df='df -h'
+alias dff='df -Th'
+alias duh='du -h ./ --max-depth=1'
+# su
+#alias su='su -l'
+# vim
+alias v='vim'
+alias vi='vim'
+alias view='vim -R'
+alias svi='sudo vim'
+alias 'src'='exec zsh'
+# git
+alias g='git'
+alias gi='git'
+alias gs='git status -s -b'
+alias gst='git status -s -b'
+alias gc='git commit'
+alias gci='git commit -a'
+alias '偽ｔ'=git
+# screen
+alias scr='screen -R'
+alias s='screen -U'
+alias sc='screen -S main'
+alias sn='screen'
+alias sl='screen -ls'
+alias sr='screen -r main'
+alias srr='screen -U -D -RR'
+# tmux
+alias tm='tmux'
+alias tm='tmux a'
+alias tma='tmux attach'
+alias tma0='tmux attach -t 0'
+alias tma1='tmux attach -t 1'
+alias tma2='tmux attach -t 2'
+alias tml='tmux list-sessions'
+alias -g V="| vim -"
+alias -g EV="| xargs --verbose sh -c 'vim \"\$@\" < /dev/tty'"
+# less
+alias less='less -r'
+#alias less="$PAGER"
+#alias more="$PAGER"
+#alias -g L="| $PAGER"
+#alias -g M="| $PAGER"
+# grep
+alias 'gr'='grep --color=auto -ERUIn'
+# make
+#alias make='make -j1'
+alias make='make -j3'
+alias 'm'='make'
+alias 'mn'='make native-code'
+alias 'mc'='make clean'
+# rpm
+alias rpmi='rpm -qilvv --changelog --scripts'           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+alias rpmip='rpm -qpilvv --changelog --scripts'         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
+
+##---------------------------------
+# other command
+##---------------------------------
+alias help='run-help' # builtin command help
+alias psa='ps auxww'
+alias bell="echo '\a'"
+alias dirs='dirs -p'
+alias mcpan='sudo perl -MCPAN -e shell'
+alias pd='pushd'
+alias ppd='popd'
+alias cvs='svn'
+# alias j='jobs -l'
+alias ssh='ssh -A'
+alias sum="awk '{sum+=\$1} END {print sum}'"
+#alias h='head'
+#alias t='tail'
+#alias g='grep'
+#alias c='cat'
+#alias j='jobs'
+alias -g H='| head'
+alias -g T='| tail'
+alias -g G='| grep'
+alias -g C='| cat -n'
+alias -g W='| wc'
+alias -g V='| view -'
+
+# colorized cat
+alias ccat='pygmentize -O style=vim -f console256 -g'
+
+# process
+alias 'ps?'='pgrep -l -f'
+alias pk='pkill -f'
+
+# rails
+alias -g RET="RAILS_ENV=test"
+alias -g RED="RAILS_ENV=development"
+alias -g REP="RAILS_ENV=production"
+
+# rake
+alias raket='RAILS_ENV=test rake'
+alias raked='RAILS_ENV=development rake'
+alias rakep='RAILS_ENV=production rake'
+
+# scala
+alias scala='scala -deprecation -unchecked -explaintypes'
+alias scc='scalac -deprecation -unchecked -explaintypes'
+alias sci='scala -deprecation -unchecked -explaintypes -cp $SCALA_CLASSPATH -i ~/import.scala'
+alias sce='scala'
+
+alias pon='predict-on'
+alias poff='predict-off'
+alias p='ping -c 4'
+
+alias cp='nocorrect cp -irp'
+alias refe='nocorrect refe'
+alias java='nocorrect java'
+alias erl='nocorrect erl'
+alias sbcl='nocorrect sbcl'
+alias gosh='nocorrect gosh'
+alias node='nocorrect node'
+# alias hg='nocorrect hg --encoding=utf-8'
+
+# extract http://d.hatena.ne.jp/jeneshicc/20110215/1297778049
+extract () {
+  if [ -f $1 ] ; then
+      case $1 in
+          *.tar.bz2)   tar xvjf $1    ;;
+          *.tar.gz)    tar xvzf $1    ;;
+          *.tar.xz)    tar xvJf $1    ;;
+          *.bz2)       bunzip2 $1     ;;
+          *.rar)       unrar x $1     ;;
+          *.gz)        gunzip $1      ;;
+          *.tar)       tar xvf $1     ;;
+          *.tbz2)      tar xvjf $1    ;;
+          *.tgz)       tar xvzf $1    ;;
+          *.zip)       unzip $1       ;;
+          *.Z)         uncompress $1  ;;
+          *.7z)        7z x $1        ;;
+          *.lzma)      lzma -dv $1    ;;
+          *.xz)        xz -dv $1      ;;
+          *)           echo "don't know how to extract '$1'..." ;;
+      esac
+  else
+      echo "'$1' is not a valid file!"
+  fi
+}
+alias ex='extract'
+
+#alias ev='vi ~/dotfiles/.vimrc*'
+#alias be='bundle exec'
+
+grepvim() {
+    XFS=`grep -ERUInl $* | uniq | xargs`
+    if [ "$XFS" ] ; then
+      vim `grep -ERUInl $* | uniq | xargs`
+    fi
+}
+alias grv='grepvim'
+
+
+
+## ls colors
+#if [ -x `which dircolors` ]; then
+#    eval `dircolors $HOME/.dircolors`
+#fi
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+#
