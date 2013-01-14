@@ -211,7 +211,7 @@ setopt multios                  # 複数のリダイレクトやパイプなど�
 
 #setopt interactive_comments    # コマンドラインでも # 以降をコメントと見なす
 #setopt mail_warning            # メールスプール $MAIL が読まれていたらワーニングを表示する
-#setopt mark_dirs               # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
+setopt mark_dirs                # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt path_dirs                # コマンド名に / が含まれているとき PATH 中のサブディレクトリを探す
 #setopt numeric_glob_sort       # ファイル名の展開で、辞書順ではなく数値的にソートされるようになる
 #setopt print_exit_value        # 戻り値が 0 以外の場合終了コードを表示する           
@@ -223,7 +223,7 @@ setopt path_dirs                # コマンド名に / が含まれていると�
 #setopt always_last_prompt      # 補完候補リスト表示で無駄なスクロールをしない(dafault)
 setopt promptcr                 # 改行のない出力をプロンプトで上書きする
 setopt prompt_subst             # プロンプト内で変数を展開
-limit   coredumpsize    0       # コアファイルを吐かないようにする
+limit  coredumpsize    0        # コアファイルを吐かないようにする
 
 # sudoも補完の対象
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
@@ -269,6 +269,7 @@ HISTFILE=~/.zsh_history
 #HISTFILE="$HOME/.zhistory.$HOST" # 履歴ファイル
 HISTSIZE=100000
 SAVEHIST=100000
+export HISTTIMEFORMAT='%y/%m/%d %H:%M:%S '
 
 # ^でcd ..する
 function cdup() {
@@ -670,7 +671,7 @@ esac
 #---------------------------------
 # time
 #---------------------------------
-REPORTTIME=8                    # CPUを8秒以上使った時は time を表示
+REPORTTIME=10                    # CPUを10秒以上使った時は time を表示
 TIMEFMT="\
     The name of this job.             :%J
     CPU seconds spent in user mode.   :%U
@@ -728,10 +729,17 @@ function awp() {
 }
 
 # cdしたらlsしないと気がすまない人用
-function cd() { builtin cd $@ && ls; }
+#function cd() { builtin cd $@ && ls; }
 
-# コマンド履歴を50件まで表示
-#function h() { history $* | head -50 }
+# コマンド履歴を最新の45件表示
+function h() { history $* | tail -45 }
+# コマンド履歴から引数で指定されたものをを検索
+function hg() { history $* | grep -i "$@" }
+
+# h: 直前の履歴 50件を表示 (引数がある場合は過去のすべてを検索)
+#function h() {
+#if [ "$1" ]; then history $* | grep -i "$@"; else history $* | head -50; fi
+#}
 
 # pushd-dirsを表示して番号を入力するとcdする
 function gd() {
@@ -808,12 +816,12 @@ function zh() {
 }
 
 # exit (kill ssh-agent)
-function exit() {
-	if [ -n "$SSH_AGENT_PID" ]; then
-		eval `ssh-agent -k`
-	fi
-	builtin exit
-}
+#function exit() {
+#	if [ -n "$SSH_AGENT_PID" ]; then
+#		eval `ssh-agent -k`
+#	fi
+#	builtin exit
+#}
 
 # グーグル検索 (要w3m)
 function google() {

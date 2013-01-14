@@ -44,7 +44,7 @@ if has('iconv')
 	unlet s:enc_jis
 endif
 
-" □とか○の文字があってもカーソル位置がずれないようにする
+" □ とか○ の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
     set ambiwidth=double
 endif
@@ -58,6 +58,10 @@ set nomousefocus
 set mousehide
 " ビジュアル選択(D&D他)を自動的にクリップボードへ (:help guioptions_a)
 set guioptions+=a
+set ttymouse=xterm2
+
+" OSのクリップボードを使用する
+"set clipboard+=unnamed
 
 " Command: コマンド設定  ============================================== {{{1
 "
@@ -74,6 +78,10 @@ command! ListCharsDispEol set listchars=eol:$ list
 command! -bar CD execute 'lcd' expand('%:p:h')
 " .gitのあるディレクトリに移動
 command! -bar CDGit call CdDotGitDir()
+
+" Ev/Rvでvimrcの編集と反映
+command! Ev edit $MYVIMRC
+command! Rv source $MYVIMRC
 
 " Autocmd: autocmd設定 ================================================ {{{1
 if has("autocmd")
@@ -98,6 +106,9 @@ if has("autocmd")
     " PHPの辞書補完とomni補完 -----------------------------------------------------------
     autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
     autocmd FileType php :setlocal dictionary+=~/.vim/dict/php5_functions.dict
+    
+    " cvsの時は文字コードをeuc-jpに設定 -------------------------------
+    autocmd FileType cvs :set fileencoding=euc-jp
 
     " svnの時は文字コードをutf8設定 -----------------------------------
     autocmd FileType svn :setlocal fileencoding=utf-8
@@ -126,9 +137,11 @@ if has("autocmd")
 endif
 
 " Options: オプション設定 ============================================= {{{1
-syntax on
+syntax enable
 "set nocompatible                        " vi互換にしない
+set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
+"set encoding=utf-8                       " デフォルトエンコーディング
 set ambiwidth=double                     " UTF-8で文字幅表示を２文字分使う
 set completeopt=menuone,preview
 set complete+=k                          " 辞書ファイルからの単語補間
@@ -137,7 +150,9 @@ set expandtab                            " タブを展開
 set autoindent                           " オートインデント
 "set noerrorbells                        " エラー時にベルを鳴らさない
 "set novisualbell                        " ヴィジュアルベルを使わない
+"set vb t_vb=                            " ビープをならさない
 set nolinebreak                          " ホワイト・スペースで折り返さない
+"set scrolloff=5                          " スクロール時の余白確保
 set tabstop=4                            " タブ幅
 set softtabstop=4
 set shiftwidth=4                         " インデント幅
@@ -150,31 +165,33 @@ set noincsearch                          " 検索文字列入力時に順次対�
 set nolist                               " タブの左側にカーソル表示
 set showcmd                              " 入力中のコマンドをステータスに表示する
 set showmatch                            " 括弧入力時の対応する括弧を表示
-set showmode                             " 
-set hlsearch                             " 検索結果文字列のハイライトを有効にしない
+set showmode                             " 現在のモードを表示
+set hlsearch                             " 検索結果文字列をハイライト
 set number                               " 行番号を表示する
 set nobackup                             " バックアップファイルは作らない
+set noswapfile                           " スワップファイル作らない
 set wildmenu                             " コマンドライン補完するときに強化されたものを使う
 set wildmode=list:longest                " コマンドライン補間をシェルっぽく
 set hidden                               " バッファが編集中でもその他のファイルを開けるように
 set autoread                             " 外部のエディタで編集中のファイルが変更されたら自動で読み直す
 set wrap                                 " 自動折り返し
-set laststatus=2                         " 常にステータス行を表示 (詳細は:he laststatus)
+set laststatus=2                         " 常にステータスラインを表示 (詳細は:he laststatus)
 set cmdheight=2                          " コマンドラインの高さ (Windows用gvim使用時はgvimrcを編集すること)
 set title                                " タイトルを表示
 set lazyredraw                           " マクロなど実行中は描画を中断
+set ttyfast                              " 高速ターミナル接続を行う
 set foldmethod=marker                    " 折畳み
 set cursorline                           " カーソル行を強調表示
-"hi CursorLine gui=underline             " 下線
-"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
+set display=uhex                         " 印字不可能文字を16進数で表示
 set list                                 " タブや改行などを別の文字で表示する
 set listchars=tab:-\ ,extends:<          " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
 set keywordprg=man\ -a                   " キーワードヘルプコマンドの設定 (default: man or man\ -s)
 set viminfo='50,<1000,s100,\"50          " viminfoの上限数など
 set backspace=indent,eol,start           " バックスペースを強化する設定
+set formatoptions=lmoq                   " テキスト整形オプション，マルチバイト系を追加
 set textwidth=0                          " Don't wrap words by default
 set history=1000                         " コマンド履歴数
-set ruler                                " show the cursor position all the time
+set ruler                                " カーソルが何行目の何列目に置かれているかを表示する
 set guioptions-=T                        " ツールバーを表示しない
 "set paste                               " pasteモードに入る
 "set nopaste                             " pasteモードから抜ける
@@ -184,17 +201,77 @@ if has('migemo')
     set migemo                           " Migemo用検索
 endif
 
-"ステータスラインに文字コードと改行文字を表示する（ウインドウ幅によって表示項目を調整）
-if winwidth(0) >= 120
-    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
-else
-    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
-endif
-
 " prg設定
 set grepprg="grep"
+" }}}1
+" StatusLine & Apperance: ステータスライン&表示設定 ============================================= {{{1
+" vim-powerlineでフォントにパッチを当てないなら以下をコメントアウト
+let g:Powerline_symbols = 'fancy'
+
+"ステータスラインに文字コードと改行文字を表示する
+ if winwidth(0) >= 120
+   set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+ else
+  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+ endif
+
+"入力モード時、ステータスラインのカラーを変更
+ augroup InsertHook
+ autocmd!
+ autocmd InsertEnter * highlight StatusLine guifg=#ccdc90 guibg=#2E4340 ctermfg=cyan
+ autocmd InsertLeave * highlight StatusLine guifg=#2E4340 guibg=#ccdc90 ctermfg=white
+ augroup END
+
+"自動的に QuickFix リストを表示する
+autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
+autocmd QuickfixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
+
+function! GetB()
+  let c = matchstr(getline('.'), '.', col('.') - 1)
+  let c = iconv(c, &enc, &fenc)
+  return String2Hex(c)
+endfunction
+" help eval-examples
+" The function Nr2Hex() returns the Hex string of a number.
+func! Nr2Hex(nr)
+  let n = a:nr
+  let r = ""
+  while n
+    let r = '0123456789ABCDEF'[n % 16] . r
+    let n = n / 16
+  endwhile
+  return r
+endfunc
+" The function String2Hex() converts each character in a string to a two
+" character Hex string.
+func! String2Hex(str)
+  let out = ''
+  let ix = 0
+  while ix < strlen(a:str)
+    let out = out . Nr2Hex(char2nr(a:str[ix]))
+    let ix = ix + 1
+  endwhile
+  return out
+endfunc
+"ステータスラインに文字コードと改行文字を表示する（ウインドウ幅によって表示項目を調整）
+"if winwidth(0) >= 120
+"    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+"else
+"    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+"endif
 
 
+" カレントウィンドウにのみ罫線を引く
+augroup cch
+  autocmd! cch
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter,BufRead * set cursorline
+augroup END
+
+hi clear CursorLine
+hi CursorLine gui=underline             " 下線
+"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
+highlight CursorLine ctermbg=black guibg=black
 " }}}1
 " Mapping: マッピング設定 ============================================= {{{1
 
@@ -582,51 +659,337 @@ if has('vim_starting')
     call neobundle#rc(expand('~/.bundle'))
 endif
 
-NeoBundle 'mrkn/mrkn256.vim'
-NeoBundle 'mattn/webapi-vim'
-NeoBundle 'tyru/restart.vim'
-NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
-NeoBundle 'tpope/vim-rails'
-NeoBundle 'sudo.vim'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'motemen/git-vim'
-NeoBundle 'tsukkee/lingr-vim'
-NeoBundle 'ujihisa/neco-look'
-NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'derekwyatt/vim-scala'
+
+" Edit {{{2
+" NERD_commenter.vim :最強コメント処理 (<Leader>c<space>でコメントをトグル)
+NeoBundle 'scrooloose/nerdcommenter.git'
+
+" 自動閉じタグ
+" NeoBundle 'yuroyoro/vim-autoclose'
+
+" -- でメソッドチェーン整形
+NeoBundle 'c9s/cascading.vim'
+
+" visually indent guide
+NeoBundle 'nathanaelkane/vim-indent-guides'
+
+" XMLとかHTMLとかの編集機能を強化する
+NeoBundle 'xmledit'
+
+" Align : 高機能整形・桁揃えプラグイン
+NeoBundle 'Align'
+
+" フィルタリングと整形
+NeoBundle 'godlygeek/tabular'
+
+" マルチバイト対応の整形
+NeoBundle 'h1mesuke/vim-alignta'
+
+" YankRing.vim : ヤンクの履歴を管理し、順々に参照、出力できるようにする
+NeoBundle 'YankRing.vim'
+
+" undo履歴を追える (need python support)
+NeoBundle 'Gundo'
+
+" surround.vim : テキストを括弧で囲む／削除する
+NeoBundle 'tpope/surround.vim'
+
+" smartchr.vim : ==などの前後を整形
+NeoBundle 'smartchr'
+
+" vim-operator-user : 簡単にoperatorを定義できるようにする
+NeoBundle 'operator-user'
+
+" operator-camelize : camel-caseへの変換
+NeoBundle 'operator-camelize'
+
+" operator-replace : yankしたものでreplaceする
+NeoBundle 'operator-replace'
+
+" textobj-user : 簡単にVimエディタのテキストオブジェクトをつくれる
+NeoBundle 'textobj-user'
+
+" vim-textobj-syntax : syntax hilightされたものをtext-objectに
+NeoBundle 'kana/vim-textobj-syntax.git'
+
+" vim-textobj-plugins : いろんなものをtext-objectにする
+NeoBundle 'thinca/vim-textobj-plugins.git'
+
+" vim-textobj-lastpat : 最後に検索されたパターンをtext-objectに
+NeoBundle 'kana/vim-textobj-lastpat.git'
+
+" vim-textobj-indent : インデントされたものをtext-objectに
+NeoBundle 'kana/vim-textobj-indent.git'
+
+" vim-textobj-function : 関数の中身をtext-objectに
+NeoBundle 'kana/vim-textobj-function.git'
+
+" vim-textobj-fold : 折りたたまれたアレをtext-objectに
+" NeoBundle 'kana/vim-textobj-fold.git'
+
+"
+NeoBundle 'textobj-rubyblock'
+
+" vim-textobj-entire : buffer全体をtext-objectに
+NeoBundle 'textobj-entire'
+
+" 「foo」 or 【bar】などをtext-objectに
+NeoBundle 'textobj-jabraces'
+
+" 改造したmonday.vim(git rebase -i とかtrue/falseとか)
+" NeoBundle 'yuroyoro/monday'
+
+" <C-a>でtrue/false切替。他色々
+NeoBundle 'taku-o/vim-toggle'
+" }}}2
+
+
+" Completion {{{2
+" 補完 autocomplpop.vim : insertmodeで自動で補完をpopup
+" NeoBundle 'AutoComplPop'
+
+" 補完 neocomplcache.vim : 究極のVim的補完環境
 NeoBundle 'Shougo/neocomplcache'
-NeoBundle 'ujihisa/unite-gem'
-NeoBundle 'h1mesuke/unite-outline'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'kchmck/vim-coffee-script'
-NeoBundle 'kana/vim-metarw'
-NeoBundle 'kana/vim-metarw-git'
+
+" neocomplcacheのsinpet補完
+" NeoBundle 'Shougo/neocomplcache-snippets-complete'
+
+" for rsense
+NeoBundle 'm2ym/rsense'
+NeoBundle 'taichouchou2/vim-rsense'
+
+" rubyでrequire先を補完する
+NeoBundle 'ujihisa/neco-ruby'
+
+" A neocomplcache plugin for English, using look command
+NeoBundle 'ujihisa/neco-look'
+" }}}2
+
+
+" Searching/Moving{{{2
+" smooth_scroll.vim : スクロールを賢く
+NeoBundle 'Smooth-Scroll'
+
+" vim-smartword : 単語移動がスマートな感じで
+NeoBundle 'smartword'
+
+" camelcasemotion : CamelCaseやsnake_case単位でのワード移動
+NeoBundle 'camelcasemotion'
+
+" <Leader><Leader>w/fなどで、motion先をhilightする
+NeoBundle 'EasyMotion'
+
+" matchit.vim : 「%」による対応括弧へのカーソル移動機能を拡張
+NeoBundle 'matchit.zip'
+
+" ruby用のmatchit拡張
+NeoBundle 'ruby-matchit'
+
+" grep.vim : 外部のgrep利用。:Grepで対話形式でgrep :Rgrepは再帰
+NeoBundle 'grep.vim'
+
+" eregex.vim : vimの正規表現をrubyやperlの正規表現な入力でできる :%S/perlregex/
+NeoBundle 'eregex.vim'
+
+" open-browser.vim : カーソルの下のURLを開くor単語を検索エンジンで検索
+NeoBundle 'tyru/open-browser.vim'
+" }}}2
+
+
+" Programming {{{2
+" quickrun.vim : 編集中のファイルを簡単に実行できるプラグイン
+NeoBundle 'thinca/vim-quickrun'
+
+" perldocやphpmanual等のリファレンスをvim上で見る
 NeoBundle 'thinca/vim-ref'
-NeoBundle 'Shougo/vimfiler'
+
+" SQLUtilities : SQL整形、生成ユーティリティ
+NeoBundle 'SQLUtilities'
+
+" vim-ruby : VimでRubyを扱う際の最も基本的な拡張機能
+NeoBundle 'vim-ruby/vim-ruby'
+
+" rails.vim : rails的なアレ
+NeoBundle 'tpope/vim-rails'
+
+" Pydiction : Python用の入力補完
+" NeoBundle 'Pydiction'
+
+" ソースコード上のメソッド宣言、変数宣言の一覧を表示
+NeoBundle 'taglist.vim'
+
+" エラーがある場所をhilight
+" NeoBundle 'errormarker.vim'
+
+" tagsを利用したソースコード閲覧・移動補助機能 tagsファイルの自動生成
+" NeoBundle 'Source-Explorer-srcexpl.vim'
+
+" NERD_tree, taglist, srcexpl の統合
+" NeoBundle 'trinity.vim'
+" }}}2
+
+
+" Syntax {{{2
+" haml
+NeoBundle 'haml.zip'
+
+" JavaScript
+NeoBundle 'JavaScript-syntax'
+
+" jQuery
+NeoBundle 'jQuery'
+
+" nginx conf
+NeoBundle 'nginx.vim'
+
+" markdown
+NeoBundle 'tpope/vim-markdown'
+
+" coffee script
+NeoBundle 'kchmck/vim-coffee-script'
+
+" python
+NeoBundle 'yuroyoro/vim-python'
+
+" scala
+NeoBundle 'yuroyoro/vim-scala'
+
+" clojure
+NeoBundle 'jondistad/vimclojure'
+
+" ghc-mod
+NeoBundle 'eagletmt/ghcmod-vim'
+
+" syntax checking plugins exist for eruby, haml, html, javascript, php, python, ruby and sass.
+NeoBundle 'scrooloose/syntastic'
+" }}}2
+
+
+" Buffer {{{2
+" DumbBuf.vim : quickbufっぽくbufferを管理。 "<Leader>b<Space>でBufferList
+" NeoBundle 'DumbBuf'
+
+" minibufexpl.vim : タブエディタ風にバッファ管理ウィンドウを表示
+" NeoBundle 'minibufexpl.vim'
+
+" NERDTree : ツリー型エクスプローラ
+NeoBundle 'The-NERD-tree'
+
+" vtreeexplorer.vim : ツリー状にファイルやディレクトリの一覧を表示
+NeoBundle 'vtreeexplorer'
+" }}}2
+
+
+" Encording {{{2
+NeoBundle 'banyan/recognize_charcode.vim'
+" }}}2
+
+
+" Utility {{{2
+" vimshell : vimのshell
+NeoBundle 'Shougo/vimshell.git'
+
+" vimproc : vimから非同期実行。vimshelleで必要
 NeoBundle 'Shougo/vimproc',
             \ { 'build' : {
             \     'mac ' : 'make -f make_mac.mak',
             \     'unix' : 'make -f make_unix.mak'
             \ }}
+
+" vim-altercmd : Ex command拡張
+NeoBundle 'tyru/vim-altercmd'
+
+" vim Interface to Web API
+NeoBundle 'mattn/webapi-vim'
+
+" cecutil.vim : 他のpluginのためのutillity1
+NeoBundle 'cecutil'
+
+" urilib.vim : vim scriptからURLを扱うライブラリ
+NeoBundle 'tyru/urilib.vim'
+
+" ステータスラインに顔文字を表示
+" NeoBundle 'mattn/hahhah-vim'
+
+" utillity
+NeoBundle 'L9'
+
+" Buffer管理のLibrary
+NeoBundle 'thinca/vim-openbuf'
+
+" vimdoc 日本語
+NeoBundle 'yuroyoro/vimdoc_ja'
+
+" vim上のtwitter client
+NeoBundle 'TwitVim'
+
+" Lingrのclient
+NeoBundle 'tsukkee/lingr-vim'
+
+" vimからGit操作する
+NeoBundle 'tpope/vim-fugitive'
+
+" ステータスラインをカッコよくする
+NeoBundle 'Lokaltog/vim-powerline'
+
+" Redmine on Vim
+NeoBundle 'mattn/vim-metarw-redmine'
+
+" A framework to read/write fake:path
+NeoBundle 'kana/vim-metarw'
+
+"   "
+NeoBundle 'kana/vim-metarw-git'
+" }}}2
+
+
+" ColorSchema{{{2
+" color schema 256
+NeoBundle 'desert256.vim'
+NeoBundle 'mrkn256.vim'
+NeoBundle 'tomasr/molokai'
+NeoBundle 'yuroyoro/yuroyoro256.vim'
+" }}}2
+
+
+" Unite {{{2
+" unite.vim : - すべてを破壊し、すべてを繋げ - vim scriptで実装されたanythingプラグイン
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'taka84u9/unite-git'
+NeoBundle 'tsukkee/unite-help'
+NeoBundle 'h1mesuke/unite-outline'
+NeoBundle 'Sixeight/unite-grep'
+NeoBundle 'basyura/unite-rails'
+NeoBundle 'ujihisa/unite-gem'
+NeoBundle 'thinca/vim-unite-history'
+NeoBundle 'tsukkee/unite-tag'
+NeoBundle 'choplin/unite-vim_hacks'
+" }}}2
+
+
+" その他 {{{2
+NeoBundle 'tyru/restart.vim'
+NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
+NeoBundle 'sudo.vim'
+NeoBundle 'motemen/git-vim'
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
-NeoBundle 'mattn/zencoding-vim'
+"NeoBundle 'mattn/zencoding-vim'
 "NeoBundle 'godlygeek/csapprox'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'groenewege/vim-less'
-NeoBundle 'taka84u9/unite-git'
 NeoBundle 'thinca/vim-scouter'
-NeoBundle 'ujihisa/neco-ruby'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'kana/vim-smartword'
-NeoBundle 'nelstrom/vim-textobj-rubyblock'
-NeoBundle 'nathanaelkane/vim-indent-guides'
+"NeoBundle 'nelstrom/vim-textobj-rubyblock'
+" }}}2
+
 filetype on
 filetype plugin on
 filetype indent on
@@ -636,8 +999,8 @@ runtime macros/matchit.vim
 " Color: 色設定 ======================================================= {{{1
 " 特定の文字を視覚化。この例では全角スペース
 " TODO:listcharsの設定と調整する
-"highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=white
-"match ZenkakuSpace /　/
+highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=white
+match ZenkakuSpace /　/
 if !has('gui_running')
     set background=dark
     highlight Folded ctermfg=yellow ctermbg=black 
@@ -646,6 +1009,39 @@ if !has('gui_running')
     highlight PmenuSel ctermbg=darkred guibg=SlateBlue
     highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
+
+"colorscheme mrkn256
+"colorscheme yuroyoro256
+
+" ターミナルタイプによるカラー設定
+if &term =~ "xterm-256color" || "screen-256color"
+  " 256色
+  set t_Co=256
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
+  set t_Co=16
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+elseif &term =~ "xterm-color"
+  set t_Co=8
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+"ポップアップメニューのカラーを設定
+"hi Pmenu guibg=#666666
+"hi PmenuSel guibg=#8cd0d3 guifg=#666666
+"hi PmenuSbar guibg=#333333
+
+" ハイライト on
+"syntax enable
+" 補完候補の色づけ for vim7
+" hi Pmenu ctermbg=255 ctermfg=0 guifg=#000000 guibg=#999999
+" hi PmenuSel ctermbg=blue ctermfg=black
+" hi PmenuSel cterm=reverse ctermfg=33 ctermbg=222 gui=reverse guifg=#3399ff guibg=#f0e68c
+" hi PmenuSbar ctermbg=0 ctermfg=9
+" hi PmenuSbar ctermbg=255 ctermfg=0 guifg=#000000 guibg=#FFFFFF
 
 " Tags: tags設定 ====================================================== {{{1
 if has("autochdir")
