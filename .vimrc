@@ -1526,5 +1526,5 @@ function! s:unite_my_settings()
     imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 
-"Escの2回押しでハイライト消去
+" Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
