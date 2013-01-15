@@ -6,7 +6,9 @@
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
-alias ll='ls -alh --color'
+alias ls='ls -aCF --color=auto --show-control-char'
+alias la='ls -aCF --color=auto --show-control-char'
+alias ll='ls -alFhtr --color=auto --show-control-char'
 #alias vi='/usr/local/bin/vim'
 #alias view='/usr/local/bin/vim -R'
 #alias vim='/usr/local/bin/vim'
