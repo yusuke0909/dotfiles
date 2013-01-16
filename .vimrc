@@ -185,7 +185,8 @@ set foldmethod=marker                    " 折畳み
 set cursorline                           " カーソル行を強調表示
 set display=uhex                         " 印字不可能文字を16進数で表示
 set list                                 " タブや改行などを別の文字で表示する
-set listchars=tab:-\ ,extends:<          " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
+"set listchars=tab:-\ ,extends:<         " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
+set listchars=eol:¬,tab:▸\ ,extends:<    " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
 set keywordprg=man\ -a                   " キーワードヘルプコマンドの設定 (default: man or man\ -s)
 set viminfo='50,<1000,s100,\"50          " viminfoの上限数など
 set backspace=indent,eol,start           " バックスペースを強化する設定
@@ -649,13 +650,13 @@ let g:netrw_http_cmd="wget -q -O" " netrw-http
 " surround.vim ------------------------------------------------------------ {{{2
 "surroundに定義を追加する【ASCIIコードを調べるには:echo char2nr("-")】
 "タグ系
-let g:surround_{char2nr('!')} = "<!-- \r -->"
-let g:surround_{char2nr('%')} = "<% \r %>"
-let g:surround_{char2nr('-')} = "<!-- \r -->"
+"let g:surround_{char2nr('!')} = "<!-- \r -->"
+"let g:surround_{char2nr('%')} = "<% \r %>"
+"let g:surround_{char2nr('-')} = "<!-- \r -->"
 "変数展開系
-let g:surround_{char2nr('#')} = "#{\r}"
-let g:surround_{char2nr('$')} = "${\r}"
-let g:surround_{char2nr('@')} = "@{\r}"
+"let g:surround_{char2nr('#')} = "#{\r}"
+"let g:surround_{char2nr('$')} = "${\r}"
+"let g:surround_{char2nr('@')} = "@{\r}"
 
 " tabbar.vim -------------------------------------------------------------- {{{2
 let g:Tb_MaxSize=3
@@ -680,9 +681,9 @@ endif
 filetype off
 if has('vim_starting')
     set runtimepath+=$VIMFILES/neobundle.vim
-    call neobundle#rc(expand('~/.bundle'))
+    call neobundle#rc(expand('~/.vim/bundle'))
 endif
-
+" NeoBundle 'Shougo/neobundle.vim'
 
 " Edit {{{2
 " NERD_commenter.vim :最強コメント処理 (<Leader>c<space>でコメントをトグル)
@@ -716,7 +717,7 @@ NeoBundle 'YankRing.vim'
 NeoBundle 'Gundo'
 
 " surround.vim : テキストを括弧で囲む／削除する
-NeoBundle 'tpope/surround.vim'
+" NeoBundle 'tpope/surround.vim'
 
 " smartchr.vim : ==などの前後を整形
 NeoBundle 'smartchr'
@@ -843,7 +844,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'taglist.vim'
 
 " エラーがある場所をhilight
- NeoBundle 'errormarker.vim'
+" NeoBundle 'errormarker.vim'
 
 " tagsを利用したソースコード閲覧・移動補助機能 tagsファイルの自動生成
 " NeoBundle 'Source-Explorer-srcexpl.vim'
@@ -974,34 +975,44 @@ NeoBundle 'mrkn256.vim'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'yuroyoro/yuroyoro256.vim'
 NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'croaker/mustang-vim'
+NeoBundle 'jeffreyiacono/vim-colors-wombat'
+NeoBundle 'nanotech/jellybeans.vim'
+NeoBundle 'vim-scripts/Lucius'
+NeoBundle 'vim-scripts/Zenburn'
+NeoBundle 'jpo/vim-railscasts-theme'
+NeoBundle 'therubymug/vim-pyte'
 " }}}2
 
 
 " Unite {{{2
-" unite.vim : - すべてを破壊し、すべてを繋げ - vim scriptで実装されたanythingプラグイン
+" Unite.vim : - すべてを破壊し、すべてを繋げ - vim scriptで実装されたanythingプラグイン
+" カラースキーム一覧表示に Unite.vim を使う
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'taka84u9/unite-git'
-NeoBundle 'tsukkee/unite-help'
 NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'Sixeight/unite-grep'
-NeoBundle 'basyura/unite-rails'
-NeoBundle 'ujihisa/unite-gem'
+NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
+" NeoBundle 'ujihisa/unite-font'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
+NeoBundle 'ujihisa/unite-colorscheme'
+NeoBundle 'basyura/unite-rails'
+NeoBundle 'ujihisa/unite-gem'
 " }}}2
 
 
 " その他 {{{2
 NeoBundle 'tyru/restart.vim'
-NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
+" NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
 NeoBundle 'sudo.vim'
 NeoBundle 'motemen/git-vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
-"NeoBundle 'mattn/zencoding-vim'
-"NeoBundle 'godlygeek/csapprox'
+" NeoBundle 'mattn/zencoding-vim'
+" NeoBundle 'godlygeek/csapprox'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
@@ -1011,7 +1022,7 @@ NeoBundle 'thinca/vim-scouter'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
-"NeoBundle 'nelstrom/vim-textobj-rubyblock'
+" NeoBundle 'nelstrom/vim-textobj-rubyblock'
 " }}}2
 
 filetype on
@@ -1033,12 +1044,17 @@ if !has('gui_running')
     highlight PmenuSel ctermbg=darkred guibg=SlateBlue
     highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
-
-colorscheme mrkn256
-"colorscheme desert256
-"colorscheme yuroyoro256
-"colorscheme molokai
-"colorscheme solarized
+ 
+" colorscheme mrkn256
+" colorscheme yuroyoro256
+colorscheme desert256
+" colorscheme desert
+" colorscheme Lucius
+" colorscheme molokai
+" colorscheme mustang
+" colorscheme jellybeans
+" colorscheme solarized
+" colorscheme Zenburn
 
 " ターミナルタイプによるカラー設定
 "if &term =~ "xterm-256color" || "screen-256color"

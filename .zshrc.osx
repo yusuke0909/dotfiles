@@ -13,13 +13,15 @@ export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # vim
-#export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-#alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-#alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vi='/usr/local/bin/vim'
-alias view='/usr/local/bin/vim -R'
-alias vim='/usr/local/bin/vim'
-alias rvim='/usr/local/bin/vim -R'
+export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
+alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias view='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
+alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias rvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
+#alias vi='/usr/local/bin/vim'
+#alias view='/usr/local/bin/vim -R'
+#alias vim='/usr/local/bin/vim'
+#alias rvim='/usr/local/bin/vim -R'
 
 # SVN
 # UTF-8.MAC用のパッチ当てた
