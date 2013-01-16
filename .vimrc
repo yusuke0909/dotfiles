@@ -973,6 +973,7 @@ NeoBundle 'desert256.vim'
 NeoBundle 'mrkn256.vim'
 NeoBundle 'tomasr/molokai'
 NeoBundle 'yuroyoro/yuroyoro256.vim'
+NeoBundle 'altercation/vim-colors-solarized'
 " }}}2
 
 
@@ -1007,7 +1008,6 @@ NeoBundle 'tpope/vim-haml'
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'thinca/vim-scouter'
-NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
@@ -1035,7 +1035,10 @@ if !has('gui_running')
 endif
 
 colorscheme mrkn256
+"colorscheme desert256
 "colorscheme yuroyoro256
+"colorscheme molokai
+"colorscheme solarized
 
 " ターミナルタイプによるカラー設定
 "if &term =~ "xterm-256color" || "screen-256color"
