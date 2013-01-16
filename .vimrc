@@ -58,6 +58,7 @@ set nomousefocus
 set mousehide
 " ビジュアル選択(D&D他)を自動的にクリップボードへ (:help guioptions_a)
 set guioptions+=a
+"set guioptions-=T                       " ツールバーを表示しない
 set ttymouse=xterm2
 
 " OSのクリップボードを使用する
@@ -141,9 +142,9 @@ syntax enable
 "set nocompatible                        " vi互換にしない
 set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
-"set encoding=utf-8                       " デフォルトエンコーディング
+"set encoding=utf-8                      " デフォルトエンコーディング
 set ambiwidth=double                     " UTF-8で文字幅表示を２文字分使う
-set completeopt=menuone,preview
+set completeopt=menuone,preview          " 
 set complete+=k                          " 辞書ファイルからの単語補間
 set nrformats=""                         " 8進数はインクリメントしない
 set expandtab                            " タブを展開
@@ -152,9 +153,9 @@ set autoindent                           " オートインデント
 "set novisualbell                        " ヴィジュアルベルを使わない
 "set vb t_vb=                            " ビープをならさない
 set nolinebreak                          " ホワイト・スペースで折り返さない
-"set scrolloff=5                          " スクロール時の余白確保
+"set scrolloff=5                         " スクロール時の余白確保
 set tabstop=4                            " タブ幅
-set softtabstop=4
+set softtabstop=4                        "  
 set shiftwidth=4                         " インデント幅
 set smartindent                          " インデントはスマートインデント
 set ignorecase                           " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -192,7 +193,6 @@ set formatoptions=lmoq                   " テキスト整形オプション，�
 set textwidth=0                          " Don't wrap words by default
 set history=1000                         " コマンド履歴数
 set ruler                                " カーソルが何行目の何列目に置かれているかを表示する
-set guioptions-=T                        " ツールバーを表示しない
 "set paste                               " pasteモードに入る
 "set nopaste                             " pasteモードから抜ける
 set pastetoggle=<F1>                     " pasteモードの切替え(set paste or set nopaste でも可)
@@ -204,13 +204,36 @@ endif
 " prg設定
 set grepprg="grep"
 " }}}1
-" StatusLine & Apperance: ステータスライン&表示設定 ============================================= {{{1
-" vim-powerlineでフォントにパッチを当てないなら以下をコメントアウト
+" StatusLine & Apperance: ステータスライン&表示設定 =================== {{{1
+set t_Co=256
+set guifont=Ricty_for_Powerline:h12
+"set guifont=Inconsolata_for_Powerline:h11:cANSI
+set guifontwide=Ricty:h12
+
+" vim-powerlineでフォントにパッチを当てたものを使うようにする設定
 let g:Powerline_symbols = 'fancy'
+" シンボルを上書きする
+let g:Powerline_symbols_override = {
+\ 'LINE': 'Caret'
+\ }
+
+" モード名を上書きする
+let g:Powerline_mode_n = 'Normal'
+let g:Powerline_mode_i = 'Insert'
+let g:Powerline_mode_R = 'Replace'
+let g:Powerline_mode_v = 'Visual'
+let g:Powerline_mode_V = 'Visual-Line'
+let g:Powerline_mode_cv = 'Visual-Block'
+let g:Powerline_mode_s = 'Select'
+let g:Powerline_mode_S = 'Select-Line'
+let g:Powerline_mode_cs = 'Select-Block'
+
+" ファイルへの相対パスを表示する
+let g:Powerline_stl_path_style = 'relative'
 
 "ステータスラインに文字コードと改行文字を表示する
  if winwidth(0) >= 120
-   set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
  else
   set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
  endif
@@ -234,6 +257,7 @@ endfunction
 " help eval-examples
 " The function Nr2Hex() returns the Hex string of a number.
 func! Nr2Hex(nr)
+    dfadfads
   let n = a:nr
   let r = ""
   while n
@@ -819,7 +843,7 @@ NeoBundle 'tpope/vim-rails'
 NeoBundle 'taglist.vim'
 
 " エラーがある場所をhilight
-" NeoBundle 'errormarker.vim'
+ NeoBundle 'errormarker.vim'
 
 " tagsを利用したソースコード閲覧・移動補助機能 tagsファイルの自動生成
 " NeoBundle 'Source-Explorer-srcexpl.vim'
@@ -1010,24 +1034,24 @@ if !has('gui_running')
     highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
 
-"colorscheme mrkn256
+colorscheme mrkn256
 "colorscheme yuroyoro256
 
 " ターミナルタイプによるカラー設定
-if &term =~ "xterm-256color" || "screen-256color"
+"if &term =~ "xterm-256color" || "screen-256color"
   " 256色
-  set t_Co=256
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
-  set t_Co=16
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-elseif &term =~ "xterm-color"
-  set t_Co=8
-  set t_Sf=[3%dm
-  set t_Sb=[4%dm
-endif
+"  set t_Co=256
+"  set t_Sf=[3%dm
+"  set t_Sb=[4%dm
+"elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
+"  set t_Co=16
+"  set t_Sf=[3%dm
+"  set t_Sb=[4%dm
+"elseif &term =~ "xterm-color"
+"  set t_Co=8
+"  set t_Sf=[3%dm
+"  set t_Sb=[4%dm
+"endif
 
 "ポップアップメニューのカラーを設定
 "hi Pmenu guibg=#666666
