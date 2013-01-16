@@ -16,6 +16,8 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 #export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
 #alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vi='/usr/local/bin/vim'
+alias view='/usr/local/bin/vim -R'
 alias vim='/usr/local/bin/vim'
 alias rvim='/usr/local/bin/vim -R'
 
@@ -33,10 +35,10 @@ export PATH=$JAVA_HOME/bin:$PATH
 export _JAVA_OPTIONS="-Dfile.encoding=UTF-8"
 
 # haskell
-export PATH=/Users/ozaki/Library/Haskell/bin:$PATH
+export PATH=/Users/yusuke/Library/Haskell/bin:$PATH
 
 # scala
-export SCALA_HOME=/Users/ozaki/.svm/current/rt
+export SCALA_HOME=/Users/yusuke/.svm/current/rt
 PATH=$SCALA_HOME/bin:$PATH
 export SCALA_DOC_HOME=$SCALA_HOME/../devel-docs/api/
 
@@ -102,7 +104,7 @@ alias perl='/opt/local/bin/perl'
 
 
 # Ruby
-# if [[ -s /Users/ozaki/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
+# if [[ -s /Users/yusuke/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 #eval "$(rbenv init -)"
 
 export REFE_DATA_DIR=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/share/refe
