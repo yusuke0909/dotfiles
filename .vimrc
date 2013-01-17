@@ -139,7 +139,7 @@ endif
 
 " Options: オプション設定 ============================================= {{{1
 syntax enable
-"set nocompatible                        " vi互換にしない
+set nocompatible                         " vi互換にしない
 set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
 "set encoding=utf-8                      " デフォルトエンコーディング
@@ -185,7 +185,6 @@ set foldmethod=marker                    " 折畳み
 set cursorline                           " カーソル行を強調表示
 set display=uhex                         " 印字不可能文字を16進数で表示
 set list                                 " タブや改行などを別の文字で表示する
-"set listchars=tab:-\ ,extends:<         " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
 set listchars=eol:¬,tab:▸\ ,extends:<    " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
 set keywordprg=man\ -a                   " キーワードヘルプコマンドの設定 (default: man or man\ -s)
 set viminfo='50,<1000,s100,\"50          " viminfoの上限数など
@@ -208,7 +207,7 @@ set grepprg="grep"
 " StatusLine & Apperance: ステータスライン&表示設定 =================== {{{1
 set t_Co=256
 set guifont=Ricty_for_Powerline:h12
-"set guifont=Inconsolata_for_Powerline:h11:cANSI
+"set guifont=Inconsolata_for_Powerline:h12:cANSI
 set guifontwide=Ricty:h12
 
 " vim-powerlineでフォントにパッチを当てたものを使うようにする設定
@@ -218,6 +217,10 @@ let g:Powerline_symbols_override = {
 \ 'LINE': 'Caret'
 \ }
 
+" vim-powerlineで使用するカラースキーム
+" let g:Powerline_theme       = 'solarized256'
+" let g:Powerline_colorscheme = 'solarized256'
+ 
 " モード名を上書きする
 let g:Powerline_mode_n = 'Normal'
 let g:Powerline_mode_i = 'Insert'
@@ -233,11 +236,17 @@ let g:Powerline_mode_cs = 'Select-Block'
 let g:Powerline_stl_path_style = 'relative'
 
 "ステータスラインに文字コードと改行文字を表示する
- if winwidth(0) >= 120
-  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
- else
-  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
- endif
+" if winwidth(0) >= 120
+"  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %F%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+" else
+"  set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %{g:HahHah()}\ %f%=[%{GetB()}]\ %{fugitive#statusline()}\ %l,%c%V%8P
+" endif
+"ステータスラインに文字コードと改行文字を表示する（ウインドウ幅によって表示項目を調整）
+if winwidth(0) >= 120
+    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+else
+    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+endif
 
 "入力モード時、ステータスラインのカラーを変更
  augroup InsertHook
@@ -278,13 +287,6 @@ func! String2Hex(str)
   endwhile
   return out
 endfunc
-"ステータスラインに文字コードと改行文字を表示する（ウインドウ幅によって表示項目を調整）
-"if winwidth(0) >= 120
-"    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
-"else
-"    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
-"endif
-
 
 " カレントウィンドウにのみ罫線を引く
 augroup cch
@@ -1044,7 +1046,7 @@ if !has('gui_running')
     highlight PmenuSel ctermbg=darkred guibg=SlateBlue
     highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
- 
+
 " colorscheme mrkn256
 " colorscheme yuroyoro256
 colorscheme desert256
