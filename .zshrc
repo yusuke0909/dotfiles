@@ -326,7 +326,7 @@ esac
 # set options
 #---------------------------------
 setopt extended_history         # コマンドの開始時刻と経過時間を登録
-setopt hist_ignore_dups         # 直前のコマンドと同一ならば登録しない
+setopt hist_ignore_dups         # pushdで同じディレクトリを重複してpushしない
 setopt hist_ignore_all_dups     # 登録済コマンド行は古い方を削除
 setopt hist_ignore_space        # コマンド行先頭が空白の時登録しない(直後ならば呼べる)
 setopt hist_reduce_blanks       # 余分な空白は詰めて登録(空白数違い登録を防ぐ)
@@ -338,6 +338,8 @@ setopt inc_append_history       # add history when command executed.
 #setopt equals                  # =command を command のパス名に展開する
 #setopt NO_flow_control         # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 #setopt hash_cmds               # 各コマンドが実行されるときにパスをハッシュに入れる
+
+
 
 setopt auto_list                # 補完候補が複数ある時に、一覧表示する
 setopt list_types               # auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示
@@ -357,6 +359,7 @@ setopt extended_glob            # 拡張グロブ
 setopt numeric_glob_sort        # 数字を数値と解釈して昇順ソートで出力
 setopt auto_cd                  # 第1引数がディレクトリだと cd を実行
 setopt auto_pushd               # cd でTabを押すとdir list を表示
+setopt pushd_minus              # cd -[tab]とcd +[tab]の役割を逆にする  -:古いのが上、+:新しいのが上
 setopt pushd_to_home            # 引数なしpushdで$HOMEに戻る(直前dirへは cd - で)
 setopt pushd_ignore_dups        # ディレクトリスタックに重複する物は古い方を削除
 #setopt pushd_silent            # pushd, popd の度にディレクトリスタックの中身を表示しない
@@ -393,6 +396,7 @@ setopt prompt_subst             # プロンプト内で変数を展開
 setopt prompt_percent           # PROMPT内で「%」文字から始まる置換機能を有効にする
 setopt transient_rprompt        # コピペしやすいようにコマンド実行後は右プロンプトを消す
 limit  coredumpsize    0        # コアファイルを吐かないようにする
+DIRSTACKSIZE=10                 # 保存するディレクトリスタックの数
 
 # sudoも補完の対象
 zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
