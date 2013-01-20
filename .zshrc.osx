@@ -6,7 +6,9 @@ export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=/opt/local/bin:/opt/local/sbin/:~/bin:$PATH
 
 # osx alias
-alias pbc='pbcopy'
+alias pbc='pbcopy'                   # クリップボードへコピー
+alias pbp='pbpaste'                  # クリップボードからペースト
+alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "select LSQuarantineDataURLString from LSQuarantineEvent"'   # Download履歴の表示
 
 # Terminal Colorの設定
 export CLICOLOR=1
@@ -92,7 +94,7 @@ export GAEJ_HOME=$GAEJ_SDK_INSTALLED_DIR/appengine-java-sdk-$GAEJ_SDK_VERSION
 export PATH=$PATH:$GAEJ_HOME/bin
 
 # Perl
-alias perl='/opt/local/bin/perl'
+# alias perl='/opt/local/bin/perl'
 
 # Python
 # alias python='/usr/local/bin/python'
@@ -117,7 +119,20 @@ export GOOS=darwin
 export GOARCH=386
 export PATH=$PATH:$GOROOT/bin
 
-# node.js
+# Node.js
+#[[ -s ~/.nvm/nvm.sh ]] && . ~/.nvm/nvm.sh # This loads NVM
+# nvm と指定されたバージョンの Node.js がインストール済みの場合だけ設定を有効にする
+if [[ -f ~/.nvm/nvm.sh ]]; then
+  source ~/.nvm/nvm.sh
+	  if which nvm >/dev/null 2>&1 ;then
+	    _nodejs_use_version="v0.8.17"
+	    if nvm ls | grep -F -e "${_nodejs_use_version}" >/dev/null 2>&1 ;then
+	      nvm use "${_nodejs_use_version}" >/dev/null
+	      export NODE_PATH=${NVM_PATH}_modules${NODE_PATH:+:}${NODE_PATH}
+	    fi
+	    unset _nodejs_use_version
+	  fi
+fi
 export NODE_PATH=/usr/local/lib/node:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 

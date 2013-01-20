@@ -14,6 +14,7 @@ alias ll='ls -alGF'
 alias rm 'rm -i'
 alias del 'rm -rf *~ .*~'
 alias cp='cp -iv'
+alias mv='mv -iv'
 # du/df
 alias du='du -h'
 alias df='df -h'
@@ -59,7 +60,8 @@ alias -g L="| $PAGER"
 alias -g M="| $PAGER"
 # grep
 alias grep='gr'
-alias gr='grep --color=auto -ERUIn'
+alias gr='grep --color=auto'
+#alias gr='grep --color=auto -ERUIn'
 # make
 #alias make='make -j1'
 alias make='make -j3'
@@ -88,12 +90,13 @@ alias ppd='popd'
 alias cvs='svn'
 alias ssh='ssh -A'
 alias sum="awk '{sum+=\$1} END {print sum}'"
-# alias j='jobs -l'
+alias pathlist='echo -e ${PATH//:/\\n}'                 # display PATH List
+#alias j='jobs'
+#alias j='jobs -l'
 #alias h='head'
 #alias t='tail'
 #alias g='grep'
 #alias c='cat'
-#alias j='jobs'
 alias -g H='| head'
 alias -g T='| tail'
 alias -g G='| grep'

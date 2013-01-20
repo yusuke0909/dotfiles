@@ -6,6 +6,7 @@ set runtimepath+=$HOME/.vim
 "ヘルプファイルをパスを指定する
 "helptags $HOME/.vim/doc/
 
+
 " Encodings: 文字コード設定 =========================================== {{{1
 " from ずんWiki http://www.kawaz.jp/pukiwiki/?vim#content_1_7
 if &encoding !=# 'utf-8'
@@ -49,6 +50,7 @@ if exists('&ambiwidth')
     set ambiwidth=double
 endif
 
+
 " Mouse: マウス設定 =================================================== {{{1
 " どのモードでもマウスを使えるようにする
 set mouse=a
@@ -63,6 +65,7 @@ set ttymouse=xterm2
 
 " OSのクリップボードを使用する
 "set clipboard+=unnamed
+
 
 " Command: コマンド設定  ============================================== {{{1
 "
@@ -83,6 +86,7 @@ command! -bar CDGit call CdDotGitDir()
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
+
 
 " Autocmd: autocmd設定 ================================================ {{{1
 if has("autocmd")
@@ -136,6 +140,7 @@ if has("autocmd")
     " 前回終了したカーソル行に移動 --------------------------------------------
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 endif
+
 
 " Options: オプション設定 ============================================= {{{1
 syntax enable
@@ -299,6 +304,10 @@ hi clear CursorLine
 hi CursorLine gui=underline             " 下線
 "highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 highlight CursorLine ctermbg=black guibg=black
+
+" NormalモードとInsertモードでカーソルの形状を変える(iTerm2)->tmuxでvim使うときは駄目。。
+let &t_SI = "\e]50;CursorShape=1\x7"
+let &t_EI = "\e]50;CursorShape=0\x7"
 " }}}1
 " Mapping: マッピング設定 ============================================= {{{1
 
@@ -536,6 +545,7 @@ inoremap <silent> <c-d> \<c-r>=repeat('', setline('.', ''))<cr>
 nnoremap <space>ppd :call PhpDocSingle()<CR>
 vnoremap <space>ppd :call PhpDocRange()<CR>
 
+
 " Plugin: プラグイン設定 ============================================== {{{1
 
 " Vimball 
@@ -666,6 +676,8 @@ let g:Tb_MaxSize=3
 " scratch.vim  ------------------------------------------------------------ {{{2
 let g:scratch_buffer_name = "Scratch"
 " }}}2
+
+
 " NeoBundle: Plugin設定 =============================================== {{{1
 "Absorb vimrc/.vim in Windows 
 if has('win32') || has ('win64')
@@ -1098,6 +1110,7 @@ else
 endif
 command! -nargs=? Ctags call <SID>Ctags(<q-args>)
 
+
 " Function: 関数定義 ================================================== {{{1
 " ----------------------------------------------------------------------------
 " 関数
@@ -1399,6 +1412,7 @@ function! SearchDotGitPath(search_path)
     endif
 endfunction
 
+
 " Envroiments: 環境固有設定 =========================================== {{{1
 
 "Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
@@ -1411,6 +1425,7 @@ endfunction
 "if filereadable("$HOME/.private/.vimrc_private")
 "    source $HOME/.private/.vimrc_private
 "endif
+
 
 " Tmp: 一時な設定 ===================================================== {{{1
 
@@ -1573,3 +1588,11 @@ endfunction
 
 " Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
+
+"" Vim起動中はtmuxのステータスラインを隠す
+"if !has('gui_running') && $TMUX !=# ''
+"    augroup Tmux
+"        autocmd!
+"        autocmd VimEnter,VimLeave * silent !tmux set status
+"    augroup END
+"endif

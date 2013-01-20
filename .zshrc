@@ -10,6 +10,12 @@ export LANG=ja_JP.UTF-8
 export LESSCHARSET=utf-8
 #PAGER
 export PAGER="less -c -x4 -RM"
+#Other
+export EDITOR=vim
+export PATH=$PATH:$HOME/local/bin:/usr/local/git/bin
+export PATH=$PATH:$HOME/dotfiles/bin
+export PATH=$PATH:/sbin:/usr/local/bin
+export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
 
 # screen を自動的に起動
 #if [ ! $TERM = "screen" -a -z "$YROOT_NAME" ]; then; screen -R; fi
@@ -27,7 +33,8 @@ case ${UID} in
     0)
         PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
         PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
-        SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+        #SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+        SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
         [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
             PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
         ;;
@@ -68,25 +75,25 @@ zstyle ':vcs_info:*' actionformats \
     '(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}|%{%F{white}%K{red}%}%a%{%f%k%}]'
 
 ### プロンプトバーの左側
-###   %{%B%}...%{%b%}: 「...」を太字にする。
-###   %{%F{cyan}%}...%{%f%}: 「...」をシアン色の文字にする。
+###   %{%B%}...%{%b%}: 「...」を太字にする
+###   %{%F{cyan}%}...%{%f%}: 「...」をシアン色の文字にする
 ###   %n: ユーザ名
 ###   %m: ホスト名（完全なホスト名ではなくて短いホスト名）
 ###   %{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%f%k%b%}:
 ###                           最後に実行したコマンドが正常終了していれば
 ###                           太字で白文字で緑背景にして異常終了していれば
-###                           太字で白文字で赤背景にする。
-###   %{%F{white}%}: 白文字にする。
+###                           太字で白文字で赤背景にする
+###   %{%F{white}%}: 白文字にする
 ###     %(x.true-text.false-text): xが真のときはtrue-textになり
-###                                偽のときはfalse-textになる。
-###       ?: 最後に実行したコマンドの終了ステータスが0のときに真になる。
-###       %K{green}: 緑景色にする。
-###       %K{red}: 赤景色を赤にする。
+###                                偽のときはfalse-textになる
+###       ?: 最後に実行したコマンドの終了ステータスが0のときに真になる
+###       %K{green}: 緑景色にする
+###       %K{red}: 赤景色を赤にする
 ###   %?: 最後に実行したコマンドの終了ステータス
-###   %{%k%}: 背景色を元に戻す。
-###   %{%f%}: 文字の色を元に戻す。
-###   %{%b%}: 太字を元に戻す。
-###   %D{%Y/%m/%d %H:%M}: 日付。「年/月/日 時:分」というフォーマット。
+###   %{%k%}: 背景色を元に戻す
+###   %{%f%}: 文字の色を元に戻す
+###   %{%b%}: 太字を元に戻す
+###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
 prompt_bar_left_self="(%{%B%}%n%{%b%}%{%F{cyan}%}@%{%f%}%{%B%}%m%{%b%})"
 prompt_bar_left_status="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})"
 prompt_bar_left_date="<%{%B%}%D{%Y/%m/%d %H:%M}%{%b%}>"
@@ -97,70 +104,70 @@ prompt_bar_left="-${prompt_bar_left_self}-${prompt_bar_left_status}-${prompt_bar
 ###   %d: カレントディレクトリのフルパス（省略しない）
 prompt_bar_right="-[%{%B%K{magenta}%F{white}%}%d%{%f%k%b%}]-"
 
-### 2行目左にでるプロンプト。
-###   %h: ヒストリ数。
-###   %(1j,(%j),): 実行中のジョブ数が1つ以上ある場合だけ「(%j)」を表示。
-###     %j: 実行中のジョブ数。
-###   %{%B%}...%{%b%}: 「...」を太字にする。
-###   %#: 一般ユーザなら「%」、rootユーザなら「#」になる。
+### 2行目左にでるプロンプト
+###   %h: ヒストリ数
+###   %(1j,(%j),): 実行中のジョブ数が1つ以上ある場合だけ「(%j)」を表示
+###     %j: 実行中のジョブ数
+###   %{%B%}...%{%b%}: 「...」を太字にする
+###   %#: 一般ユーザなら「%」、rootユーザなら「#」になる
 prompt_left="-[%h]%(1j,(%j),)%{%B%}%#%{%b%} "
 
-## プロンプトフォーマットを展開した後の文字数を返す。
+## プロンプトフォーマットを展開した後の文字数を返す
 ## 日本語未対応。
 count_prompt_characters()
 {
     # print:
-    #   -P: プロンプトフォーマットを展開する。
-    #   -n: 改行をつけない。
+    #   -P: プロンプトフォーマットを展開する
+    #   -n: 改行をつけない
     # sed:
-    #   -e $'s/\e\[[0-9;]*m//g': ANSIエスケープシーケンスを削除。
+    #   -e $'s/\e\[[0-9;]*m//g': ANSIエスケープシーケンスを削除
     # wc:
-    #   -c: 文字数を出力する。
+    #   -c: 文字数を出力する
     # sed:
-    #   -e 's/ //g': *BSDやMac OS Xのwcは数字の前に空白を出力するので削除する。
+    #   -e 's/ //g': *BSDやMac OS Xのwcは数字の前に空白を出力するので削除する
     print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g'
 }
 
-## プロンプトを更新する。
+## プロンプトを更新する
 update_prompt()
 {
-    # プロンプトバーの左側の文字数を数える。
+    # プロンプトバーの左側の文字数を数える
     # 左側では最後に実行したコマンドの終了ステータスを使って
     # いるのでこれは一番最初に実行しなければいけない。そうし
     # ないと、最後に実行したコマンドの終了ステータスが消えて
-    # しまう。
+    # しまう
     local bar_left_length=$(count_prompt_characters "$prompt_bar_left")
-    # プロンプトバーに使える残り文字を計算する。
-    # $COLUMNSにはターミナルの横幅が入っている。
+    # プロンプトバーに使える残り文字を計算する
+    # $COLUMNSにはターミナルの横幅が入っている
     local bar_rest_length=$[COLUMNS - bar_left_length]
 
     local bar_left="$prompt_bar_left"
-    # パスに展開される「%d」を削除。
+    # パスに展開される「%d」を削除
     local bar_right_without_path="${prompt_bar_right:s/%d//}"
-    # 「%d」を抜いた文字数を計算する。
+    # 「%d」を抜いた文字数を計算する
     local bar_right_without_path_length=$(count_prompt_characters "$bar_right_without_path")
-    # パスの最大長を計算する。
-    #   $[...]: 「...」を算術演算した結果で展開する。
+    # パスの最大長を計算する
+    #   $[...]: 「...」を算術演算した結果で展開する
     local max_path_length=$[bar_rest_length - bar_right_without_path_length]
-    # パスに展開される「%d」に最大文字数制限をつける。
+    # パスに展開される「%d」に最大文字数制限をつける
     #   %d -> %(C,%${max_path_length}<...<%d%<<,)
     #     %(x,true-text,false-text):
-    #         xが真のときはtrue-textになり偽のときはfalse-textになる。
+    #         xが真のときはtrue-textになり偽のときはfalse-textになる
     #         ここでは、「%N<...<%d%<<」の効果をこの範囲だけに限定させる
-    #         ために用いているだけなので、xは必ず真になる条件を指定している。
-    #       C: 現在の絶対パスが/以下にあると真。なので必ず真になる。
+    #         ために用いているだけなので、xは必ず真になる条件を指定
+    #       C: 現在の絶対パスが/以下にあると真、なので必ず真になる
     #       %${max_path_length}<...<%d%<<:
     #          「%d」が「${max_path_length}」カラムより長かったら、
     #          長い分を削除して「...」にする。最終的に「...」も含めて
-    #          「${max_path_length}」カラムより長くなることはない。
+    #          「${max_path_length}」カラムより長くなることはない
     bar_right=${prompt_bar_right:s/%d/%(C,%${max_path_length}<...<%d%<<,)/}
-    # 「${bar_rest_length}」文字分の「-」を作っている。
-    # どうせ後で切り詰めるので十分に長い文字列を作っているだけ。
-    # 文字数はざっくり。
+    # 「${bar_rest_length}」文字分の「-」を作っている
+    # どうせ後で切り詰めるので十分に長い文字列を作っているだけ
+    # 文字数はざっくり
     local separator="${(l:${bar_rest_length}::-:)}"
-    # プロンプトバー全体を「${bar_rest_length}」カラム分にする。
+    # プロンプトバー全体を「${bar_rest_length}」カラム分にする
     #   %${bar_rest_length}<<...%<<:
-    #     「...」を最大で「${bar_rest_length}」カラムにする。
+    #     「...」を最大で「${bar_rest_length}」カラムにする
     bar_right="%${bar_rest_length}<<${separator}${bar_right}%<<"
 
     # プロンプトバーと左プロンプトを設定
@@ -170,30 +177,33 @@ update_prompt()
     PROMPT="${bar_left}${bar_right}"$'\n'"${prompt_left}"
     # 右プロンプト
     #   %{%B%F{white}%K{green}}...%{%k%f%b%}:
-    #       「...」を太字で緑背景の白文字にする。
+    #       「...」を太字で緑背景の白文字にする
     #   %~: カレントディレクトリのフルパス（可能なら「~」で省略する）
     RPROMPT="[%{%B%F{white}%K{magenta}%}%~%{%k%f%b%}]"
     case "$TERM_PROGRAM" in
 	Apple_Terminal)
 	    # Mac OS Xのターミナルでは$COLUMNSに右余白が含まれていないので
-	    # 右プロンプトに「-」を追加して調整。
+	    # 右プロンプトに「-」を追加して調整
 	    ## 2011-09-05
 	    RPROMPT="${RPROMPT}-"
 	    ;;
     esac
 
-    # バージョン管理システムの情報を取得する。
+    # コマンド打ち間違い時の「もしかして」プロンプト
+        #SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+        SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
+
+
+    # バージョン管理システムの情報を取得する
     LANG=C vcs_info >&/dev/null
-    # バージョン管理システムの情報があったら右プロンプトに表示する。
+    # バージョン管理システムの情報があったら右プロンプトに表示する
     if [ -n "$vcs_info_msg_0_" ]; then
 	RPROMPT="${vcs_info_msg_0_}-${RPROMPT}"
     fi
 }
 
-## コマンド実行前に呼び出されるフック。
+## コマンド実行前に呼び出されるフック
 precmd_functions=($precmd_functions update_prompt)
-
-
 
 
 
@@ -233,10 +243,10 @@ precmd_functions=($precmd_functions update_prompt)
 #    }
 #    zle -N zle-line-init
 #    zle -N zle-keymap-select
-#
-#    # Show git branch when you are in git repository
-#    # http://d.hatena.ne.jp/mollifier/20100906/p1
-#
+
+    # Show git branch when you are in git repository
+    # http://d.hatena.ne.jp/mollifier/20100906/p1
+
 #    autoload -Uz add-zsh-hook
 #    autoload -Uz vcs_info
 #
@@ -279,45 +289,45 @@ precmd_functions=($precmd_functions update_prompt)
 #    fi
 #    return 0
 #}
-#
-## git のブランチ名 *と作業状態* を zsh の右プロンプトに表示＋ status に応じて色もつけてみた - Yarukidenized:ヤルキデナイズド :
-## http://d.hatena.ne.jp/uasi/20091025/1256458798
-#autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
-#
-#function rprompt-git-current-branch {
-#local name st color gitdir action pushed
-#if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-#    return
-#fi
-#
-#name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
-#if [[ -z $name ]]; then
-#    return
-#fi
-#
-#gitdir=`git rev-parse --git-dir 2> /dev/null`
-#action=`VCS_INFO_git_getaction "$gitdir"` && action="|$action"
-#pushed="`_git_not_pushed`"
-#
-#st=`git status 2> /dev/null`
-#if [[ "$st" =~ "(?m)^nothing to" ]]; then
-#    color=%F{green}
-#elif [[ "$st" =~ "(?m)^nothing added" ]]; then
-#    color=%F{yellow}
-#elif [[ "$st" =~ "(?m)^# Untracked" ]]; then
-#    color=%B%F{red}
-#else
-#    color=%F{red}
-#fi
-#
-#echo "[$color$name$action$pushed%f%b]"
-#    }
-#
+
+# git のブランチ名 *と作業状態* を zsh の右プロンプトに表示＋ status に応じて色もつけてみた - Yarukidenized:ヤルキデナイズド :
+# http://d.hatena.ne.jp/uasi/20091025/1256458798
+autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
+
+function rprompt-git-current-branch {
+local name st color gitdir action pushed
+if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
+    return
+fi
+
+name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
+if [[ -z $name ]]; then
+    return
+fi
+
+gitdir=`git rev-parse --git-dir 2> /dev/null`
+action=`VCS_INFO_git_getaction "$gitdir"` && action="|$action"
+pushed="`_git_not_pushed`"
+
+st=`git status 2> /dev/null`
+if [[ "$st" =~ "(?m)^nothing to" ]]; then
+    color=%F{green}
+elif [[ "$st" =~ "(?m)^nothing added" ]]; then
+    color=%F{yellow}
+elif [[ "$st" =~ "(?m)^# Untracked" ]]; then
+    color=%B%F{red}
+else
+    color=%F{red}
+fi
+
+echo "[$color$name$action$pushed%f%b]"
+    }
+
     # PCRE 互換の正規表現を使う
     setopt re_match_pcre
-#
+
 #    RPROMPT='`rprompt-git-current-branch`${RESET}${WHITE}[${BLUE}%(5~,%-2~/.../%2~,%~)${WHITE}]${RESET}'
-#
+
     ;;
 esac
 
@@ -339,24 +349,25 @@ setopt inc_append_history       # add history when command executed.
 #setopt NO_flow_control         # Ctrl+S/Ctrl+Q によるフロー制御を使わないようにする
 #setopt hash_cmds               # 各コマンドが実行されるときにパスをハッシュに入れる
 
-
-
 setopt auto_list                # 補完候補が複数ある時に、一覧表示する
 setopt list_types               # auto_list の補完候補一覧で、ls -F のようにファイルの種別をマーク表示
 setopt list_packed              # 補完候補リストを詰めて表示
 setopt print_eight_bit          # 補完候補リストの日本語を適正表示
 #setopt menu_complete           # 1回目のTABで補完候補を挿入
 setopt auto_menu                # 補完キー（Tab,  Ctrl+I) を連打するだけで順に補完候補を自動で補完する
-#setopt auto_remove_slash       # 引数の最後のスラッシュを取り除いて実行する
-setopt noautoremoveslash        # 最後がディレクトリ名で終わっている場合末尾の / を自動的に取り除かない
+setopt complete_in_word         # カーソル位置で補完する
+setopt glob_complete            # globを展開しないで候補の一覧から補完する
+setopt complete_aliases         # aliasでも補完できるようにする
+setopt hist_expand              # 補完時にヒストリを自動的に展開する
+setopt auto_remove_slash        # 引数の最後のスラッシュを取り除いて実行する
+#setopt noautoremoveslash       # 最後がディレクトリ名で終わっている場合末尾の / を自動的に取り除かない
 setopt no_clobber               # 上書きリダイレクトの禁止
 #setopt no_unset                # 未定義変数の使用の禁止
 setopt no_hup                   # logout時にバックグラウンドジョブを kill -HUP しない
 setopt no_beep                  # コマンド入力エラーでBEEPを鳴らさない
 #setopt nolistbeep              # beepを鳴らさないようにする
 
-setopt extended_glob            # 拡張グロブ
-setopt numeric_glob_sort        # 数字を数値と解釈して昇順ソートで出力
+setopt extended_glob            # 拡張globを有効にする(glob中で「(#...)」という書式で指定する)
 setopt auto_cd                  # 第1引数がディレクトリだと cd を実行
 setopt auto_pushd               # cd でTabを押すとdir list を表示
 setopt pushd_minus              # cd -[tab]とcd +[tab]の役割を逆にする  -:古いのが上、+:新しいのが上
@@ -378,12 +389,14 @@ setopt auto_param_slash         # ディレクトリ名の補完で末尾の / �
 setopt brace_ccl                # {a-c} を a b c に展開する機能を使えるようにする
 #setopt chase_links             # シンボリックリンクは実体を追うようになる
 setopt multios                  # 複数のリダイレクトやパイプなど、必要に応じて tee や cat の機能が使われる
+setopt magic_equal_subst        # --prefix=~/localというように「=」の後でも「~」や「=コマンド」などのファイル名展開を行う
+setopt long_list_jobs           # jobsでプロセスIDも出力する
 
 #setopt interactive_comments    # コマンドラインでも # 以降をコメントと見なす
 #setopt mail_warning            # メールスプール $MAIL が読まれていたらワーニングを表示する
 setopt mark_dirs                # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt path_dirs                # コマンド名に / が含まれているとき PATH 中のサブディレクトリを探す
-#setopt numeric_glob_sort       # ファイル名の展開で、辞書順ではなく数値的にソートされるようになる
+setopt numeric_glob_sort        # ファイル名の展開で、辞書順ではなく数値的にソートされるようになる
 #setopt print_exit_value        # 戻り値が 0 以外の場合終了コードを表示する           
 #setopt pushd_to_home           # pushd を引数なしで実行した場合 pushd $HOME と見なされる
 #setopt short_loops             # for, repeat, select, if, function などで簡略文法が使えるようになる
@@ -398,16 +411,9 @@ setopt transient_rprompt        # コピペしやすいようにコマンド実�
 limit  coredumpsize    0        # コアファイルを吐かないようにする
 DIRSTACKSIZE=10                 # 保存するディレクトリスタックの数
 
-# sudoも補完の対象
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
-# 色付きで補完する
-zstyle ':completion:*' list-colors di=34 fi=0
-#zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-
-
 
 #---------------------------------
-# devicemap & bindkey
+# Devicemap & Bindkey
 #---------------------------------
 stty    erase   '^H'
 stty    erase   '^?'
@@ -468,8 +474,8 @@ zle -N self-insert url-quote-magic
 #---------------------------------
 # Completion configuration
 #---------------------------------
-autoload -U compinit; compinit -u
-autoload -U colors
+autoload -U compinit; compinit -u   # 初期化
+autoload -U colors                  # ${fg[red]}形式のカラー書式を有効化
 colors
 
 fpath=(~/.zsh/functions/Completion ${fpath})
@@ -477,10 +483,56 @@ fpath=(~/.zsh/functions/Completion ${fpath})
 # zsh editor
 autoload zed
 
+# 色付きで補完する
+zstyle ':completion:*' list-colors di=34 fi=0
+#zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# セパレータを設定する
+zstyle ':completion:*' list-separator '-->'
+zstyle ':completion:*:manuals' separate-sections true
+
 # ホスト名補完候補を ~/.ssh/known_hosts から自動的に取得する
 if [ -e ~/.ssh/known_hosts ]; then
 	_cache_hosts=(`perl -ne 'if (/^([a-zA-Z0-9.-]+)/) { print "$1\n";}' ~/.ssh/known_hosts`);
 fi
+
+# sudoも補完の対象
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin
+
+# 補完方法毎にグループ化する
+# 補完方法の表示方法
+#   %B...%b: 「...」を太字にする
+#   %d: 補完方法のラベル
+zstyle ':completion:*' format '%B%d%b'
+zstyle ':completion:*' group-name ''
+
+# 補完侯補をメニューから選択
+# select=2: 補完候補を一覧から選択する
+#           ただし、補完候補が2つ以上なければすぐに補完する
+zstyle ':completion:*:default' menu select=2
+
+# 補完候補に色を付ける。
+# "": 空文字列はデフォルト値を使うという意味
+#zstyle ':completion:*:default' list-colors ""
+
+# 補完候補がなければより曖昧に候補を探す
+# m:{a-z}={A-Z}: 小文字を大文字に変えたものでも補完
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
+
+# 補完方法の設定。指定した順番に実行
+# _oldlist 前回の補完結果を再利用する
+# _complete: 補完する
+# _match: globを展開しないで候補の一覧から補完する
+# _ignored: 補完候補にださないと指定したものも補完候補とする
+# _approximate: 似ている補完候補も補完候補とする
+# _prefix: カーソル以降を無視してカーソル位置までで補完する
+zstyle ':completion:*' completer \
+    _oldlist _complete _match _ignored _approximate _prefix
+
+# 補完候補をキャッシュする
+zstyle ':completion:*' use-cache yes
+# 詳細な情報を使う
+zstyle ':completion:*' verbose yes
 
 #zstyle ':completion:*' use-compctl false # compctl形式を使用しない
 
@@ -587,7 +639,9 @@ freebsd*)
 esac
 
 
-## terminal configuration
+#---------------------------------
+# Terminal configuration
+#---------------------------------
 # http://journal.mycom.co.jp/column/zsh/009/index.html
 unset LSCOLORS
 
@@ -633,13 +687,27 @@ case "${TERM}" in
         ;;
 esac
 
+## ウィンドウタイトル
+## 実行中のコマンドとユーザ名とホスト名とカレントディレクトリを表示
+update_title() {
+    local command_line=
+    typeset -a command_line
+    command_line=${(z)2}
+    local command=
+    if [ ${(t)command_line} = "array-local" ]; then
+	command="$command_line[1]"
+    else
+	command="$2"
+    fi
+    print -n -P "\e]2;"
+    echo -n "(${command})"
+    print -n -P " %n@%m:%~\a"
+}
+## X環境上でだけウィンドウタイトルを変える
+if [ -n "$DISPLAY" ]; then
+    preexec_functions=($preexec_functions update_title)
+fi
 
-
-export EDITOR=vim
-export PATH=$PATH:$HOME/local/bin:/usr/local/git/bin
-export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=$PATH:/sbin:/usr/local/bin
-export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
 
 expand-to-home-or-insert () {
     if [ "$LBUFFER" = "" -o "$LBUFFER[-1]" = " " ]; then
@@ -649,12 +717,22 @@ expand-to-home-or-insert () {
     fi
 }
 
-# C-M-h でチートシートを表示する
-cheat-sheet () { zle -M "`cat ~/dotfiles/.zsh/cheat-sheet`" }
-zle -N cheat-sheet
-# bindkey "^[^h" cheat-sheet
 
-# zsh の exntended_glob と HEAD^^^ を共存させる。
+#---------------------------------
+# Other configuration
+#---------------------------------
+# C-M-h でチートシートを表示する
+#cheat-sheet () { zle -M "`cat ~/dotfiles/.zsh/cheat-sheet`" }
+#zle -N cheat-sheet
+# bindkey "^[^h" cheat-sheet
+cheat-sheet () { zle -M "`cat ~/bin/cheat-sheet`" }
+zle -N cheat-sheet
+bindkey "^[^h" cheat-sheet
+git-cheat () { zle -M "`cat ~/bin/git-cheat-sheet`" }
+zle -N git-cheat
+bindkey "^[^g" git-cheat
+
+# zsh の exntended_glob と HEAD^^^ を共存させる
 # http://subtech.g.hatena.ne.jp/cho45/20080617/1213629154
 typeset -A abbreviations
 abbreviations=(
@@ -703,7 +781,7 @@ bindkey "^x " no-magic-abbrev-expand
 # やっぱりauto_menu使いたいのでoff
 # source ~/.zsh/incr*.zsh
 
-# auto-fuの設定。^PとかのHistory検索と相性が悪いのでひとまず無効に。
+# auto-fuの設定。^PとかのHistory検索と相性が悪いのでひとまず無効
 # http://d.hatena.ne.jp/tarao/20100531/1275322620
 # incremental completion
 # if is-at-least 4.3.10; then
@@ -781,6 +859,12 @@ bindkey "^x " no-magic-abbrev-expand
 # afu-ad-delete-unambiguous-prefix afu+accept-and-hold
 # fi
 
+## 履歴JUMP
+#_Z_CMD=j
+#source ~/bin/z.sh
+#precmd() {
+#  _z --add "$(pwd -P)"
+#}
 
 function rmf(){
 for file in $*
@@ -844,7 +928,9 @@ esac
 #---------------------------------
 # time
 #---------------------------------
-REPORTTIME=10                    # CPUを10秒以上使った時は time を表示
+# 実行したプロセスの消費時間が10秒以上かかったら
+# 自動的に消費時間の統計情報を表示する
+REPORTTIME=10                    # CPUを10秒以上使った時は time を表示(FormatはTIMEFMTで指定)
 TIMEFMT="\
     The name of this job.             :%J
     CPU seconds spent in user mode.   :%U
@@ -856,17 +942,15 @@ TIMEFMT="\
 #---------------------------------
 # watch
 #---------------------------------
-#autoload -U colors; colors      # ${fg[red]}形式のカラー書式を有効化
 watch=(notme) # (all:全員、notme:自分以外、ユーザ名,@ホスト名、%端末名
 LOGCHECK=60   # チェック間隔[秒]
-#WATCHFMT="%(a:${fg[blue]}Hello %n [%m] [%t]:${fg[red]}Bye %n [%m] [%t])"
 WATCHFMT="%(a:[34mHello %n [%m] [%t]:[31mBye %n [%m] [%t])"
+log           # ログイン時にはすぐに表示
 
 
 #---------------------------------
 # functions 
 #---------------------------------
-
 # CPU 使用率の高いプロセス10個
 function psc() {
   ps auxww | head -n 1
