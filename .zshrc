@@ -10,12 +10,15 @@ export LANG=ja_JP.UTF-8
 export LESSCHARSET=utf-8
 #PAGER
 export PAGER="less -c -x4 -RM"
-#Other
+#EDITOR
 export EDITOR=vim
+#PATH,MANPATH
 export PATH=$PATH:$HOME/local/bin:/usr/local/git/bin
 export PATH=$PATH:$HOME/dotfiles/bin
 export PATH=$PATH:/sbin:/usr/local/bin
 export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
+#Other
+export MYSQL_PS1="mysql:`hostname`>\h>\d> "
 
 # screen を自動的に起動
 #if [ ! $TERM = "screen" -a -z "$YROOT_NAME" ]; then; screen -R; fi
