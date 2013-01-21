@@ -96,6 +96,9 @@
   rhh3 = reset --hard HEAD~~~
   rhh4 = reset --hard HEAD~~~~
   rhh5 = reset --hard HEAD~~~~~
+  # rm関連
+  rm = rm --cached           #commit情報削除:ファイルそのものは残す
+  rmd = rm -r --cached       #Directoryごとcommit情報削除:ファイルそのものは残す
   # diff関連
   di = diff
   dm = diff master           # masterとのdiff
