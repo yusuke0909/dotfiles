@@ -1040,6 +1040,18 @@ function rdiff() {
 		rm -f $tmp2;
 	fi
 }
+#
+# RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+function rpmi() {
+	PKG=$1
+     rpm -qilvvR --changelog --scripts $PKG | $PAGER
+}
+
+# RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
+function rpmip() {
+	PKG=$1
+     rpm -qiplvvR --changelog --scripts $PKG | $PAGER
+}
 
 # cvs-add
 function cvsadd() {
