@@ -8,7 +8,7 @@
 # ls
 alias ls='ls -aGF'
 alias la='\ls -aGF'
-alias ll='ls -alGF'
+alias ll='ls -alGFthr'
 #alias ls='ls -CF --color=auto --show-control-char'
 #alias ll='ls -alF --color=auto --show-control-char'
 alias rm 'rm -i'
@@ -181,11 +181,8 @@ grepvim() {
 }
 alias grv='grepvim'
 
-
-
 # ls colors
-if [ -x `which dircolors` ]; then
-    eval `dircolors $HOME/.dircolors`
-fi
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
+#if [ -x `which dircolors` ]; then
+#    eval `dircolors $HOME/.dircolors`
+#fi
+#zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
