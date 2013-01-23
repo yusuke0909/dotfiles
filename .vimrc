@@ -136,9 +136,11 @@ if has("autocmd")
     autocmd BufRead,BufNewFile *.mkd  setf markdown
     autocmd BufRead,BufNewFile *.md  setf markdown
 
-
     " 前回終了したカーソル行に移動 --------------------------------------------
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+"    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+    " 設定の保存と復元
+    autocmd BufWinLeave ?* silent mkview
+    autocmd BufWinEnter ?* silent loadview
 endif
 
 
