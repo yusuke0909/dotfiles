@@ -1040,18 +1040,6 @@ function rdiff() {
 		rm -f $tmp2;
 	fi
 }
-#
-# RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
-function rpmi() {
-	PKG=$1
-     rpm -qilvvR --changelog --scripts $PKG | $PAGER
-}
-
-# RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
-function rpmip() {
-	PKG=$1
-     rpm -qiplvvR --changelog --scripts $PKG | $PAGER
-}
 
 # cvs-add
 function cvsadd() {
@@ -1059,41 +1047,10 @@ function cvsadd() {
 	cvs up | grep -E '^\?' | sed 's/^..//' | xargs cvs add
 }
 
-# ssh-agent
-function ssha() {
-	eval `ssh-agent`;
-	ssh-add;
-}
-
-
-# SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
-# SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
-# SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
-agent="$HOME/tmp/ssh-agent-$USER"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-        /tmp/*/agent.[0-9]*)
-            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
-
-
 # 半角カナへ変換
 function zh() {
 	php -d open_basedir=/ -r 'array_shift($argv);foreach($argv as $f){$c=file_get_contents($f);$c=mb_convert_kana($c,"ak");file_put_contents($f,$c);}' $*
 }
-
-# exit (kill ssh-agent)
-#function exit() {
-#	if [ -n "$SSH_AGENT_PID" ]; then
-#		eval `ssh-agent -k`
-#	fi
-#	builtin exit
-#}
 
 # グーグル検索 (要w3m)
 function google() {
@@ -1111,10 +1068,37 @@ function google() {
 }
 alias ggl=google
 
+# exit (kill ssh-agent)
+#function exit() {
+#	if [ -n "$SSH_AGENT_PID" ]; then
+#		eval `ssh-agent -k`
+#	fi
+#	builtin exit
+#}
+
+# ssh-agent
+function ssha() {
+	eval `ssh-agent`;
+	ssh-add;
+}
+
+# SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
+# SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
+# SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
+agent="$HOME/tmp/ssh-agent-$USER"
+if [ -S "$SSH_AUTH_SOCK" ]; then
+    case $SSH_AUTH_SOCK in
+        /tmp/*/agent.[0-9]*)
+            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+    esac
+elif [ -S $agent ]; then
+    export SSH_AUTH_SOCK=$agent
+else
+    echo "no ssh-agent"
+fi
 
 # ssh-agent実行
 #ssha
-
 
 # Attache tmux
 #env | grep -i TMUX > /dev/null 2>&1

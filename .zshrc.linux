@@ -13,6 +13,31 @@ alias ll='ls -alFhtr --color=auto --show-control-char'
 #alias view='/usr/local/bin/vim -R'
 #alias vim='/usr/local/bin/vim'
 #alias rvim='/usr/local/bin/vim -R'
+# rpm関連
+#alias rpmi='rpm -qilvvR --changelog --scripts'           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+#alias rpmip='rpm -qpilvvR --changelog --scripts'         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
+
+# RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+function rpmi() {
+	PKG=$1
+	if [ -n "$PKG" ]; then
+		echo "RPMが指定されていません。"
+		echo "Usage: rpmi <RPM_filename>"
+    else
+	    rpm -qilvvR --changelog --scripts $PKG | $PAGER
+    fi
+}
+
+# RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
+function rpmip() {
+	PKG=$1
+	if [ -n "$PKG" ]; then
+		echo "RPMが指定されていません。"
+		echo "Usage: rpmip <RPM_filename>"
+    else
+	    rpm -qpilvvR --changelog --scripts $PKG | $PAGER
+    fi
+}
 
 # PATH
 export PATH

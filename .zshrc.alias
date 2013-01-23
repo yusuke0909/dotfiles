@@ -69,9 +69,6 @@ alias make='make -j3'
 alias 'm'='make'
 alias 'mn'='make native-code'
 alias 'mc'='make clean'
-# rpm
-#alias rpmi='rpm -qilvvR --changelog --scripts'           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
-#alias rpmip='rpm -qpilvvR --changelog --scripts'         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
 # cdショートカット
 alias cdd='cd ~/Desktop'
 alias cdp='cd /Volumes/Pogoplug'                        #My Mac
