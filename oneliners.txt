@@ -1,4 +1,3 @@
-
 #MysqlでFKの一覧を調べるワンライナー
 mysql -u resolver --password=resolver resolver < TableList.sql |sed 's/\\n/&\
 /g'| grep 'CONSTRAINT .* FOREIGN KEY'|cut -d ' ' -f4 > FKList

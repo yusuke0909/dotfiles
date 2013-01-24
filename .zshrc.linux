@@ -20,9 +20,10 @@ alias ll='ls -alFhtr --color=auto --show-control-char'
 # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
 function rpmi() {
 	PKG=$1
-	if [ -n "$PKG" ]; then
+	if [ -z "$PKG" ]; then
 		echo "RPMが指定されていません。"
-		echo "Usage: rpmi <RPM_filename>"
+		echo "インストール済みのパッケージを指定してください。"
+        echo "Usage: rpmi <RPM_filename(installed) >"
     else
 	    rpm -qilvvR --changelog --scripts $PKG | $PAGER
     fi
@@ -31,7 +32,7 @@ function rpmi() {
 # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
 function rpmip() {
 	PKG=$1
-	if [ -n "$PKG" ]; then
+	if [ -z "$PKG" ]; then
 		echo "RPMが指定されていません。"
 		echo "Usage: rpmip <RPM_filename>"
     else
