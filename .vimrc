@@ -124,7 +124,7 @@ if has("autocmd")
     " rails -------------------------------------------------------------------
     autocmd BufNewFile,BufRead app/**/*.rhtml set fenc=utf-8
     autocmd BufNewFile,BufRead app/**/*.rb set fenc=utf-8
-    autocmd FileType ruby :source $HOME/.vim/ftplugin/ruby-matchit.vim
+    "autocmd FileType ruby :source $HOME/.vim/ftplugin/ruby-matchit.vim
 
     " freemaker(Javaテンプレートエンジン) -------------------------------------
     autocmd BufNewFile,BufRead *.ftl setf ftl
@@ -858,7 +858,7 @@ NeoBundle 'tpope/vim-rails'
 " NeoBundle 'Pydiction'
 
 " ソースコード上のメソッド宣言、変数宣言の一覧を表示
-NeoBundle 'taglist.vim'
+" NeoBundle 'taglist.vim'
 
 " エラーがある場所をhilight
 " NeoBundle 'errormarker.vim'
