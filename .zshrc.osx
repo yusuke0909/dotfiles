@@ -11,6 +11,7 @@ alias pbp='pbpaste'                  # クリップボードからペースト
 alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "select LSQuarantineDataURLString from LSQuarantineEvent"'   # Download履歴の表示
 
 # Terminal Colorの設定
+alias dircolors='gdircolors'
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
 
