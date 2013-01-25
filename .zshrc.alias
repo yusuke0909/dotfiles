@@ -46,6 +46,7 @@ alias '偽と'=git
 #alias sr='screen -r main'
 #alias srr='screen -U -D -RR'
 # tmux
+alias tmux='tmux -2'
 alias tm='tmux'
 alias tma='tmux attach'
 alias tma0='tmux attach -t 0'
