@@ -1,4 +1,5 @@
 " Path: パス設定 ====================================================== {{{1
+
 " Windowsでも.vimをRumtimeディレクトリにする
 set runtimepath+=$HOME/.vim
 " hatena.vimを使う
@@ -6,8 +7,9 @@ set runtimepath+=$HOME/.vim
 "ヘルプファイルをパスを指定する
 "helptags $HOME/.vim/doc/
 
-
+" }}}1
 " Encodings: 文字コード設定 =========================================== {{{1
+
 " from ずんWiki http://www.kawaz.jp/pukiwiki/?vim#content_1_7
 if &encoding !=# 'utf-8'
 	set encoding=japan
@@ -49,8 +51,7 @@ endif
 if exists('&ambiwidth')
     set ambiwidth=double
 endif
-
-
+" }}}1
 " Mouse: マウス設定 =================================================== {{{1
 " どのモードでもマウスを使えるようにする
 set mouse=a
@@ -66,9 +67,9 @@ set ttymouse=xterm2
 " OSのクリップボードを使用する
 "set clipboard+=unnamed
 
-
+" }}}1
 " Command: コマンド設定  ============================================== {{{1
-"
+
 "best_of_tipsを開く
 command! Btips1 :silent e $HOME/.vim/doc/best_tips1.txt
 command! Btips2 :silent e $HOME/.vim/doc/best_tips2.txt
@@ -86,8 +87,7 @@ command! -bar CDGit call CdDotGitDir()
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
-
-
+" }}}1
 " Autocmd: autocmd設定 ================================================ {{{1
 if has("autocmd")
     filetype plugin on
@@ -144,8 +144,9 @@ if has("autocmd")
     autocmd BufWinEnter ?* silent loadview
 endif
 
-
+" }}}1
 " Options: オプション設定 ============================================= {{{1
+
 syntax enable
 set nocompatible                         " vi互換にしない
 set ffs=unix,dos,mac                     " 改行文字
@@ -311,6 +312,7 @@ highlight CursorLine ctermbg=black guibg=black
 " NormalモードとInsertモードでカーソルの形状を変える(iTerm2)->tmuxでvim使うときは駄目。。
 let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
+
 " }}}1
 " Mapping: マッピング設定 ============================================= {{{1
 
@@ -548,7 +550,7 @@ inoremap <silent> <c-d> \<c-r>=repeat('', setline('.', ''))<cr>
 nnoremap <space>ppd :call PhpDocSingle()<CR>
 vnoremap <space>ppd :call PhpDocRange()<CR>
 
-
+" }}}1
 " Plugin: プラグイン設定 ============================================== {{{1
 
 " Vimball 
@@ -680,7 +682,7 @@ let g:Tb_MaxSize=3
 let g:scratch_buffer_name = "Scratch"
 " }}}2
 
-
+" }}}1
 " NeoBundle: Plugin設定 =============================================== {{{1
 "Absorb vimrc/.vim in Windows 
 if has('win32') || has ('win64')
@@ -1064,10 +1066,10 @@ endif
 
 " colorscheme mrkn256
 " colorscheme yuroyoro256
-colorscheme desert256
+" colorscheme desert256
 " colorscheme desert
 " colorscheme Lucius
-" colorscheme molokai
+colorscheme molokai
 " colorscheme mustang
 " colorscheme jellybeans
 " colorscheme solarized
@@ -1103,6 +1105,7 @@ colorscheme desert256
 " hi PmenuSbar ctermbg=0 ctermfg=9
 " hi PmenuSbar ctermbg=255 ctermfg=0 guifg=#000000 guibg=#FFFFFF
 
+" }}}1
 " Tags: tags設定 ====================================================== {{{1
 if has("autochdir")
 	set autochdir
@@ -1113,11 +1116,8 @@ else
 endif
 command! -nargs=? Ctags call <SID>Ctags(<q-args>)
 
-
+" }}}1
 " Function: 関数定義 ================================================== {{{1
-" ----------------------------------------------------------------------------
-" 関数
-" ----------------------------------------------------------------------------
 "--------------------------------------------------------
 " ステータスライン表示に使用する関数群
 " -------------------------------------------------------
@@ -1414,8 +1414,7 @@ function! SearchDotGitPath(search_path)
         return l:search_result_path
     endif
 endfunction
-
-
+" }}}1
 " Envroiments: 環境固有設定 =========================================== {{{1
 
 "Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
@@ -1429,7 +1428,7 @@ endfunction
 "    source $HOME/.private/.vimrc_private
 "endif
 
-
+" }}}1
 " Tmp: 一時な設定 ===================================================== {{{1
 
 " Copy and paste with fakeclip
@@ -1464,7 +1463,7 @@ let g:hier_enabled             = 1
 autocmd BufWritePost *.c,*.h,*.h :QuickRun c -outputter quickfix
 autocmd FileType qf nnoremap <buffer><silent> q :q<CR>:HierClear<CR>
 
-
+" }}}1
 " Etc: その他 ========================================================= {{{1
 
 " ^@を削除するテスト
@@ -1554,7 +1553,7 @@ autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 let g:neocomplcache_omni_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 
-""" Unite.vim
+"" Unite.vim
 " 起動時にインサートモードで開始
 " let g:unite_enable_start_insert = 1
 "
@@ -1599,3 +1598,5 @@ nmap <ESC><ESC> :nohlsearch<CR><ESC>
 "        autocmd VimEnter,VimLeave * silent !tmux set status
 "    augroup END
 "endif
+
+" }}}1

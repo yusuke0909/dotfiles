@@ -24,7 +24,6 @@ export MYSQL_PS1="mysql:`hostname`>\h>\d> "
 #if [ ! $TERM = "screen" -a -z "$YROOT_NAME" ]; then; screen -R; fi
 #if [ -n $YROOT_NAME ]; then; builtin cd $HOME; fi
 
-
 #---------------------------------
 # Default shell configuration
 # colors enables us to idenfity color by $fg[red].
