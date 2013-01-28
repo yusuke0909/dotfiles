@@ -1065,11 +1065,11 @@ if !has('gui_running')
 endif
 
 " colorscheme mrkn256
-" colorscheme yuroyoro256
+colorscheme yuroyoro256
 " colorscheme desert256
 " colorscheme desert
 " colorscheme Lucius
-colorscheme molokai
+" colorscheme molokai
 " colorscheme mustang
 " colorscheme jellybeans
 " colorscheme solarized
