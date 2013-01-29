@@ -5,6 +5,7 @@
 # Terminal Colorの設定
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
+eval `dircolors $HOME/.dircolors`
 
 alias ls='ls -aCF --color=auto --show-control-char'
 alias la='ls -aCF --color=auto --show-control-char'

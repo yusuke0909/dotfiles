@@ -13,9 +13,10 @@ alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEv
 # Terminal Colorの設定
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-function dircolors() {
-    gdircolors
-}
+eval `gdircolors $HOME/.dircolors`
+#function dircolors() {
+#    gdircolors
+#}
 
 # vim
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
