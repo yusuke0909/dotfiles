@@ -112,6 +112,10 @@ alias ccat='pygmentize -O style=vim -f console256 -g'
 alias 'ps?'='pgrep -l -f'
 alias pk='pkill -f'
 
+# MySQL
+export MYSQL_PS1="mysql:`hostname`>\h>\d> "
+alias mysql="mysql --pager='less -S'"
+
 ## rails
 #alias -g RET="RAILS_ENV=test"
 #alias -g RED="RAILS_ENV=development"
