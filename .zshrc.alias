@@ -101,6 +101,7 @@ alias -g T='| tail'
 alias -g G='| grep'
 alias -g C='| cat -n'
 alias -g W='| wc'
+alias -g S='| sort'
 alias -g V='| view -'
 #alias -g V='| vim -'
 alias -g EV="| xargs --verbose sh -c 'vim \"\$@\" < /dev/tty'"
