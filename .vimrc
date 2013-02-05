@@ -1041,6 +1041,7 @@ NeoBundle 'thinca/vim-scouter'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
+NeoBundle 'supermomonga/shaberu.vim'            "vimにしゃべってもらうためのPlugin
 " NeoBundle 'nelstrom/vim-textobj-rubyblock'
 " }}}2
 
