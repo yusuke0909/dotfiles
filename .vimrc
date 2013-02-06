@@ -509,7 +509,7 @@ vnoremap <silent> <space>ud :call UrlEscapeTheSelectedTextLiteraly(2)<CR>
 "nnoremap ?  :set noincsearch<CR>?
 
 " textobj-datetimeの設定
-silent! call textobj#datetime#default_mappings(1)
+" silent! call textobj#datetime#default_mappings(1)
 
 "ScreenのキーバインドでC-Tを割り当てているため、タグジャンプの戻るはc-[に割り当てる。
 nnoremap <M-]> :pop<CR>
@@ -821,7 +821,7 @@ NeoBundle 'smartword'
 NeoBundle 'camelcasemotion'
 
 " <Leader><Leader>w/fなどで、motion先をhilightする
-NeoBundle 'EasyMotion'
+" NeoBundle 'EasyMotion'
 
 " matchit.vim : 「%」による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'matchit.zip'
@@ -860,13 +860,13 @@ NeoBundle 'tpope/vim-rails'
 " NeoBundle 'Pydiction'
 
 " ソースコード上のメソッド宣言、変数宣言の一覧を表示
-" NeoBundle 'taglist.vim'
+NeoBundle 'taglist.vim'
 
 " エラーがある場所をhilight
 " NeoBundle 'errormarker.vim'
 
 " tagsを利用したソースコード閲覧・移動補助機能 tagsファイルの自動生成
-" NeoBundle 'Source-Explorer-srcexpl.vim'
+NeoBundle 'Source-Explorer-srcexpl.vim'
 
 " NERD_tree, taglist, srcexpl の統合
 " NeoBundle 'trinity.vim'
@@ -934,11 +934,14 @@ NeoBundle 'banyan/recognize_charcode.vim'
 NeoBundle 'Shougo/vimshell.git'
 
 " vimproc : vimから非同期実行。vimshelleで必要
-NeoBundle 'Shougo/vimproc',
-            \ { 'build' : {
-            \     'mac ' : 'make -f make_mac.mak',
-            \     'unix' : 'make -f make_unix.mak'
-            \ }}
+NeoBundle 'Shougo/vimproc', {
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
 
 " vim-altercmd : Ex command拡張
 NeoBundle 'tyru/vim-altercmd'
@@ -1041,8 +1044,8 @@ NeoBundle 'thinca/vim-scouter'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
-NeoBundle 'supermomonga/shaberu.vim'            "vimにしゃべってもらうためのPlugin
 " NeoBundle 'nelstrom/vim-textobj-rubyblock'
+" NeoBundle 'supermomonga/shaberu.vim'            "vimにしゃべってもらうためのPlugin
 " }}}2
 
 filetype on
@@ -1370,10 +1373,6 @@ ruby << EOF
     end
     VIM::command("return '#{convert_text}'")
 EOF
-endfunction
-
-function SelectPasteTextOverWriteRegister()
-    let @" = @0
 endfunction
 
 " YankRingっぽいローテーションペーストを行う
