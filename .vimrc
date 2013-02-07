@@ -931,13 +931,11 @@ NeoBundle 'banyan/recognize_charcode.vim'
 
 " Utility {{{2
 " vimshell : vimのshell
-NeoBundle 'Shougo/vimshell.git'
+NeoBundle 'Shougo/vimshell'
 
 " vimproc : vimから非同期実行。vimshelleで必要
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
     \ 'mac' : 'make -f make_mac.mak',
     \ 'unix' : 'make -f make_unix.mak',
   \ },
@@ -1031,7 +1029,6 @@ NeoBundle 'tyru/restart.vim'
 NeoBundle 'sudo.vim'
 NeoBundle 'motemen/git-vim'
 NeoBundle 'Shougo/vimfiler'
-NeoBundle 'Shougo/vimshell'
 NeoBundle 'ujihisa/vimshell-ssh'
 " NeoBundle 'mattn/zencoding-vim'
 " NeoBundle 'godlygeek/csapprox'
