@@ -860,7 +860,7 @@ NeoBundle 'tpope/vim-rails'
 " NeoBundle 'Pydiction'
 
 " ソースコード上のメソッド宣言、変数宣言の一覧を表示
-NeoBundle 'taglist.vim'
+" NeoBundle 'taglist.vim'
 
 " エラーがある場所をhilight
 " NeoBundle 'errormarker.vim'
