@@ -1067,12 +1067,12 @@ endif
 
 " colorscheme mrkn256
 " colorscheme yuroyoro256
-colorscheme desert256
+" colorscheme desert256
 " colorscheme desert
 " colorscheme Lucius
 " colorscheme molokai
 " colorscheme mustang
-" colorscheme jellybeans
+colorscheme jellybeans
 " colorscheme solarized
 " colorscheme Zenburn
 
