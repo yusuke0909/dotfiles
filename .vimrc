@@ -667,13 +667,13 @@ let g:netrw_http_cmd="wget -q -O" " netrw-http
 " surround.vim ------------------------------------------------------------ {{{2
 "surroundに定義を追加する【ASCIIコードを調べるには:echo char2nr("-")】
 "タグ系
-"let g:surround_{char2nr('!')} = "<!-- \r -->"
-"let g:surround_{char2nr('%')} = "<% \r %>"
-"let g:surround_{char2nr('-')} = "<!-- \r -->"
+let g:surround_{char2nr('!')} = "<!-- \r -->"
+let g:surround_{char2nr('%')} = "<% \r %>"
+let g:surround_{char2nr('-')} = "<!-- \r -->"
 "変数展開系
-"let g:surround_{char2nr('#')} = "#{\r}"
-"let g:surround_{char2nr('$')} = "${\r}"
-"let g:surround_{char2nr('@')} = "@{\r}"
+let g:surround_{char2nr('#')} = "#{\r}"
+let g:surround_{char2nr('$')} = "${\r}"
+let g:surround_{char2nr('@')} = "@{\r}"
 
 " tabbar.vim -------------------------------------------------------------- {{{2
 let g:Tb_MaxSize=3
@@ -709,7 +709,7 @@ endif
 NeoBundle 'scrooloose/nerdcommenter.git'
 
 " 自動閉じタグ
-" NeoBundle 'yuroyoro/vim-autoclose'
+NeoBundle 'yuroyoro/vim-autoclose'
 
 " -- でメソッドチェーン整形
 NeoBundle 'c9s/cascading.vim'
@@ -736,7 +736,7 @@ NeoBundle 'YankRing.vim'
 NeoBundle 'Gundo'
 
 " surround.vim : テキストを括弧で囲む／削除する
-" NeoBundle 'tpope/surround.vim'
+NeoBundle 'vim-scripts/surround.vim'
 
 " smartchr.vim : ==などの前後を整形
 NeoBundle 'smartchr'
@@ -790,13 +790,13 @@ NeoBundle 'taku-o/vim-toggle'
 
 " Completion {{{2
 " 補完 autocomplpop.vim : insertmodeで自動で補完をpopup
-" NeoBundle 'AutoComplPop'
+NeoBundle 'vim-scripts/AutoComplPop'
 
 " 補完 neocomplcache.vim : 究極のVim的補完環境
 NeoBundle 'Shougo/neocomplcache'
 
 " neocomplcacheのsinpet補完
-" NeoBundle 'Shougo/neocomplcache-snippets-complete'
+NeoBundle 'Shougo/neosnippet'
 
 " for rsense
 NeoBundle 'm2ym/rsense'
@@ -821,7 +821,7 @@ NeoBundle 'smartword'
 NeoBundle 'camelcasemotion'
 
 " <Leader><Leader>w/fなどで、motion先をhilightする
-" NeoBundle 'EasyMotion'
+NeoBundle 'EasyMotion'
 
 " matchit.vim : 「%」による対応括弧へのカーソル移動機能を拡張
 NeoBundle 'matchit.zip'
@@ -936,6 +936,8 @@ NeoBundle 'Shougo/vimshell'
 " vimproc : vimから非同期実行。vimshelleで必要
 NeoBundle 'Shougo/vimproc', {
   \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
     \ 'mac' : 'make -f make_mac.mak',
     \ 'unix' : 'make -f make_unix.mak',
   \ },
@@ -1014,7 +1016,7 @@ NeoBundle 'h1mesuke/unite-outline'
 NeoBundle 'Sixeight/unite-grep'
 NeoBundle 'tsukkee/unite-help'
 NeoBundle 'thinca/vim-unite-history'
-" NeoBundle 'ujihisa/unite-font'
+NeoBundle 'ujihisa/unite-font'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'ujihisa/unite-colorscheme'
@@ -1025,24 +1027,22 @@ NeoBundle 'ujihisa/unite-gem'
 
 " その他 {{{2
 NeoBundle 'tyru/restart.vim'
-" NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
+NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
 NeoBundle 'sudo.vim'
 NeoBundle 'motemen/git-vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'ujihisa/vimshell-ssh'
 " NeoBundle 'mattn/zencoding-vim'
-" NeoBundle 'godlygeek/csapprox'
+NeoBundle 'godlygeek/csapprox'
 NeoBundle 'ujihisa/shadow.vim'
 NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'tpope/vim-haml'
-NeoBundle 'Shougo/neosnippet'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'thinca/vim-scouter'
 NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
-" NeoBundle 'nelstrom/vim-textobj-rubyblock'
-" NeoBundle 'supermomonga/shaberu.vim'            "vimにしゃべってもらうためのPlugin
+NeoBundle 'nelstrom/vim-textobj-rubyblock'
 " }}}2
 
 filetype on
@@ -1092,19 +1092,20 @@ colorscheme jellybeans
 "  set t_Sb=[4%dm
 "endif
 
-"ポップアップメニューのカラーを設定
-"hi Pmenu guibg=#666666
-"hi PmenuSel guibg=#8cd0d3 guifg=#666666
-"hi PmenuSbar guibg=#333333
+" ポップアップメニューのカラーを設定
+hi Pmenu guibg=#666666
+hi PmenuSel guibg=#8cd0d3 guifg=#666666
+hi PmenuSbar guibg=#333333
 
-" ハイライト on
-"syntax enable
+ " ハイライト on
+ "syntax enable
+
 " 補完候補の色づけ for vim7
-" hi Pmenu ctermbg=255 ctermfg=0 guifg=#000000 guibg=#999999
-" hi PmenuSel ctermbg=blue ctermfg=black
-" hi PmenuSel cterm=reverse ctermfg=33 ctermbg=222 gui=reverse guifg=#3399ff guibg=#f0e68c
-" hi PmenuSbar ctermbg=0 ctermfg=9
-" hi PmenuSbar ctermbg=255 ctermfg=0 guifg=#000000 guibg=#FFFFFF
+ hi Pmenu ctermbg=255 ctermfg=0 guifg=#000000 guibg=#999999
+ hi PmenuSel ctermbg=blue ctermfg=black
+ hi PmenuSel cterm=reverse ctermfg=33 ctermbg=222 gui=reverse guifg=#3399ff guibg=#f0e68c
+ hi PmenuSbar ctermbg=0 ctermfg=9
+ hi PmenuSbar ctermbg=255 ctermfg=0 guifg=#000000 guibg=#FFFFFF
 
 " }}}1
 " Tags: tags設定 ====================================================== {{{1
@@ -1159,20 +1160,20 @@ endfunction
 "　自動補完をタブで選択できるように(cho45さんから)
 " http://subtech.g.hatena.ne.jp/cho45/20071009#c1191925480
 "-------------------------------------------------------------------
-"function! InsertTabWrapper() 
-"	let col = col('.') - 1 
-"	if !col || getline('.')[col - 1] !~ '\k' 
-"		return "\<TAB>"
-"	else
-"		if pumvisible()
-"			return "\<C-N>"
-"		else
-"			return "\<C-N>\<C-P>"
-"		end
-"	endif
-"endfunction
-"" インサート時のTabキーマッピングをInsertTabWrapperで書き換える
-"inoremap <silent> <tab> <c-r>=InsertTabWrapper()<cr>
+function! InsertTabWrapper() 
+	let col = col('.') - 1 
+	if !col || getline('.')[col - 1] !~ '\k' 
+		return "\<TAB>"
+	else
+		if pumvisible()
+			return "\<C-N>"
+		else
+			return "\<C-N>\<C-P>"
+		end
+	endif
+endfunction
+" インサート時のTabキーマッピングをInsertTabWrapperで書き換える
+inoremap <silent> <tab> <c-r>=InsertTabWrapper()<cr>
 
 
 "------------------------------------------------
@@ -1199,9 +1200,8 @@ ruby << EOF
 EOF
 endfunction
 
-
 "------------------------------------------------
-"選択中のCSVカラムをハイライトする
+" 選択中のCSVカラムをハイライトする
 "------------------------------------------------
 function! SelectCsvH()
     "最後のヤンクを保管しておく
@@ -1216,7 +1216,7 @@ function! SelectCsvH()
     else
         echo "対象のカラムは存在しません"
     endif
-    "最後のヤンクを書き戻す
+    " 最後のヤンクを書き戻す
     let @" = tmp
     let @/ = seltext
 endfunction
@@ -1238,21 +1238,21 @@ endfunction
 "------------------------------------------------
 "選択中の文字列を検索する
 "------------------------------------------------
-"function! SelSearch()
-"    "最後のヤンクを保管しておく
-"    let tmp = @"
-"    "現在選択中のテキストを取得する
-"    normal! gv"ty 
-"    "取得した結果を変数に格納する
-"    let seltext=@t
-"    silent! exe ":/" . seltext
-"    "最後のヤンクを書き戻す
-"    let @" = tmp
-"    let @/ = seltext
-"    "二回の移動を組み合わせることで、次の検索したい文字列へジャンプする
-"    normal! N
-"    normal! n
-"endfunction
+function! SelSearch()
+    "最後のヤンクを保管しておく
+    let tmp = @"
+    "現在選択中のテキストを取得する
+    normal! gv"ty 
+    "取得した結果を変数に格納する
+    let seltext=@t
+    silent! exe ":/" . seltext
+    "最後のヤンクを書き戻す
+    let @" = tmp
+    let @/ = seltext
+    "二回の移動を組み合わせることで、次の検索したい文字列へジャンプする
+    normal! N
+    normal! n
+endfunction
 function! SearchTheSelectedTextLiteraly()
   let reg_0 = [@0, getregtype('0')]
   let reg_u = [@", getregtype('"')]
@@ -1288,25 +1288,25 @@ endfunction
 " 最後に選択したテキストを取得する
 "-----------------------------
 function! x:selected_text()
-  let [visual_p, pos, r_, r0] = [mode() =~# "[vV\<C-v>]", getpos('.'), @@, @0]
+ let [visual_p, pos, r_, r0] = [mode() =~# "[vV\<C-v>]", getpos('.'), @@, @0]
 
-  if visual_p
-    execute "normal! \<Esc>"
-  endif
-  normal! gvy
-  let _ = @@
+ if visual_p
+   execute "normal! \<Esc>"
+ endif
+ normal! gvy
+ let _ = @@
 
-  let [@@, @0] = [r_, r0]
-  if visual_p
-    normal! gv
-  else
-    call setpos('.', pos)
-  endif
-  return _
+ let [@@, @0] = [r_, r0]
+ if visual_p
+   normal! gv
+ else
+   call setpos('.', pos)
+ endif
+ return _
 endfunction
 
-" :argdoと同等
-function! Allargs(command)
+ " :argdoと同等
+ function! Allargs(command)
     let i = 0
     while i < argc()
         if filereadable(argv(i))
@@ -1315,30 +1315,30 @@ function! Allargs(command)
         endif
         let i = i + 1
     endwhile
-endfunction
-command! -nargs=+ -complete=command Allargs call Allargs(<q-args>)
+ endfunction
+ command! -nargs=+ -complete=command Allargs call Allargs(<q-args>)
 
-" IMEの状態を取得する Return 1:ON 0:OFF
-function! ImeStatus()
-    if has('win32') && has('ruby')
-ruby << EOF
-    require 'Win32API'
-
-    # 最前面のウィンドウハンドルを取得（操作中のvimウインドウ）
-    wndObj = Win32API.new('user32.dll', 'GetForegroundWindow', 'v', 'n')
-    hWnd = wndObj.call
-    # IMEのコンテキストを取得
-    imcObj = Win32API.new('imm32','ImmGetContext','l','l')
-    himc = imcObj.call(hWnd)
-    # IMEの状態を取得
-    imeOpenObj = Win32API.new('imm32','ImmGetOpenStatus',%w(l),'l')
-    p imeOpenObj.call(himc).to_s
-    VIM::command("return '" + imeOpenObj.call(himc).to_s + "'")
-EOF
-    else
-        return '0'
-    endif
-endfunction
+  " IMEの状態を取得する Return 1:ON 0:OFF
+  function! ImeStatus()
+      if has('win32') && has('ruby')
+  ruby << EOF
+      require 'Win32API'
+  
+      # 最前面のウィンドウハンドルを取得（操作中のvimウインドウ）
+      wndObj = Win32API.new('user32.dll', 'GetForegroundWindow', 'v', 'n')
+      hWnd = wndObj.call
+      # IMEのコンテキストを取得
+      imcObj = Win32API.new('imm32','ImmGetContext','l','l')
+      himc = imcObj.call(hWnd)
+      # IMEの状態を取得
+      imeOpenObj = Win32API.new('imm32','ImmGetOpenStatus',%w(l),'l')
+      p imeOpenObj.call(himc).to_s
+      VIM::command("return '" + imeOpenObj.call(himc).to_s + "'")
+  EOF
+      else
+          return '0'
+      endif
+  endfunction
 
 "------------------------------------------------
 " 選択したテキストのURLEscapeを行う関数
@@ -1390,7 +1390,7 @@ function! RegistersComplete()
     return ''
 endfunction
 
-" .gitのあるディレクトリに移動する
+"" .gitのあるディレクトリに移動する
 function! CdDotGitDir()
     let l:current_path = getcwd()
     lcd %:p:h
@@ -1414,13 +1414,13 @@ endfunction
 " }}}1
 " Envroiments: 環境固有設定 =========================================== {{{1
 
-"Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
-"if &term =~ "screen"
-"	autocmd VimLeave * call SetScreenTabName('shell')
-"	autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif
-"endif
+""Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
+if &term =~ "screen"
+	autocmd VimLeave * call SetScreenTabName('shell')
+	autocmd BufEnter * if bufname("") !~ "^\[A-Za-z0-9\]*://" | call SetScreenTabName("%") | endif
+endif
 
-" 公開できない設定やローカルマシンごとの固有設定を読み込む
+"" 公開できない設定やローカルマシンごとの固有設定を読み込む
 "if filereadable("$HOME/.private/.vimrc_private")
 "    source $HOME/.private/.vimrc_private
 "endif
@@ -1523,7 +1523,7 @@ inoremap <expr><C-y>  neocomplcache#close_popup()
 inoremap <expr><C-e>  neocomplcache#cancel_popup()
 
 " AutoComplPop like behavior.
-"let g:neocomplcache_enable_auto_select = 1
+let g:neocomplcache_enable_auto_select = 1
 
 " Shell like behavior(not recommended).
 "set completeopt+=longest
