@@ -2,8 +2,6 @@
 
 " Windowsでも.vimをRumtimeディレクトリにする
 set runtimepath+=$HOME/.vim
-" hatena.vimを使う
-"set runtimepath+=$HOME/.vim/hatena
 "ヘルプファイルをパスを指定する
 "helptags $HOME/.vim/doc/
 
@@ -65,7 +63,7 @@ set guioptions+=a
 set ttymouse=xterm2
 
 " OSのクリップボードを使用する
-"set clipboard+=unnamed
+" set clipboard+=unnamed
 
 " }}}1
 " Command: コマンド設定  ============================================== {{{1
@@ -75,9 +73,9 @@ command! Btips1 :silent e $HOME/.vim/doc/best_tips1.txt
 command! Btips2 :silent e $HOME/.vim/doc/best_tips2.txt
 
 " listcharsを切り替える
-command! ListCharsDispFull set listchars=tab:^-,eol:$,trail:_,nbsp:% list
-command! ListCharsDispTab set listchars=tab:^- list
-command! ListCharsDispEol set listchars=eol:$ list
+"command! ListCharsDispFull set listchars=tab:^-,eol:$,trail:_,nbsp:% list
+"command! ListCharsDispTab set listchars=tab:^- list
+"command! ListCharsDispEol set listchars=eol:$ list
 
 " カレントディレクトリに移動
 command! -bar CD execute 'lcd' expand('%:p:h')
@@ -87,6 +85,7 @@ command! -bar CDGit call CdDotGitDir()
 " Ev/Rvでvimrcの編集と反映
 command! Ev edit $MYVIMRC
 command! Rv source $MYVIMRC
+
 " }}}1
 " Autocmd: autocmd設定 ================================================ {{{1
 if has("autocmd")
@@ -111,7 +110,7 @@ if has("autocmd")
     " PHPの辞書補完とomni補完 -----------------------------------------------------------
     autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
     autocmd FileType php :setlocal dictionary+=~/.vim/dict/php5_functions.dict
-    
+
     " cvsの時は文字コードをeuc-jpに設定 -------------------------------
     autocmd FileType cvs :set fileencoding=euc-jp
 
@@ -124,24 +123,30 @@ if has("autocmd")
     " rails -------------------------------------------------------------------
     autocmd BufNewFile,BufRead app/**/*.rhtml set fenc=utf-8
     autocmd BufNewFile,BufRead app/**/*.rb set fenc=utf-8
-    "autocmd FileType ruby :source $HOME/.vim/ftplugin/ruby-matchit.vim
+    autocmd FileType ruby :source $HOME/.vim/bundle/ruby-matchit/plugin/ruby-matchit.vim
 
     " freemaker(Javaテンプレートエンジン) -------------------------------------
     autocmd BufNewFile,BufRead *.ftl setf ftl
 
     " git.vim コミット後ログを表示する ----------------------------------------
     "autocmd BufWritePost COMMIT_EDITMSG exe ":bd" | exe ":Cd" | exe ":GitLog"
-    
+
     " markdown
     autocmd BufRead,BufNewFile *.mkd  setf markdown
     autocmd BufRead,BufNewFile *.md  setf markdown
 
     " 前回終了したカーソル行に移動 --------------------------------------------
-    " autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
     " 設定の保存と復元(カーソル位置や折畳みの状態など)
-    autocmd BufWinLeave ?* silent mkview
-    autocmd BufWinEnter ?* silent loadview
+    "autocmd BufWinLeave ?* silent mkview
+    "autocmd BufWinEnter ?* silent loadview
+
+    " autoreadで再読み込みする頻度があがる
+    augroup vimrc-checktime
+        autocmd!
+        autocmd WinEnter * checktime
+    augroup END
 endif
 
 " }}}1
@@ -153,18 +158,18 @@ set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
 "set encoding=utf-8                      " デフォルトエンコーディング
 set ambiwidth=double                     " UTF-8で文字幅表示を２文字分使う
-set completeopt=menuone,preview          " 
+set completeopt=menuone,preview          " 入力モードでの補完についてのオプションのコンマ区切りのリスト(詳細は :help cot)
 set complete+=k                          " 辞書ファイルからの単語補間
 set nrformats=""                         " 8進数はインクリメントしない
-set expandtab                            " タブを展開
 set autoindent                           " オートインデント
-"set noerrorbells                        " エラー時にベルを鳴らさない
+set noerrorbells                         " エラー時にベルを鳴らさない
 "set novisualbell                        " ヴィジュアルベルを使わない
 "set vb t_vb=                            " ビープをならさない
 set nolinebreak                          " ホワイト・スペースで折り返さない
 "set scrolloff=5                         " スクロール時の余白確保
-set tabstop=4                            " タブ幅
-set softtabstop=4                        "  
+"set expandtab                           " Insertモードで <Tab> を挿入するとき、代わりに適切な数の空白を使用(onのときにtabを挿入するときはCTRL-V<Tab>)
+set tabstop=4                            " 画面上でタブ文字が占める幅
+set softtabstop=4                        " <Tab> や <BS> を打ち込んだときにカーソルが動く幅
 set shiftwidth=4                         " インデント幅
 set smartindent                          " インデントはスマートインデント
 set ignorecase                           " 検索文字列が小文字の場合は大文字小文字を区別なく検索する
@@ -172,7 +177,6 @@ set smartcase                            " 検索文字列に大文字が含ま�
 set wrapscan                             " 検索時に最後まで行ったら最初に戻る
 set shortmess=t                          " 'Press RETURN or enter command to continue' を表示しない
 set noincsearch                          " 検索文字列入力時に順次対象文字列にヒットさせない
-set nolist                               " タブの左側にカーソル表示
 set showcmd                              " 入力中のコマンドをステータスに表示する
 set showmatch                            " 括弧入力時の対応する括弧を表示
 set showmode                             " 現在のモードを表示
@@ -193,8 +197,8 @@ set ttyfast                              " 高速ターミナル接続を行う
 set foldmethod=marker                    " 折畳み
 set cursorline                           " カーソル行を強調表示
 set display=uhex                         " 印字不可能文字を16進数で表示
-set list                                 " タブや改行などを別の文字で表示する
-set listchars=eol:¬,tab:▸\ ,extends:<    " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
+set list                                 " 表示できない文字は '^'を付けて表示し、行末に $ を置く
+set listchars=eol:¬,tab:▸\ ,extends:<,trail:.    " タブや改行などの代替文字設定 (ex. tab:>-,extends:<,trail:-,eol:< )
 set keywordprg=man\ -a                   " キーワードヘルプコマンドの設定 (default: man or man\ -s)
 set viminfo='50,<1000,s100,\"50          " viminfoの上限数など
 set backspace=indent,eol,start           " バックスペースを強化する設定
@@ -304,10 +308,12 @@ augroup cch
   autocmd WinEnter,BufRead * set cursorline
 augroup END
 
+" highlight設定
 hi clear CursorLine
 hi CursorLine gui=underline             " 下線
-"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 highlight CursorLine ctermbg=black guibg=black
+"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
+highlight SpecialKey term=underline ctermfg=red ctermbg=green guifg=red guibg=green
 
 " NormalモードとInsertモードでカーソルの形状を変える(iTerm2)->tmuxでvim使うときは駄目。。
 let &t_SI = "\e]50;CursorShape=1\x7"
@@ -458,8 +464,9 @@ nnoremap viM $?\%(.*#.*module\)\@!module<CR>%kVnj
 " カーソル位置キーワードをカレントディレクトリファイルからgrep...?
 "map _g :let efsave=&ef<Bar>let &ef=tempname()<Bar>exe ':!grep -n -w "<cword>" * >'.&ef<CR>:cf<CR>:exe ":!rm ".&ef<CR>:let &ef=efsave<Bar>unlet efsave<CR><CR>:cc<CR>
 
-".vimrcの再読み込み
-nnoremap ,vr :source $HOME/.vimrc<CR>:source $HOME/.gvimrc<CR>
+" .vimrcの再読み込み
+nnoremap ,vr :source ~/.vimrc<CR>
+" nnoremap ,vr :source $HOME/.vimrc<CR>:source $HOME/.gvimrc<CR>
 
 " YankRingっぽいレジスタ履歴Yank&Paste
 vnoremap <silent> y <ESC>:call NumberedRegisterRotation()<CR>gvy
@@ -702,7 +709,7 @@ if has('vim_starting')
     set runtimepath+=$VIMFILES/neobundle.vim
     call neobundle#rc(expand('~/.vim/bundle'))
 endif
-" NeoBundle 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/neobundle.vim'
 
 " Edit {{{2
 " NERD_commenter.vim :最強コメント処理 (<Leader>c<space>でコメントをトグル)
@@ -771,7 +778,6 @@ NeoBundle 'kana/vim-textobj-function.git'
 " vim-textobj-fold : 折りたたまれたアレをtext-objectに
 " NeoBundle 'kana/vim-textobj-fold.git'
 
-"
 NeoBundle 'textobj-rubyblock'
 
 " vim-textobj-entire : buffer全体をtext-objectに
@@ -977,7 +983,8 @@ NeoBundle 'tsukkee/lingr-vim'
 NeoBundle 'tpope/vim-fugitive'
 
 " ステータスラインをカッコよくする
-NeoBundle 'Lokaltog/vim-powerline'
+" NeoBundle 'Lokaltog/vim-powerline'
+NeoBundle 'delphinus35/vim-powerline'
 
 " Redmine on Vim
 NeoBundle 'mattn/vim-metarw-redmine'
@@ -1065,6 +1072,7 @@ if !has('gui_running')
     highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
 
+" ColorScheme選択
 " colorscheme mrkn256
 " colorscheme yuroyoro256
 " colorscheme desert256
@@ -1556,7 +1564,7 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 "
 " " インサート／ノーマルどちらからでも呼び出せるように
 " キー
-""" Unite.vim
+"" Unite.vim
 " 起動時にインサートモードで開始
 let g:unite_enable_start_insert = 1
 let g:unite_source_history_yank_enable = 1
