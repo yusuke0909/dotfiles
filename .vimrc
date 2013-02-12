@@ -1562,7 +1562,7 @@ let g:neocomplcache_omni_patterns.c = '\%(\.\|->\)\h\w*'
 " 起動時にインサートモードで開始
 " let g:unite_enable_start_insert = 1
 "
-" " インサート／ノーマルどちらからでも呼び出せるように
+" インサート／ノーマルどちらからでも呼び出せるように
 " キー
 "" Unite.vim
 " 起動時にインサートモードで開始
@@ -1596,7 +1596,7 @@ endfunction
 " Escの2回押しでハイライト消去
 nmap <ESC><ESC> :nohlsearch<CR><ESC>
 
-"" Vim起動中はtmuxのステータスラインを隠す
+" Vim起動中はtmuxのステータスラインを隠す
 "if !has('gui_running') && $TMUX !=# ''
 "    augroup Tmux
 "        autocmd!
