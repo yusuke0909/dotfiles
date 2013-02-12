@@ -308,13 +308,6 @@ augroup cch
   autocmd WinEnter,BufRead * set cursorline
 augroup END
 
-" highlight設定
-hi clear CursorLine
-hi CursorLine gui=underline             " 下線
-highlight CursorLine ctermbg=black guibg=black
-"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
-highlight SpecialKey term=underline ctermfg=red ctermbg=green guifg=red guibg=green
-
 " NormalモードとInsertモードでカーソルの形状を変える(iTerm2)->tmuxでvim使うときは駄目。。
 let &t_SI = "\e]50;CursorShape=1\x7"
 let &t_EI = "\e]50;CursorShape=0\x7"
@@ -1083,6 +1076,13 @@ endif
 colorscheme jellybeans
 " colorscheme solarized
 " colorscheme Zenburn
+
+" highlight設定
+hi clear CursorLine
+hi CursorLine cterm=underline gui=underline     " 下線
+highlight CursorLine ctermfg=white ctermbg=red guifg=white guibg=red
+"highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
+highlight SpecialKey term=underline ctermfg=white guifg=white
 
 " ターミナルタイプによるカラー設定
 "if &term =~ "xterm-256color" || "screen-256color"
