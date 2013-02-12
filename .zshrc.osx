@@ -33,9 +33,8 @@ alias rvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R 
 # UTF-8.MAC用のパッチ当てた
 #alias svn='/usr/local/bin/svn'
 
-# Java
-
-##Java7
+# Java #
+#Java7
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home
 # export JAVA_HOME=/Library/Java/Home
 export PATH=$JAVA_HOME/bin:$PATH

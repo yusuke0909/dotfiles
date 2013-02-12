@@ -29,7 +29,6 @@ function rpmi() {
 	    rpm -qilvvR --changelog --scripts $PKG | $PAGER
     fi
 }
-
 # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
 function rpmip() {
 	PKG=$1
