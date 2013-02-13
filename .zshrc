@@ -357,6 +357,7 @@ setopt print_eight_bit          # 補完候補リストの日本語を適正表�
 setopt auto_menu                # 補完キー（Tab,  Ctrl+I) を連打するだけで順に補完候補を自動で補完する
 setopt complete_in_word         # カーソル位置で補完する
 setopt glob_complete            # globを展開しないで候補の一覧から補完する
+setopt dotglob                  # ワイルドカード「*」で「.」から始まるファイル/ディレクトリにヒットする
 setopt complete_aliases         # aliasでも補完できるようにする
 setopt hist_expand              # 補完時にヒストリを自動的に展開する
 setopt auto_remove_slash        # 引数の最後のスラッシュを取り除いて実行する

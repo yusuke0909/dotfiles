@@ -47,7 +47,7 @@ endif
 
 " □ とか○ の文字があってもカーソル位置がずれないようにする
 if exists('&ambiwidth')
-    set ambiwidth=double
+	set ambiwidth=double
 endif
 " }}}1
 " Mouse: マウス設定 =================================================== {{{1
@@ -89,70 +89,70 @@ command! Rv source $MYVIMRC
 " }}}1
 " Autocmd: autocmd設定 ================================================ {{{1
 if has("autocmd")
-    filetype plugin on
-    "ファイルタイプにあわせたインデントを利用する
-    filetype indent on
-    " これらのftではインデントを無効に
-    autocmd FileType html :setlocal indentexpr=
-    autocmd FileType xhtml :setlocal indentexpr=
-
-    " autocomplpop.vim --------------------------------------------------------
-    "コマンドラインウインドウの中はAutoComplPopを停止する
-    autocmd CmdwinEnter * AutoComplPopDisable
-    autocmd CmdwinLeave * AutoComplPopEnable
-
-    " rubycomplete.vim --------------------------------------------------------
-    autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
-    autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-    autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-    autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-
-    " PHPの辞書補完とomni補完 -----------------------------------------------------------
-    autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
-    autocmd FileType php :setlocal dictionary+=~/.vim/dict/php5_functions.dict
-
-    " cvsの時は文字コードをeuc-jpに設定 -------------------------------
-    autocmd FileType cvs :set fileencoding=euc-jp
-
-    " svnの時は文字コードをutf8設定 -----------------------------------
-    autocmd FileType svn :setlocal fileencoding=utf-8
-
-    " changelog ---------------------------------------------------------------
-    autocmd BufNewFile,BufRead *.changelog setf changelog
-
-    " rails -------------------------------------------------------------------
-    autocmd BufNewFile,BufRead app/**/*.rhtml set fenc=utf-8
-    autocmd BufNewFile,BufRead app/**/*.rb set fenc=utf-8
-    autocmd FileType ruby :source $HOME/.vim/bundle/ruby-matchit/plugin/ruby-matchit.vim
-
-    " freemaker(Javaテンプレートエンジン) -------------------------------------
-    autocmd BufNewFile,BufRead *.ftl setf ftl
-
-    " git.vim コミット後ログを表示する ----------------------------------------
-    "autocmd BufWritePost COMMIT_EDITMSG exe ":bd" | exe ":Cd" | exe ":GitLog"
-
-    " markdown
-    autocmd BufRead,BufNewFile *.mkd  setf markdown
-    autocmd BufRead,BufNewFile *.md  setf markdown
-
-    " 前回終了したカーソル行に移動 --------------------------------------------
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
-
-    " 設定の保存と復元(カーソル位置や折畳みの状態など)
-    "autocmd BufWinLeave ?* silent mkview
-    "autocmd BufWinEnter ?* silent loadview
-
-    " autoreadで再読み込みする頻度があがる
-    augroup vimrc-checktime
-        autocmd!
-        autocmd WinEnter * checktime
-    augroup END
+	filetype plugin on
+	"ファイルタイプにあわせたインデントを利用する
+	filetype indent on
+	" これらのftではインデントを無効に
+	autocmd FileType html :setlocal indentexpr=
+	autocmd FileType xhtml :setlocal indentexpr=
+	
+	" autocomplpop.vim --------------------------------------------------------
+	"コマンドラインウインドウの中はAutoComplPopを停止する
+	autocmd CmdwinEnter * AutoComplPopDisable
+	autocmd CmdwinLeave * AutoComplPopEnable
+	
+	" rubycomplete.vim --------------------------------------------------------
+	autocmd FileType ruby,eruby setlocal omnifunc=rubycomplete#Complete
+	autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+	autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+	autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+	
+	" PHPの辞書補完とomni補完 -----------------------------------------------------------
+	autocmd FileType php setlocal omnifunc=phpcomplete#CompletePHP
+	autocmd FileType php :setlocal dictionary+=~/.vim/dict/php5_functions.dict
+	
+	" cvsの時は文字コードをeuc-jpに設定 -------------------------------
+	autocmd FileType cvs :set fileencoding=euc-jp
+	
+	" svnの時は文字コードをutf8設定 -----------------------------------
+	autocmd FileType svn :setlocal fileencoding=utf-8
+	
+	" changelog ---------------------------------------------------------------
+	autocmd BufNewFile,BufRead *.changelog setf changelog
+	
+	" rails -------------------------------------------------------------------
+	autocmd BufNewFile,BufRead app/**/*.rhtml set fenc=utf-8
+	autocmd BufNewFile,BufRead app/**/*.rb set fenc=utf-8
+	autocmd FileType ruby :source $HOME/.vim/bundle/ruby-matchit/plugin/ruby-matchit.vim
+	
+	" freemaker(Javaテンプレートエンジン) -------------------------------------
+	autocmd BufNewFile,BufRead *.ftl setf ftl
+	
+	" git.vim コミット後ログを表示する ----------------------------------------
+	"autocmd BufWritePost COMMIT_EDITMSG exe ":bd" | exe ":Cd" | exe ":GitLog"
+	
+	" markdown
+	autocmd BufRead,BufNewFile *.mkd  setf markdown
+	autocmd BufRead,BufNewFile *.md  setf markdown
+	
+	" 前回終了したカーソル行に移動 --------------------------------------------
+	autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+	
+	" 設定の保存と復元(カーソル位置や折畳みの状態など)
+	"autocmd BufWinLeave ?* silent mkview
+	"autocmd BufWinEnter ?* silent loadview
+	
+	" autoreadで再読み込みする頻度があがる
+	augroup vimrc-checktime
+		autocmd!
+		autocmd WinEnter * checktime
+	augroup END
 endif
 
 " }}}1
 " Options: オプション設定 ============================================= {{{1
 
-syntax enable
+syntax enable                            " ハイライト on
 set nocompatible                         " vi互換にしない
 set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
@@ -256,9 +256,9 @@ let g:Powerline_stl_path_style = 'relative'
 " endif
 "ステータスラインに文字コードと改行文字を表示する（ウインドウ幅によって表示項目を調整）
 if winwidth(0) >= 120
-    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+	set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
 else
-    set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
+	set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %(%{GitBranch()}\ %)\ %F%=[%{GetB()}]\ %l,%c%V%8P
 endif
 
 "入力モード時、ステータスラインのカラーを変更
@@ -273,9 +273,9 @@ autocmd QuickfixCmdPost make,grep,grepadd,vimgrep,vimgrepadd cwin
 autocmd QuickfixCmdPost lmake,lgrep,lgrepadd,lvimgrep,lvimgrepadd lwin
 
 function! GetB()
-  let c = matchstr(getline('.'), '.', col('.') - 1)
-  let c = iconv(c, &enc, &fenc)
-  return String2Hex(c)
+	let c = matchstr(getline('.'), '.', col('.') - 1)
+	let c = iconv(c, &enc, &fenc)
+	return String2Hex(c)
 endfunction
 " help eval-examples
 " The function Nr2Hex() returns the Hex string of a number.
@@ -303,9 +303,9 @@ endfunc
 
 " カレントウィンドウにのみ罫線を引く
 augroup cch
-  autocmd! cch
-  autocmd WinLeave * set nocursorline
-  autocmd WinEnter,BufRead * set cursorline
+	autocmd! cch
+	autocmd WinLeave * set nocursorline
+	autocmd WinEnter,BufRead * set cursorline
 augroup END
 
 " NormalモードとInsertモードでカーソルの形状を変える(iTerm2)->tmuxでvim使うときは駄目。。
@@ -317,13 +317,13 @@ let &t_EI = "\e]50;CursorShape=0\x7"
 
 " Macの場合にLeader設定
 if has('mac') && has('gui_running')
-   let mapleader = "\\"
+	let mapleader = "\\"
 endif
 
 
 if has('clipboard')
-   noremap <silent> <space>tv :set clipboard=<CR>
-   noremap <silent> <space>tc :set clipboard=unnamed<CR>
+	noremap <silent> <space>tv :set clipboard=<CR>
+	noremap <silent> <space>tc :set clipboard=unnamed<CR>
 endif
 
 " <c-[>のタイプがずれた時対策
@@ -520,18 +520,18 @@ noremap <C-z> <C-t>
 vnoremap <silent> ,hc :call SelectCsvH()<CR>
 
 if has("win32")
-    " 画面の最大化と元のサイズをキーに割り当て
-    noremap <silent> <F2> :simalt ~x<CR>
-    noremap <silent> <F3> :simalt ~r<CR>
-    "文字の大きさ変更キーマップ
-    noremap _w :simalt ~r<CR>:set guifont=MS_Gothic:h12:cSHIFTJIS<CR>:set columns=110<CR>:set lines=30<CR>
-    noremap _1 :simalt ~r<CR>:set columns=110 lines=30<CR>
-    noremap _2 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h16:", "")<CR>
-    noremap _3 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h18:", "")<CR>
-    noremap _4 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h20:", "")<CR>
-    noremap _5 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h24:", "")<CR>
-    noremap _6 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h32:", "")<CR>
-    noremap _7 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h48:", "")<CR>
+	" 画面の最大化と元のサイズをキーに割り当て
+	noremap <silent> <F2> :simalt ~x<CR>
+	noremap <silent> <F3> :simalt ~r<CR>
+	"文字の大きさ変更キーマップ
+	noremap _w :simalt ~r<CR>:set guifont=MS_Gothic:h12:cSHIFTJIS<CR>:set columns=110<CR>:set lines=30<CR>
+	noremap _1 :simalt ~r<CR>:set columns=110 lines=30<CR>
+	noremap _2 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h16:", "")<CR>
+	noremap _3 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h18:", "")<CR>
+	noremap _4 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h20:", "")<CR>
+	noremap _5 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h24:", "")<CR>
+	noremap _6 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h32:", "")<CR>
+	noremap _7 :simalt ~x<CR>:let &guifont=substitute(&guifont, ":h\\d\\+:", ":h48:", "")<CR>
 endif
 
 " 異なるプロセスvim間でコピー（yanktmp.vim用）
@@ -753,7 +753,7 @@ NeoBundle 'operator-replace'
 " textobj-user : 簡単にVimエディタのテキストオブジェクトをつくれる
 NeoBundle 'textobj-user'
 
-" vim-textobj-syntax : syntax hilightされたものをtext-objectに
+" vim-textobj-syntax : syntax highlightされたものをtext-objectに
 NeoBundle 'kana/vim-textobj-syntax.git'
 
 " vim-textobj-plugins : いろんなものをtext-objectにする
@@ -1057,12 +1057,12 @@ runtime macros/matchit.vim
 highlight ZenkakuSpace cterm=underline ctermfg=lightblue guibg=white
 match ZenkakuSpace /　/
 if !has('gui_running')
-    set background=dark
-    highlight Folded ctermfg=yellow ctermbg=black 
-    highlight FoldColumn ctermfg=yellow ctermbg=black 
-    highlight Pmenu ctermfg=white ctermbg=darkgray  guibg=#606060
-    highlight PmenuSel ctermbg=darkred guibg=SlateBlue
-    highlight PmenuSbar ctermbg=darkblue guibg=#404040
+	set background=dark
+	highlight Folded ctermfg=yellow ctermbg=black 
+	highlight FoldColumn ctermfg=yellow ctermbg=black 
+	highlight Pmenu ctermfg=white ctermbg=darkgray  guibg=#606060
+	highlight PmenuSel ctermbg=darkred guibg=SlateBlue
+	highlight PmenuSbar ctermbg=darkblue guibg=#404040
 endif
 
 " ColorScheme選択
@@ -1080,33 +1080,52 @@ colorscheme jellybeans
 " highlight設定
 hi clear CursorLine
 hi CursorLine cterm=underline gui=underline     " 下線
-highlight CursorLine ctermfg=white ctermbg=red guifg=white guibg=red
+"highlight CursorLine ctermfg=white ctermbg=red guifg=white guibg=red
 "highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 highlight SpecialKey term=underline ctermfg=white guifg=white
 
+""行頭のスペースの連続をハイライトさせる
+""Tab文字も区別されずにハイライトされるので、区別したいときはTab文字の表示を別に
+""設定する必要がある。
+"function! SOLSpaceHilight()
+"	syntax match SOLSpace "^\s\+" display containedin=ALL
+"	highlight SOLSpace term=underline ctermbg=LightGray
+"endf
+""全角スペースをハイライトさせる。
+"function! JISX0208SpaceHilight()
+"	syntax match JISX0208Space "　" display containedin=ALL
+"	highlight JISX0208Space term=underline ctermbg=LightCyan
+"endf
+""syntaxの有無をチェックし、新規バッファと新規読み込み時にハイライトさせる
+"if has("syntax")
+"	syntax on
+"		augroup invisible
+"		autocmd! invisible
+"		autocmd BufNew,BufRead * call SOLSpaceHilight()
+"		autocmd BufNew,BufRead * call JISX0208SpaceHilight()
+"	augroup END
+"endif
+
 " ターミナルタイプによるカラー設定
 "if &term =~ "xterm-256color" || "screen-256color"
-  " 256色
-"  set t_Co=256
-"  set t_Sf=[3%dm
-"  set t_Sb=[4%dm
+	" 256色
+	"set t_Co=256
+	"set t_Sf=[3%dm
+	"set t_Sb=[4%dm
 "elseif &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
-"  set t_Co=16
-"  set t_Sf=[3%dm
-"  set t_Sb=[4%dm
+	"set t_Co=16
+	"set t_Sf=[3%dm
+	"set t_Sb=[4%dm
 "elseif &term =~ "xterm-color"
-"  set t_Co=8
-"  set t_Sf=[3%dm
-"  set t_Sb=[4%dm
+	"set t_Co=8
+	"set t_Sf=[3%dm
+	"set t_Sb=[4%dm
 "endif
 
 " ポップアップメニューのカラーを設定
 hi Pmenu guibg=#666666
 hi PmenuSel guibg=#8cd0d3 guifg=#666666
 hi PmenuSbar guibg=#333333
-
- " ハイライト on
- "syntax enable
 
 " 補完候補の色づけ for vim7
  hi Pmenu ctermbg=255 ctermfg=0 guifg=#000000 guibg=#999999
@@ -1132,27 +1151,28 @@ command! -nargs=? Ctags call <SID>Ctags(<q-args>)
 " ステータスライン表示に使用する関数群
 " -------------------------------------------------------
 function! GetB()
-    let c = matchstr(getline('.'), '.', col('.') - 1)
-    let c = iconv(c, &enc, &fenc)
-    return String2Hex(c)
+	let c = matchstr(getline('.'), '.', col('.') - 1)
+	let c = iconv(c, &enc, &fenc)
+	return String2Hex(c)
 endfunction
 function! Nr2Hex(nr)
-    let n = a:nr
-    let r = ""
-    while n
-        let r = '0123456789ABCDEF'[n % 16] . r
-        let n = n / 16
-    endwhile
-    return r
+	let n = a:nr
+	let r = ""
+	while n
+		let r = '0123456789ABCDEF'[n % 16] . r
+		let n = n / 16
+	endwhile
+	return r
 endfunc
+
 function! String2Hex(str)
-    let out = ''
-    let ix = 0
-    while ix < strlen(a:str)
-        let out = out . Nr2Hex(char2nr(a:str[ix]))
-        let ix = ix + 1
-    endwhile
-    return out
+	let out = ''
+	let ix = 0
+	while ix < strlen(a:str)
+		let out = out . Nr2Hex(char2nr(a:str[ix]))
+		let ix = ix + 1
+	endwhile
+	return out
 endfunc
 
 "-------------------------------------------------------------------
@@ -1160,8 +1180,8 @@ endfunc
 " 終了時にはShellと表示する。※^[ はctrl + v を押しながら [
 "-------------------------------------------------------------------
 function! SetScreenTabName(name)
-    let arg = 'k' . a:name . ' > vim \\'
-    silent! exe '!echo -n "' . arg . "\""
+	let arg = 'k' . a:name . ' > vim \\'
+	silent! exe '!echo -n "' . arg . "\""
 endfunction
 
 "-------------------------------------------------------------------
@@ -1191,8 +1211,8 @@ inoremap <silent> <tab> <c-r>=InsertTabWrapper()<cr>
 " csv の特定のカラムをハイライト (put in .vimrc)
 " :Csv 5   # 5番めのカラムをハイライト
 function! CSVH(x)
-    execute 'match Keyword /^\([^,]*,\)\{'.a:x.'}\zs[^,]*/'
-    execute 'normal ^'.a:x.'f,'
+	execute 'match Keyword /^\([^,]*,\)\{'.a:x.'}\zs[^,]*/'
+	execute 'normal ^'.a:x.'f,'
 endfunction
 command! -nargs=1 Csv :call CSVH(<args>)
 
@@ -1201,10 +1221,10 @@ command! -nargs=1 Csv :call CSVH(<args>)
 "-----------------------------
 function! CsvCol2Index(colName)
 ruby << EOF
-    colName = VIM::evaluate("a:colName")
-    columns = eval("[#{VIM::Buffer.current.line}]")
-    colIndex = columns.index(colName) || -1
-    VIM::command("return '#{colIndex.to_s#}'")
+	colName = VIM::evaluate("a:colName")
+	columns = eval("[#{VIM::Buffer.current.line}]")
+	colIndex = columns.index(colName) || -1
+	VIM::command("return '#{colIndex.to_s#}'")
 EOF
 endfunction
 
@@ -1212,66 +1232,67 @@ endfunction
 " 選択中のCSVカラムをハイライトする
 "------------------------------------------------
 function! SelectCsvH()
-    "最後のヤンクを保管しておく
-    let tmp = @"
-    "現在選択中のテキストを取得する
-    normal! gv"ty
-    "取得した結果を変数に格納する
-    let seltext=@t
-    let columnNumber = CsvCol2Index(seltext)
-    if columnNumber >= 0
-        let result = CSVH(columnNumber)
-    else
-        echo "対象のカラムは存在しません"
-    endif
-    " 最後のヤンクを書き戻す
-    let @" = tmp
-    let @/ = seltext
+	" 最後のヤンクを保管しておく
+	let tmp = @"
+	" 現在選択中のテキストを取得する
+	normal! gv"ty
+	" 取得した結果を変数に格納する
+	let seltext=@t
+	let columnNumber = CsvCol2Index(seltext)
+	if columnNumber >= 0
+		let result = CSVH(columnNumber)
+	else
+		echo "対象のカラムは存在しません"
+	endif
+	" 最後のヤンクを書き戻す
+	let @" = tmp
+	let @/ = seltext
 endfunction
 
 "-----------------------------
 " html escape function
 "-----------------------------
 function! HtmlEscape()
-    silent s/&/\&amp;/eg
-    silent s/</\&lt;/eg
-    silent s/>/\&gt;/eg
+	silent s/&/\&amp;/eg
+	silent s/</\&lt;/eg
+	silent s/>/\&gt;/eg
 endfunction
 function! HtmlUnEscape()
-    silent s/&lt;/</eg
-    silent s/&gt;/>/eg
-    silent s/&amp;/\&/eg
+	silent s/&lt;/</eg
+	silent s/&gt;/>/eg
+	silent s/&amp;/\&/eg
 endfunction
 
 "------------------------------------------------
 "選択中の文字列を検索する
 "------------------------------------------------
 function! SelSearch()
-    "最後のヤンクを保管しておく
-    let tmp = @"
-    "現在選択中のテキストを取得する
-    normal! gv"ty 
-    "取得した結果を変数に格納する
-    let seltext=@t
-    silent! exe ":/" . seltext
-    "最後のヤンクを書き戻す
-    let @" = tmp
-    let @/ = seltext
-    "二回の移動を組み合わせることで、次の検索したい文字列へジャンプする
-    normal! N
-    normal! n
+	"最後のヤンクを保管しておく
+	let tmp = @"
+	"現在選択中のテキストを取得する
+	normal! gv"ty 
+	"取得した結果を変数に格納する
+	let seltext=@t
+	silent! exe ":/" . seltext
+	"最後のヤンクを書き戻す
+	let @" = tmp
+	let @/ = seltext
+	"二回の移動を組み合わせることで、次の検索したい文字列へジャンプする
+	normal! N
+	normal! n
 endfunction
+
 function! SearchTheSelectedTextLiteraly()
-  let reg_0 = [@0, getregtype('0')]
-  let reg_u = [@", getregtype('"')]
-
-  normal! gvy
-  let @/ = @0
-  call histadd('/', '\V' . escape(@0, '\'))
-  normal! n
-
-  call setreg('0', reg_0[0], reg_0[1])
-  call setreg('"', reg_u[0], reg_u[1])
+	let reg_0 = [@0, getregtype('0')]
+	let reg_u = [@", getregtype('"')]
+	
+	normal! gvy
+	let @/ = @0
+	call histadd('/', '\V' . escape(@0, '\'))
+	normal! n
+	
+	call setreg('0', reg_0[0], reg_0[1])
+	call setreg('"', reg_u[0], reg_u[1])
 endfunction
 
 "------------------------------------------------
@@ -1282,49 +1303,49 @@ endfunction
 " tag ファイルの指定
 "tagファイル作成関数 
 " 使い方：srcディレクトリをCtagsの引数に渡すと、~/.vim/tags ファイルを作成します。
-"         引数がない場合、vimが認識してるカレントディレクトリでctagsを実行します。
-"         http://d.hatena.ne.jp/smeghead/searchdiary?word=*%5Bvim%5D
+"		引数がない場合、vimが認識してるカレントディレクトリでctagsを実行します。
+"		http://d.hatena.ne.jp/smeghead/searchdiary?word=*%5Bvim%5D
 function! s:Ctags(searchPath)
-    let searchPath = a:searchPath
-    if searchPath ==# ""
-        let searchPath = getcwd()
-    endif
-    exe ':!ctags -R -f ' . $HOME . '/tags' searchPath
+	let searchPath = a:searchPath
+	if searchPath ==# ""
+		let searchPath = getcwd()
+	endif
+		exe ':!ctags -R -f ' . $HOME . '/tags' searchPath
 endfunction
 
 "---------------------------------
 " 最後に選択したテキストを取得する
 "-----------------------------
 function! x:selected_text()
- let [visual_p, pos, r_, r0] = [mode() =~# "[vV\<C-v>]", getpos('.'), @@, @0]
+	let [visual_p, pos, r_, r0] = [mode() =~# "[vV\<C-v>]", getpos('.'), @@, @0]
 
- if visual_p
-   execute "normal! \<Esc>"
- endif
- normal! gvy
- let _ = @@
+if visual_p
+	execute "normal! \<Esc>"
+endif
+	normal! gvy
+	let _ = @@
 
- let [@@, @0] = [r_, r0]
- if visual_p
-   normal! gv
- else
-   call setpos('.', pos)
- endif
- return _
+	let [@@, @0] = [r_, r0]
+if visual_p
+	  normal! gv
+else
+	call setpos('.', pos)
+endif
+	return _
 endfunction
 
- " :argdoと同等
- function! Allargs(command)
-    let i = 0
-    while i < argc()
-        if filereadable(argv(i))
-            execute "e " . argv(i)
-            execute a:command
-        endif
-        let i = i + 1
-    endwhile
- endfunction
- command! -nargs=+ -complete=command Allargs call Allargs(<q-args>)
+" :argdoと同等
+function! Allargs(command)
+	let i = 0
+	while i < argc()
+		if filereadable(argv(i))
+			execute "e " . argv(i)
+			execute a:command
+		endif
+			let i = i + 1
+		endwhile
+endfunction
+command! -nargs=+ -complete=command Allargs call Allargs(<q-args>)
 
   " IMEの状態を取得する Return 1:ON 0:OFF
   function! ImeStatus()
@@ -1442,8 +1463,8 @@ endif
 map gy "*y
 map gp "*p
 if exists('$WINDOW') || exists('$TMUX')
-    map gY <Plug>(fakeclip-screen-y)
-    map gP <Plug>(fakeclip-screen-p)
+	map gY <Plug>(fakeclip-screen-y)
+	map gP <Plug>(fakeclip-screen-p)
 endif
 
 " ckfix のエラー箇所を波線でハイライト
@@ -1454,12 +1475,12 @@ let g:hier_enabled             = 1
 " すでに quickfix ウィンドウが開いている場合は閉じるので注意
 "let s:silent_quickfix = quickrun#outputter#quickfix#new()
 "function! s:silent_quickfix.finish(session)
-"    call call(quickrun#outputter#quickfix#new().finish, [a:session], self)
-"    :cclose
-"    " vim-hier の更新
-"    :HierUpdate
-"    " quickfix への出力後に quickfixstatus を有効に
-"    :QuickfixStatusEnable
+"	call call(quickrun#outputter#quickfix#new().finish, [a:session], self)
+"	:cclose
+"	" vim-hier の更新
+"	:HierUpdate
+"	" quickfix への出力後に quickfixstatus を有効に
+"	:QuickfixStatusEnable
 "endfunction
 "" quickrun に登録
 "call quickrun#register_outputter("silent_quickfix", s:silent_quickfix)
@@ -1506,9 +1527,9 @@ let g:neocomplcache_dictionary_filetype_lists = {
 
 " Define keyword.
 if !exists('g:neocomplcache_keyword_patterns')
-  let g:neocomplcache_keyword_patterns = {}
-  endif
-  let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+	let g:neocomplcache_keyword_patterns = {}
+endif
+	let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
 
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neocomplcache_snippets_expand)
@@ -1586,11 +1607,11 @@ nnoremap <silent> <space>fv :<C-u>Unite bookmark<CR>
 " unite.vim上でのキーマッピング
 autocmd FileType unite call s:unite_my_settings()
 function! s:unite_my_settings()
-    " 単語単位からパス単位で削除するように変更
-    imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
-    " ESCキーを2回押すと終了する
-    nmap <silent><buffer> <ESC><ESC> q
-    imap <silent><buffer> <ESC><ESC> <ESC>q
+	" 単語単位からパス単位で削除するように変更
+	imap <buffer> <C-w> <Plug>(unite_delete_backward_path)
+	" ESCキーを2回押すと終了する
+	nmap <silent><buffer> <ESC><ESC> q
+	imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 
 " Escの2回押しでハイライト消去
