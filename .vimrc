@@ -784,6 +784,13 @@ NeoBundle 'textobj-jabraces'
 
 " <C-a>でtrue/false切替。他色々
 NeoBundle 'taku-o/vim-toggle'
+
+" root権限でファイルを編集/保存できるようにする
+NeoBundle 'sudo.vim'
+" ex.
+" コマンドラインから実行: vim sudo:<filename>
+" 複数のファイルを開く時にsudo対象のファイルを選択: vim <filename> sudo:<filename> <filename>
+" 現在開いているファイルをsudoを実行して開く :e sudo:%
 " }}}2
 
 
@@ -1028,7 +1035,6 @@ NeoBundle 'ujihisa/unite-gem'
 " その他 {{{2
 NeoBundle 'tyru/restart.vim'
 NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
-NeoBundle 'sudo.vim'
 NeoBundle 'motemen/git-vim'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'ujihisa/vimshell-ssh'
