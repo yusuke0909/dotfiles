@@ -49,6 +49,16 @@ color256()
     local green=$2; shift
     local blue=$3; shift
 
+	#色の定義
+	#local DEFAULT=$'%{^[[m%]]}'$
+	#local RED=$'%{^[[1;31m%]]}'$
+	#local GREEN=$'%{^[[1;32m%]]}'$
+	#local YELLOW=$'%{^[[1;33m%]]}'$
+	#local BLUE=$'%{^[[1;34m%]]}'$
+	#local PURPLE=$'%{^[[1;35m%]]}'$
+	#local LIGHT_BLUE=$'%{^[[1;36m%]]}'$
+	#local WHITE=$'%{^[[1;37m%]]}'$
+
     echo -n $[$red * 36 + $green * 6 + $blue + 16]
 }
 
@@ -342,7 +352,7 @@ setopt hist_ignore_space        # コマンド行先頭が空白の時登録し�
 setopt hist_reduce_blanks       # 余分な空白は詰めて登録(空白数違い登録を防ぐ)
 setopt share_history            # historyの共有
 setopt hist_no_store            # historyコマンドは登録しない
-#setopt hist_verify             # historyを呼び出してから実行する間に一旦編集できる状態になる
+setopt hist_verify              # history展開で、直接コマンドを実行せずに編集可能な状態にする
 setopt inc_append_history       # add history when command executed.
 #setopt auto_resume             # サスペンド中のプロセスと同じコマンド名を実行した場合はリジュームする
 #setopt equals                  # =command を command のパス名に展開する
@@ -460,6 +470,8 @@ zle reset-prompt
 zle -N cdup
 # bindkey '\^' cdup
 
+# 展開する前に補完候補を出させる(Ctrl-iで補完するようにする)
+# bindkey "^I" menu-complete   
 
 # back-wordでの単語境界の設定
 autoload -Uz select-word-style
@@ -532,18 +544,27 @@ zstyle ':completion:*' completer \
 
 # 補完候補をキャッシュする
 zstyle ':completion:*' use-cache yes
+
 # 詳細な情報を使う
 zstyle ':completion:*' verbose yes
 
+# 
+zstyle ':completion:*:options' description 'yes'
+
+# オブジェクトファイルとか中間ファイルとかはfileとして補完させない
+zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
+
+#
+#zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
+#zstyle ':completion:*:warnings' format $RED'No matches for:'$YELLOW' %d'$DEFAULT
+#zstyle ':completion:*:descriptions' format $YELLOW'completing %B%d%b'$DEFAULT
+#zstyle ':completion:*:corrections' format $YELLOW'%B%d '$RED'(errors: %e)%b'$DEFAULT
 #zstyle ':completion:*' use-compctl false # compctl形式を使用しない
 
 # カレントディレクトリに候補がない場合のみ cdpath 上のディレクトリを候補
 #zstyle ':completion:*:cd:*' tag-order local-directories path-directories
 # cf. zstyle ':completion:*:path-directories' hidden true
 # cf. cdpath 上のディレクトリは補完候補から外れる
-
-# 補完時に大小文字を区別しない
-#zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # コマンドの予測入力(ヒストリ→一般補完) ## コマンド別に有効にできないか
 #autoload -U predict-on
