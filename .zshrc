@@ -408,7 +408,7 @@ setopt long_list_jobs           # jobsでプロセスIDも出力する
 setopt mark_dirs                # ファイル名の展開でディレクトリにマッチした場合末尾に / を付加する
 setopt path_dirs                # コマンド名に / が含まれているとき PATH 中のサブディレクトリを探す
 setopt numeric_glob_sort        # ファイル名の展開で、辞書順ではなく数値的にソートされるようになる
-#setopt print_exit_value        # 戻り値が 0 以外の場合終了コードを表示する           
+#setopt print_exit_value        # 戻り値が 0 以外の場合終了コードを表示する
 #setopt pushd_to_home           # pushd を引数なしで実行した場合 pushd $HOME と見なされる
 #setopt short_loops             # for, repeat, select, if, function などで簡略文法が使えるようになる
 #setopt single_line_zle         # デフォルトの複数行コマンドライン編集ではなく、１行編集モードになる
@@ -487,11 +487,13 @@ zle -N self-insert url-quote-magic
 #---------------------------------
 # Completion configuration
 #---------------------------------
+#Additional completion definitions for Zsh. 以下git clone
+#git clone git://github.com/zsh-users/zsh-completions.git ~/.zsh/completions
+fpath=(~/.zsh/completions/src ${fpath})
+
 autoload -U compinit; compinit -u   # 初期化
 autoload -U colors                  # ${fg[red]}形式のカラー書式を有効化
 colors
-
-fpath=(~/.zsh/functions/Completion ${fpath})
 
 # zsh editor
 autoload zed
