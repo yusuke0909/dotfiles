@@ -13,7 +13,7 @@ alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEv
 # Terminal Colorの設定
 export CLICOLOR=1
 export LSCOLORS=ExFxCxDxBxegedabagacad
-eval `gdircolors $HOME/.dircolors`
+#eval `gdircolors $HOME/.dircolors`
 #function dircolors() {
 #    gdircolors
 #}
