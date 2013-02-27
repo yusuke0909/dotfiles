@@ -342,10 +342,6 @@ echo "[$color$name$action$pushed%f%b]"
 esac
 
 
-# zsh-syntax-highlighting
-# https://github.com/zsh-users/zsh-syntax-highlighting
-source ~/dotfiles/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 #---------------------------------
 # set options
 #---------------------------------
@@ -493,7 +489,7 @@ zle -N self-insert url-quote-magic
 #---------------------------------
 #Additional completion definitions for Zsh. 以下git clone
 #git clone git://github.com/zsh-users/zsh-completions.git ~/.zsh/completions
-fpath=(~/dotfiles/.zsh/completions/src ${fpath})
+fpath=(~/.zsh/completions/src ${fpath})
 
 autoload -U compinit; compinit -u   # 初期化
 autoload -U colors                  # ${fg[red]}形式のカラー書式を有効化
@@ -930,6 +926,10 @@ else
 fi
 }
 
+
+#---------------------------------
+# alias configuration
+#---------------------------------
 # alias設定
 [ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
 #[ -f ~/dotfiles/.zshrc.alias ] && source ~/dotfiles/.zshrc.alias
@@ -1134,3 +1134,11 @@ fi
 #    tmux
 #  fi
 #fi
+
+
+#---------------------------------
+# zsh-syntax-highlighting
+#---------------------------------
+# https://github.com/zsh-users/zsh-syntax-highlighting
+source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
