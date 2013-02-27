@@ -89,6 +89,22 @@ zstyle ':vcs_info:*' actionformats \
 ###   %{%F{cyan}%}...%{%f%}: 「...」をシアン色の文字にする
 ###   %n: ユーザ名
 ###   %m: ホスト名（完全なホスト名ではなくて短いホスト名）
+###   %{%k%}: 背景色を元に戻す
+###   %{%f%}: 文字の色を元に戻す
+###   %{%b%}: 太字を元に戻す
+###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
+prompt_bar_left_self="(%{%B%}%F{yellow}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{yellow}%m%{%b%})"
+###prompt_bar_left_status="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})"
+prompt_bar_left_date="<%{%B%}%F{yellow}%D{%Y/%m/%d %H:%M}%{%b%}>"
+prompt_bar_left="-${prompt_bar_left_self}-${prompt_bar_left_date}-"
+#prompt_bar_left="-${prompt_bar_left_self}-${promp_bar_left_status}-${prompt_bar_left_date}-"
+### プロンプトバーの右側
+###   %{%B%K{magenta}%F{white}%}...%{%f%k%b%}:
+###       「...」を太字のマゼンタ背景の白文字にする。
+###   %d: カレントディレクトリのフルパス（省略しない）
+prompt_bar_right="-[%{%B%K{magenta}%F{white}%}%d%{%f%k%b%}]-"
+
+### 2行目左にでるプロンプト
 ###   %{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%f%k%b%}:
 ###                           最後に実行したコマンドが正常終了していれば
 ###                           太字で白文字で緑背景にして異常終了していれば
@@ -100,27 +116,12 @@ zstyle ':vcs_info:*' actionformats \
 ###       %K{green}: 緑景色にする
 ###       %K{red}: 赤景色を赤にする
 ###   %?: 最後に実行したコマンドの終了ステータス
-###   %{%k%}: 背景色を元に戻す
-###   %{%f%}: 文字の色を元に戻す
-###   %{%b%}: 太字を元に戻す
-###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
-prompt_bar_left_self="(%{%B%}%n%{%b%}%{%F{cyan}%}@%{%f%}%{%B%}%m%{%b%})"
-prompt_bar_left_status="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})"
-prompt_bar_left_date="<%{%B%}%D{%Y/%m/%d %H:%M}%{%b%}>"
-prompt_bar_left="-${prompt_bar_left_self}-${prompt_bar_left_status}-${prompt_bar_left_date}-"
-### プロンプトバーの右側
-###   %{%B%K{magenta}%F{white}%}...%{%f%k%b%}:
-###       「...」を太字のマゼンタ背景の白文字にする。
-###   %d: カレントディレクトリのフルパス（省略しない）
-prompt_bar_right="-[%{%B%K{magenta}%F{white}%}%d%{%f%k%b%}]-"
-
-### 2行目左にでるプロンプト
 ###   %h: ヒストリ数
 ###   %(1j,(%j),): 実行中のジョブ数が1つ以上ある場合だけ「(%j)」を表示
 ###     %j: 実行中のジョブ数
 ###   %{%B%}...%{%b%}: 「...」を太字にする
 ###   %#: 一般ユーザなら「%」、rootユーザなら「#」になる
-prompt_left="-[%h]%(1j,(%j),)%{%B%}%#%{%b%} "
+prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%} "
 
 ## プロンプトフォーマットを展開した後の文字数を返す
 ## 日本語未対応。
@@ -927,10 +928,7 @@ fi
 }
 
 
-#---------------------------------
-# alias configuration
-#---------------------------------
-# alias設定
+# OSごとのalias設定読み込み
 [ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
 #[ -f ~/dotfiles/.zshrc.alias ] && source ~/dotfiles/.zshrc.alias
 
