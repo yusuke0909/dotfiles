@@ -191,3 +191,27 @@ alias grv='grepvim'
 #    eval `dircolors $HOME/.dircolors`
 #fi
 #zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+
+# RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
+function rpmi() {
+	PKG=$1
+	if [ -z "$PKG" ]; then
+		echo "RPMが指定されていません。"
+		echo "インストール済みのパッケージを指定してください。"
+        echo "Usage: rpmi <RPM_filename(installed) >"
+    else
+	    rpm -qilvvR --changelog --scripts $PKG | $PAGER
+    fi
+}
+# RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
+function rpmip() {
+	PKG=$1
+	if [ -z "$PKG" ]; then
+		echo "RPMが指定されていません。"
+		echo "Usage: rpmip <RPM_filename>"
+    else
+	    rpm -qpilvvR --changelog --scripts $PKG | $PAGER
+    fi
+}
+
