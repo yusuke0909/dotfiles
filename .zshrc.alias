@@ -173,9 +173,10 @@ extract () {
       echo "'$1' is not a valid file!"
   fi
 }
+alias -s {tar.bz2,tar.gz,tar.xz,bz2,rar,gz,tar,tbz2,tgz,zip,Z,7z,lzma,xz}=extract
 alias ex='extract'
 
-#alias ev='vi ~/dotfiles/.vimrc*'
+alias myv='vim ~/dotfiles/.vimrc'
 #alias be='bundle exec'
 
 grepvim() {
