@@ -72,6 +72,7 @@ alias 'mn'='make native-code'
 alias 'mc'='make clean'
 # cdショートカット
 alias cdd='cd ~/Desktop'
+alias cdot='cd ~/dotfiles'
 alias cdp='cd /Volumes/Pogoplug'                        #My Mac
 alias cdh='cd /Volumes/My\ Book\ Thunderbolt\ Duo'      #My Mac
 ##---------------------------------

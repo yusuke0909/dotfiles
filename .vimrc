@@ -1601,15 +1601,15 @@ endif
 " file_mruの表示フォーマットを指定。空にすると表示スピードが高速化される
 let g:unite_source_file_mru_filename_format = ''
 
-" data_directory はramdiskを指定
-if has('win32')
-  let g:unite_data_directory = 'R:\.unite'
-elseif  has('macunix')
-  let g:unite_data_directory = '/Volumes/RamDisk/.unite'
-else
-  let g:unite_data_directory = '~/ramdisk/.unite'
-  " let g:unite_data_directory = '/mnt/ramdisk/.unite'
-endif
+"" data_directory はramdiskを指定
+"if has('win32')
+"  let g:unite_data_directory = 'R:\.unite'
+"elseif  has('macunix')
+"  let g:unite_data_directory = '/Volumes/RamDisk/.unite'
+"else
+"  let g:unite_data_directory = '~/ramdisk/.unite'
+"  " let g:unite_data_directory = '/mnt/ramdisk/.unite'
+"endif
  
 " bookmarkだけホームディレクトリに保存
 let g:unite_source_bookmark_directory = $HOME . '/.unite/bookmark'
@@ -1675,15 +1675,15 @@ endfunction
 
 "}}}2
 " VimFiler:設定 {{{
-" data_directory はramdiskを指定
-if has('win32')
-  let g:vimfiler_data_directory = 'R:\.vimfiler'
-elseif  has('macunix')
-  let g:vimfiler_data_directory = '/Volumes/RamDisk/.vimfiler'
-else
-  let g:unite_data_directory = '~/ramdisk/.vimfiler'
-  " let g:vimfiler_data_directory = '/mnt/ramdisk/.vimfiler'
-endif
+"" data_directory はramdiskを指定
+"if has('win32')
+"  let g:vimfiler_data_directory = 'R:\.vimfiler'
+"elseif  has('macunix')
+"  let g:vimfiler_data_directory = '/Volumes/RamDisk/.vimfiler'
+"else
+"  let g:unite_data_directory = '~/ramdisk/.vimfiler'
+"  " let g:vimfiler_data_directory = '/mnt/ramdisk/.vimfiler'
+"endif
 
 " vimデフォルトのエクスプローラをvimfilerで置き換える
 let g:vimfiler_as_default_explorer = 1
