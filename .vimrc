@@ -949,6 +949,9 @@ NeoBundle 'Shougo/vimproc', {
   \ },
 \ }
 
+" vim上でのファイル操作
+NeoBundle 'Shougo/vimfiler'
+
 " vim-altercmd : Ex command拡張
 NeoBundle 'tyru/vim-altercmd'
 
@@ -1036,7 +1039,6 @@ NeoBundle 'ujihisa/unite-gem'
 NeoBundle 'tyru/restart.vim'
 NeoBundle 'git@github.com:sorah/metarw-simplenote.vim.git'
 NeoBundle 'motemen/git-vim'
-NeoBundle 'Shougo/vimfiler'
 NeoBundle 'ujihisa/vimshell-ssh'
 " NeoBundle 'mattn/zencoding-vim'
 NeoBundle 'godlygeek/csapprox'
