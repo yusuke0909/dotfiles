@@ -1,10 +1,5 @@
-#
-# .zshrc
-#
-
-#---------------------------------
-# Environment variable configuration
-#---------------------------------
+#---- .zshrc Configuration ----#
+# Environment Variable Configuration ===================================== {{{1
 # LANG
 export LANG=ja_JP.UTF-8
 export LESSCHARSET=utf-8
@@ -22,10 +17,9 @@ export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
 #if [ ! $TERM = "screen" -a -z "$YROOT_NAME" ]; then; screen -R; fi
 #if [ -n $YROOT_NAME ]; then; builtin cd $HOME; fi
 
-#---------------------------------
-# Default shell configuration
+# }}}1
+# Default Shell Configuration ============================================ {{{1
 # colors enables us to idenfity color by $fg[red].
-#---------------------------------
 autoload colors
 colors
 
@@ -341,11 +335,8 @@ echo "[$color$name$action$pushed%f%b]"
 
     ;;
 esac
-
-
-#---------------------------------
-# set options
-#---------------------------------
+# }}}1
+# Set Options ============================================================ {{{1
 setopt extended_history         # コマンドの開始時刻と経過時間を登録
 setopt hist_ignore_dups         # pushdで同じディレクトリを重複してpushしない
 setopt hist_ignore_all_dups     # 登録済コマンド行は古い方を削除
@@ -423,10 +414,8 @@ setopt transient_rprompt        # コピペしやすいようにコマンド実�
 limit  coredumpsize    0        # コアファイルを吐かないようにする
 DIRSTACKSIZE=10                 # 保存するディレクトリスタックの数
 
-
-#---------------------------------
-# Devicemap & Bindkey
-#---------------------------------
+# }}}1
+# Devicemap & Bindkey ==================================================== {{{1
 stty    erase   '^H'
 stty    erase   '^?'
 stty    intr    '^C'
@@ -484,10 +473,8 @@ zstyle ':zle:*' word-style unspecified
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic
 
-
-#---------------------------------
-# Completion configuration
-#---------------------------------
+# }}}1
+# Completion Configuration =============================================== {{{1
 #Additional completion definitions for Zsh. 以下git clone
 #git clone git://github.com/zsh-users/zsh-completions.git ~/.zsh/completions
 fpath=(~/.zsh/completions/src ${fpath})
@@ -614,10 +601,9 @@ autoload run-help
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
-
+# }}}1
+# Alias Configuration ==================================================== {{{1
 #---------------------------------
-# Alias configuration
-#
 # expand aliases before completing
 #---------------------------------
 setopt complete_aliases     # aliased ls needs if file/dir completions work
@@ -663,10 +649,8 @@ freebsd*)
     ;;
 esac
 
-
-#---------------------------------
-# Terminal configuration
-#---------------------------------
+# }}}1
+# Terminal Configuration ================================================= {{{1
 # http://journal.mycom.co.jp/column/zsh/009/index.html
 unset LSCOLORS
 
@@ -742,10 +726,8 @@ expand-to-home-or-insert () {
     fi
 }
 
-
-#---------------------------------
-# Other configuration
-#---------------------------------
+# }}}1
+# Other Configuration ==================================================== {{{1
 # C-M-h でチートシートを表示する
 #cheat-sheet () { zle -M "`cat ~/dotfiles/.zsh/cheat-sheet`" }
 #zle -N cheat-sheet
@@ -927,8 +909,8 @@ else
 fi
 }
 
-
-# OSごとのalias設定読み込み
+# }}}1
+# Alias Settings by OS Types ============================================= {{{1
 [ -f ~/.zshrc.alias ] && source ~/.zshrc.alias
 #[ -f ~/dotfiles/.zshrc.alias ] && source ~/dotfiles/.zshrc.alias
 
@@ -950,10 +932,9 @@ esac
 ## local固有設定
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
-
-#---------------------------------
-# time
-#---------------------------------
+# }}}1
+# Time & Watch Settings ================================================== {{{1
+# time 
 # 実行したプロセスの消費時間が10秒以上かかったら
 # 自動的に消費時間の統計情報を表示する
 REPORTTIME=10                    # CPUを10秒以上使った時は time を表示(FormatはTIMEFMTで指定)
@@ -964,19 +945,14 @@ TIMEFMT="\
     Elapsed time in seconds.          :%E
     The  CPU percentage.              :%P"
 
-
-#---------------------------------
 # watch
-#---------------------------------
 watch=(notme) # (all:全員、notme:自分以外、ユーザ名,@ホスト名、%端末名
 LOGCHECK=60   # チェック間隔[秒]
 WATCHFMT="%(a:[34mHello %n [%m] [%t]:[31mBye %n [%m] [%t])"
 log           # ログイン時にはすぐに表示
 
-
-#---------------------------------
-# functions 
-#---------------------------------
+# }}}1
+# functions ============================================================== {{{1
 # CPU 使用率の高いプロセス10個
 function psc() {
   ps auxww | head -n 1
@@ -1105,6 +1081,9 @@ function ssha() {
 	ssh-add;
 }
 
+# }}}1
+# SSH Settings =========================================================== {{{1
+
 # SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
 # SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
 # SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
@@ -1133,10 +1112,10 @@ fi
 #  fi
 #fi
 
-
-#---------------------------------
-# zsh-syntax-highlighting
-#---------------------------------
+# }}}1
+# Syntax-Highlighting ==================================================== {{{1
 # https://github.com/zsh-users/zsh-syntax-highlighting
 source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# }}}1
 
