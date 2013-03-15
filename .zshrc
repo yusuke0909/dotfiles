@@ -10,7 +10,7 @@ export EDITOR=vim
 #PATH,MANPATH
 export PATH=$PATH:$HOME/local/bin:/usr/local/git/bin
 export PATH=$PATH:$HOME/dotfiles/bin
-export PATH=$PATH:/sbin:/usr/local/bin
+export PATH=$PATH:/sbin:/usr/sbin:/usr/local/bin
 export MANPATH=$MANPATH:/opt/local/man:/usr/local/share/man
 
 # screen を自動的に起動
