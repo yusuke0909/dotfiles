@@ -145,15 +145,15 @@ update_prompt()
 	# プロンプトバーに使える残り文字を計算する
 	# $COLUMNSにはターミナルの横幅が入っている
 	local bar_rest_length=$[COLUMNS - bar_left_length]
-		# プロンプトバー左側の先頭文字列の色ををランダムに更新する
-		echo $[RANDOM % 6] > /dev/null
-		local bar_left="%{%F$(fg256 $[RANDOM % 5] $[RANDOM % 5] $[RANDOM % 5])%}* $prompt_bar_left"
+	# プロンプトバー左側の先頭文字列の色ををランダムに更新する
+	echo $[RANDOM % 6] > /dev/null
+	local bar_left="%{%F$(fg256 $[RANDOM % 5] $[RANDOM % 5] $[RANDOM % 5])%}* $prompt_bar_left"
 	# パスに展開される「%d」を削除
 	local bar_right_without_path="${prompt_bar_right:s/%d//}"
 	# 「%d」を抜いた文字数を計算する
 	local bar_right_without_path_length=$(count_prompt_characters "$bar_right_without_path")
 	# パスの最大長を計算する
-	#   $[...]: 「...」を算術演算した結果で展開する
+	# $[...]: 「...」を算術演算した結果で展開する
 	local max_path_length=$[bar_rest_length - bar_right_without_path_length]
 	# パスに展開される「%d」に最大文字数制限をつける
 	#   %d -> %(C,%${max_path_length}<...<%d%<<,)
