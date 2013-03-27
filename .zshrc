@@ -130,7 +130,7 @@ count_prompt_characters()
 	#   -e 's/ //g': *BSDやMac OS Xのwcは数字の前に空白を出力するので削除する
 	count_char=$(print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g')
 	#print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g'
-	expr $count_char + 1
+	expr $count_char + 2
 }
 
 ## プロンプトを更新する
