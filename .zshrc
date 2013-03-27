@@ -24,24 +24,24 @@ autoload colors
 colors
 
 case ${UID} in
-    0)
-        PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
-        PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
-        #SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-        SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
-        [ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
-            PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
-        ;;
-    *)
+	0)
+		PROMPT="%B%{${fg[red]}%}%/#%{${reset_color}%}%b "
+		PROMPT2="%B%{${fg[red]}%}%_#%{${reset_color}%}%b "
+		SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
+		#SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
+		[ -n "${REMOTEHOST}${SSH_CONNECTION}" ] &&
+			PROMPT="%{${fg[cyan]}%}$(echo ${HOST%%.*} | tr '[a-z]' '[A-Z]') ${PROMPT}"
+		;;
+	*)
 ## 256色生成用便利関数
 ### red: 0-5
 ### green: 0-5
 ### blue: 0-5
 color256()
 {
-    local red=$1; shift
-    local green=$2; shift
-    local blue=$3; shift
+	local red=$1; shift
+	local green=$2; shift
+	local blue=$3; shift
 
 	#色の定義
 	#local DEFAULT=$'%{^[[m%]]}'$
@@ -53,17 +53,17 @@ color256()
 	#local LIGHT_BLUE=$'%{^[[1;36m%]]}'$
 	#local WHITE=$'%{^[[1;37m%]]}'$
 
-    echo -n $[$red * 36 + $green * 6 + $blue + 16]
+	echo -n $[$red * 36 + $green * 6 + $blue + 16]
 }
 
 fg256()
 {
-    echo -n $'\e[38;5;'$(color256 "$@")"m"
+	echo -n $'\e[38;5;'$(color256 "$@")"m"
 }
 
 bg256()
 {
-    echo -n $'\e[48;5;'$(color256 "$@")"m"
+	echo -n $'\e[48;5;'$(color256 "$@")"m"
 }
 
 ## プロンプトの作成
@@ -74,9 +74,9 @@ bg256()
 ## バージョン管理システムの情報も表示する
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats \
-    '(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}]'
+	'(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}]'
 zstyle ':vcs_info:*' actionformats \
-    '(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}|%{%F{white}%K{red}%}%a%{%f%k%}]'
+	'(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}|%{%F{white}%K{red}%}%a%{%f%k%}]'
 
 ### プロンプトバーの左側
 ###   %{%B%}...%{%b%}: 「...」を太字にする
@@ -87,11 +87,9 @@ zstyle ':vcs_info:*' actionformats \
 ###   %{%f%}: 文字の色を元に戻す
 ###   %{%b%}: 太字を元に戻す
 ###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
-prompt_bar_left_self="(%{%B%}%F{yellow}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{yellow}%m%{%b%})"
-###prompt_bar_left_status="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})"
+prompt_bar_left_self="%{%B%}%F{yellow}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{yellow}%m%{%b%}"
 prompt_bar_left_date="<%{%B%}%F{yellow}%D{%Y/%m/%d %H:%M}%{%b%}>"
-prompt_bar_left="-${prompt_bar_left_self}-${prompt_bar_left_date}-"
-#prompt_bar_left="-${prompt_bar_left_self}-${promp_bar_left_status}-${prompt_bar_left_date}-"
+prompt_bar_left="${prompt_bar_left_self}-${prompt_bar_left_date}-"
 ### プロンプトバーの右側
 ###   %{%B%K{magenta}%F{white}%}...%{%f%k%b%}:
 ###       「...」を太字のマゼンタ背景の白文字にする。
@@ -118,93 +116,95 @@ prompt_bar_right="-[%{%B%K{magenta}%F{white}%}%d%{%f%k%b%}]-"
 prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%} "
 
 ## プロンプトフォーマットを展開した後の文字数を返す
-## 日本語未対応。
+## 日本語未対応
 count_prompt_characters()
 {
-    # print:
-    #   -P: プロンプトフォーマットを展開する
-    #   -n: 改行をつけない
-    # sed:
-    #   -e $'s/\e\[[0-9;]*m//g': ANSIエスケープシーケンスを削除
-    # wc:
-    #   -c: 文字数を出力する
-    # sed:
-    #   -e 's/ //g': *BSDやMac OS Xのwcは数字の前に空白を出力するので削除する
-    print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g'
+	# print:
+	#   -P: プロンプトフォーマットを展開する
+	#   -n: 改行をつけない
+	# sed:
+	#   -e $'s/\e\[[0-9;]*m//g': ANSIエスケープシーケンスを削除
+	# wc:
+	#   -m: 文字数を出力する
+	# sed:
+	#   -e 's/ //g': *BSDやMac OS Xのwcは数字の前に空白を出力するので削除する
+	count_char=$(print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g')
+	#print -n -P -- "$1" | sed -e $'s/\e\[[0-9;]*m//g' | wc -m | sed -e 's/ //g'
+	expr $count_char + 1
 }
 
 ## プロンプトを更新する
 update_prompt()
 {
-    # プロンプトバーの左側の文字数を数える
-    # 左側では最後に実行したコマンドの終了ステータスを使って
-    # いるのでこれは一番最初に実行しなければいけない。そうし
-    # ないと、最後に実行したコマンドの終了ステータスが消えて
-    # しまう
-    local bar_left_length=$(count_prompt_characters "$prompt_bar_left")
-    # プロンプトバーに使える残り文字を計算する
-    # $COLUMNSにはターミナルの横幅が入っている
-    local bar_rest_length=$[COLUMNS - bar_left_length]
+	# プロンプトバーの左側の文字数を数える
+	# 左側では最後に実行したコマンドの終了ステータスを使って
+	# いるのでこれは一番最初に実行しなければいけない。そうし
+	# ないと、最後に実行したコマンドの終了ステータスが消えて
+	# しまう
+	local bar_left_length=$(count_prompt_characters "$prompt_bar_left")
+	# プロンプトバーに使える残り文字を計算する
+	# $COLUMNSにはターミナルの横幅が入っている
+	local bar_rest_length=$[COLUMNS - bar_left_length]
+		# プロンプトバー左側の先頭文字列の色ををランダムに更新する
+		echo $[RANDOM % 6] > /dev/null
+		local bar_left="%{%F$(fg256 $[RANDOM % 5] $[RANDOM % 5] $[RANDOM % 5])%}* $prompt_bar_left"
+	# パスに展開される「%d」を削除
+	local bar_right_without_path="${prompt_bar_right:s/%d//}"
+	# 「%d」を抜いた文字数を計算する
+	local bar_right_without_path_length=$(count_prompt_characters "$bar_right_without_path")
+	# パスの最大長を計算する
+	#   $[...]: 「...」を算術演算した結果で展開する
+	local max_path_length=$[bar_rest_length - bar_right_without_path_length]
+	# パスに展開される「%d」に最大文字数制限をつける
+	#   %d -> %(C,%${max_path_length}<...<%d%<<,)
+	#     %(x,true-text,false-text):
+	#         xが真のときはtrue-textになり偽のときはfalse-textになる
+	#         ここでは、「%N<...<%d%<<」の効果をこの範囲だけに限定させる
+	#         ために用いているだけなので、xは必ず真になる条件を指定
+	#       C: 現在の絶対パスが/以下にあると真、なので必ず真になる
+	#       %${max_path_length}<...<%d%<<:
+	#          「%d」が「${max_path_length}」カラムより長かったら、
+	#          長い分を削除して「...」にする。最終的に「...」も含めて
+	#          「${max_path_length}」カラムより長くなることはない
+	bar_right=${prompt_bar_right:s/%d/%(C,%${max_path_length}<...<%d%<<,)/}
+	# 「${bar_rest_length}」文字分の「-」を作っている
+	# どうせ後で切り詰めるので十分に長い文字列を作っているだけ
+	# 文字数はざっくり
+	local separator="${(l:${bar_rest_length}::-:)}"
+	# プロンプトバー全体を「${bar_rest_length}」カラム分にする
+	#   %${bar_rest_length}<<...%<<:
+	#     「...」を最大で「${bar_rest_length}」カラムにする
+	bar_right="%${bar_rest_length}<<${separator}${bar_right}%<<"
+	
+	# プロンプトバーと左プロンプトを設定
+	#   "${bar_left}${bar_right}": プロンプトバー
+	#   $'\n': 改行
+	#   "${prompt_left}": 2行目左のプロンプト
+	PROMPT="${bar_left}${bar_right}"$'\n'"${prompt_left}"
+	# 右プロンプト
+	#   %{%B%F{white}%K{green}}...%{%k%f%b%}:
+	#       「...」を太字で緑背景の白文字にする
+	#   %~: カレントディレクトリのフルパス（可能なら「~」で省略する）
+	RPROMPT="[%{%B%F{white}%K{magenta}%}%~%{%k%f%b%}]"
+	case "$TERM_PROGRAM" in
+		Apple_Terminal)
+		# Mac OS Xのターミナルでは$COLUMNSに右余白が含まれていないので
+		# 右プロンプトに「-」を追加して調整
+		## 2011-09-05
+		RPROMPT="${RPROMPT}-"
+		;;
+esac
 
-    local bar_left="$prompt_bar_left"
-    # パスに展開される「%d」を削除
-    local bar_right_without_path="${prompt_bar_right:s/%d//}"
-    # 「%d」を抜いた文字数を計算する
-    local bar_right_without_path_length=$(count_prompt_characters "$bar_right_without_path")
-    # パスの最大長を計算する
-    #   $[...]: 「...」を算術演算した結果で展開する
-    local max_path_length=$[bar_rest_length - bar_right_without_path_length]
-    # パスに展開される「%d」に最大文字数制限をつける
-    #   %d -> %(C,%${max_path_length}<...<%d%<<,)
-    #     %(x,true-text,false-text):
-    #         xが真のときはtrue-textになり偽のときはfalse-textになる
-    #         ここでは、「%N<...<%d%<<」の効果をこの範囲だけに限定させる
-    #         ために用いているだけなので、xは必ず真になる条件を指定
-    #       C: 現在の絶対パスが/以下にあると真、なので必ず真になる
-    #       %${max_path_length}<...<%d%<<:
-    #          「%d」が「${max_path_length}」カラムより長かったら、
-    #          長い分を削除して「...」にする。最終的に「...」も含めて
-    #          「${max_path_length}」カラムより長くなることはない
-    bar_right=${prompt_bar_right:s/%d/%(C,%${max_path_length}<...<%d%<<,)/}
-    # 「${bar_rest_length}」文字分の「-」を作っている
-    # どうせ後で切り詰めるので十分に長い文字列を作っているだけ
-    # 文字数はざっくり
-    local separator="${(l:${bar_rest_length}::-:)}"
-    # プロンプトバー全体を「${bar_rest_length}」カラム分にする
-    #   %${bar_rest_length}<<...%<<:
-    #     「...」を最大で「${bar_rest_length}」カラムにする
-    bar_right="%${bar_rest_length}<<${separator}${bar_right}%<<"
-
-    # プロンプトバーと左プロンプトを設定
-    #   "${bar_left}${bar_right}": プロンプトバー
-    #   $'\n': 改行
-    #   "${prompt_left}": 2行目左のプロンプト
-    PROMPT="${bar_left}${bar_right}"$'\n'"${prompt_left}"
-    # 右プロンプト
-    #   %{%B%F{white}%K{green}}...%{%k%f%b%}:
-    #       「...」を太字で緑背景の白文字にする
-    #   %~: カレントディレクトリのフルパス（可能なら「~」で省略する）
-    RPROMPT="[%{%B%F{white}%K{magenta}%}%~%{%k%f%b%}]"
-    case "$TERM_PROGRAM" in
-	Apple_Terminal)
-	    # Mac OS Xのターミナルでは$COLUMNSに右余白が含まれていないので
-	    # 右プロンプトに「-」を追加して調整
-	    ## 2011-09-05
-	    RPROMPT="${RPROMPT}-"
-	    ;;
-    esac
-
-    # コマンド打ち間違い時の「もしかして」プロンプト
-        #SPROMPT="%B%{${fg[red]}%}%r is correct? [n,y,a,e]:%{${reset_color}%}%b "
-        SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
+	# コマンド打ち間違い時の「もしかして」プロンプト
+		SPROMPT="%B%{${fg[red]}%}Did you mean %{${fg[white]}%}%R %{${fg[red]}%}to %{${fg[white]}%}『 %{${fg[yellow]}%}%r %{${fg[white]}%}』%{${reset_color}%}?  ( [N]o , [Y]es , [E]dit , [A]bort ) :%{${reset_color}%}%b "
 
 
-    # バージョン管理システムの情報を取得する
-    LANG=C vcs_info >&/dev/null
-    # バージョン管理システムの情報があったら右プロンプトに表示する
-    if [ -n "$vcs_info_msg_0_" ]; then
-	RPROMPT="${vcs_info_msg_0_}-${RPROMPT}"
-    fi
+	# バージョン管理システムの情報を取得する
+	LANG=C vcs_info >&/dev/null
+	# バージョン管理システムの情報があったら右プロンプトに表示する
+	if [ -n "$vcs_info_msg_0_" ]; then
+		RPROMPT="${vcs_info_msg_0_}-${RPROMPT}"
+	fi
 }
 
 ## コマンド実行前に呼び出されるフック
@@ -302,12 +302,12 @@ autoload -Uz VCS_INFO_get_data_git; VCS_INFO_get_data_git 2> /dev/null
 function rprompt-git-current-branch {
 local name st color gitdir action pushed
 if [[ "$PWD" =~ '/\.git(/.*)?$' ]]; then
-    return
+	return
 fi
 
 name=`git rev-parse --abbrev-ref=loose HEAD 2> /dev/null`
 if [[ -z $name ]]; then
-    return
+	return
 fi
 
 gitdir=`git rev-parse --git-dir 2> /dev/null`
@@ -316,24 +316,24 @@ pushed="`_git_not_pushed`"
 
 st=`git status 2> /dev/null`
 if [[ "$st" =~ "(?m)^nothing to" ]]; then
-    color=%F{green}
+	color=%F{green}
 elif [[ "$st" =~ "(?m)^nothing added" ]]; then
-    color=%F{yellow}
+	color=%F{yellow}
 elif [[ "$st" =~ "(?m)^# Untracked" ]]; then
-    color=%B%F{red}
+	color=%B%F{red}
 else
-    color=%F{red}
+	color=%F{red}
 fi
 
 echo "[$color$name$action$pushed%f%b]"
-    }
+	}
 
     # PCRE 互換の正規表現を使う
-    setopt re_match_pcre
+	setopt re_match_pcre
 
 #    RPROMPT='`rprompt-git-current-branch`${RESET}${WHITE}[${BLUE}%(5~,%-2~/.../%2~,%~)${WHITE}]${RESET}'
 
-    ;;
+	;;
 esac
 # }}}1
 # Set Options ============================================================ {{{1
@@ -530,7 +530,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # _approximate: 似ている補完候補も補完候補とする
 # _prefix: カーソル以降を無視してカーソル位置までで補完する
 zstyle ':completion:*' completer \
-    _oldlist _complete _match _ignored _approximate _prefix
+	_oldlist _complete _match _ignored _approximate _prefix
 
 # 補完候補をキャッシュする
 zstyle ':completion:*' use-cache yes
@@ -611,42 +611,42 @@ setopt complete_aliases     # aliased ls needs if file/dir completions work
 alias where="command -v"
 
 case "${OSTYPE}" in
-    freebsd*|darwin*)
-        alias ls="ls -alG"
-        zle -N expand-to-home-or-insert
-        bindkey "@"  expand-to-home-or-insert
-        ;;
-    linux*)
-        alias la="ls -al"
-        ;;
+	freebsd*|darwin*)
+		alias ls="ls -alG"
+		zle -N expand-to-home-or-insert
+		bindkey "@"  expand-to-home-or-insert
+		;;
+	linux*)
+		alias la="ls -al"
+		;;
 esac
 
 
 case "${OSTYPE}" in
-    # MacOSX
-    darwin*)
-    export PATH=$PATH:/opt/local/bin:/opt/local/sbin/
-    export PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/
-    ;;
+	# MacOSX
+	darwin*)
+	export PATH=$PATH:/opt/local/bin:/opt/local/sbin/
+	export PATH=$PATH:/System/Library/PrivateFrameworks/Apple80211.framework/Versions/A/Resources/
+	;;
 freebsd*)
-    case ${UID} in
-        0)
-            updateports()
-            {
-                if [ -f /usr/ports/.portsnap.INDEX ]
-                then
-                    portsnap fetch update
-                else
-                    portsnap fetch extract update
-                fi
-                (cd /usr/ports/; make index)
+	case ${UID} in
+		0)
+			updateports()
+			{
+				if [ -f /usr/ports/.portsnap.INDEX ]
+				then
+					portsnap fetch update
+				else
+					portsnap fetch extract update
+				fi
+				(cd /usr/ports/; make index)
 
-                portversion -v -l \<
-            }
-            alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
-            ;;
-    esac
-    ;;
+				portversion -v -l \<
+			}
+			alias appsupgrade='pkgdb -F && BATCH=YES NO_CHECKSUM=YES portupgrade -a'
+			;;
+		esac
+		;;
 esac
 
 # }}}1
@@ -655,75 +655,75 @@ esac
 unset LSCOLORS
 
 case "${TERM}" in
-    xterm)
-        export TERM=xterm-color
+	xterm)
+		export TERM=xterm-color
 
         ;;
-    kterm)
-        export TERM=kterm-color
-        # set BackSpace control character
+	kterm)
+		export TERM=kterm-color
+		# set BackSpace control character
 
-        stty erase
-        ;;
+		stty erase
+		;;
 
-    cons25)
-        unset LANG
-        export LSCOLORS=ExFxCxdxBxegedabagacad
-
-        export LS_COLORS='di=01;32:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
-        zstyle ':completion:*' list-colors \
+	cons25)
+		unset LANG
+		export LSCOLORS=ExFxCxdxBxegedabagacad
+		
+		export LS_COLORS='di=01;32:ln=01;35:so=01;32:ex=01;31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
+		zstyle ':completion:*' list-colors \
             'di=;36;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
-        ;;
+		;;
 
-    kterm*|xterm*)
-        # Terminal.app
-        #    precmd() {
-        #        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
-        #    }
-        # export LSCOLORS=exfxcxdxbxegedabagacad
-        # export LSCOLORS=gxfxcxdxbxegedabagacad
-        # export LS_COLORS='di=1;34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
+	kterm*|xterm*)
+		# Terminal.app
+		#    precmd() {
+		#        echo -ne "\033]0;${USER}@${HOST%%.*}:${PWD}\007"
+		#    }
+		# export LSCOLORS=exfxcxdxbxegedabagacad
+		# export LSCOLORS=gxfxcxdxbxegedabagacad
+		# export LS_COLORS='di=1;34:ln=35:so=32:pi=33:ex=31:bd=46;34:cd=43;34:su=41;30:sg=46;30'
 
-        export CLICOLOR=1
-        export LSCOLORS=ExFxCxDxBxegedabagacad
-
-        zstyle ':completion:*' list-colors \
+		export CLICOLOR=1
+		export LSCOLORS=ExFxCxDxBxegedabagacad
+		
+		zstyle ':completion:*' list-colors \
             'di=36' 'ln=35' 'so=32' 'ex=31' 'bd=46;34' 'cd=43;34'
-        ;;
+		;;
 
-    dumb)
-        echo "Welcome Emacs Shell"
-        ;;
+	dumb)
+		echo "Welcome Emacs Shell"
+		;;
 esac
 
 ## ウィンドウタイトル
 ## 実行中のコマンドとユーザ名とホスト名とカレントディレクトリを表示
 update_title() {
-    local command_line=
-    typeset -a command_line
-    command_line=${(z)2}
-    local command=
-    if [ ${(t)command_line} = "array-local" ]; then
-	command="$command_line[1]"
-    else
-	command="$2"
-    fi
-    print -n -P "\e]2;"
-    echo -n "(${command})"
-    print -n -P " %n@%m:%~\a"
+	local command_line=
+	typeset -a command_line
+	command_line=${(z)2}
+	local command=
+		if [ ${(t)command_line} = "array-local" ]; then
+			command="$command_line[1]"
+	    else
+			command="$2"
+	    fi
+	print -n -P "\e]2;"
+	echo -n "(${command})"
+	print -n -P " %n@%m:%~\a"
 }
 ## X環境上でだけウィンドウタイトルを変える
 if [ -n "$DISPLAY" ]; then
-    preexec_functions=($preexec_functions update_title)
+	preexec_functions=($preexec_functions update_title)
 fi
 
 
 expand-to-home-or-insert () {
-    if [ "$LBUFFER" = "" -o "$LBUFFER[-1]" = " " ]; then
-        LBUFFER+="~/"
-    else
-        zle self-insert
-    fi
+	if [ "$LBUFFER" = "" -o "$LBUFFER[-1]" = " " ]; then
+		LBUFFER+="~/"
+	else
+		zle self-insert
+	fi
 }
 
 # }}}1
@@ -754,23 +754,23 @@ abbreviations=(
 )
 
 magic-abbrev-expand () {
-    local MATCH
-    LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9^]#}
-    LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
+	local MATCH
+	LBUFFER=${LBUFFER%%(#m)[-_a-zA-Z0-9^]#}
+	LBUFFER+=${abbreviations[$MATCH]:-$MATCH}
 }
 
 magic-abbrev-expand-and-insert () {
-    magic-abbrev-expand
-    zle self-insert
+	magic-abbrev-expand
+	zle self-insert
 }
 
 magic-abbrev-expand-and-accept () {
-    magic-abbrev-expand
-    zle accept-line
+	magic-abbrev-expand
+	zle accept-line
 }
 
 no-magic-abbrev-expand () {
-    LBUFFER+=' '
+	LBUFFER+=' '
 }
 
 zle -N magic-abbrev-expand
@@ -876,36 +876,35 @@ bindkey "^x " no-magic-abbrev-expand
 function rmf(){
 for file in $*
 do
-    __rm_single_file $file
+	__rm_single_file $file
 done
 }
 
 function __rm_single_file(){
 if ! [ -d ~/.Trash/ ]
 then
-    command /bin/mkdir ~/.Trash
+	command /bin/mkdir ~/.Trash
 fi
 
 if ! [ $# -eq 1 ]
 then
-    echo "__rm_single_file: 1 argument required but $# passed."
-    exit
+	echo "__rm_single_file: 1 argument required but $# passed."
+	exit
 fi
 
-if [ -e $1 ]
-then
-    BASENAME=`basename $1`
-    NAME=$BASENAME
-    COUNT=0
-    while [ -e ~/.Trash/$NAME ]
-    do
-        COUNT=$(($COUNT+1))
-        NAME="$BASENAME.$COUNT"
-    done
+if [ -e $1 ]; then
+	BASENAME=`basename $1`
+	NAME=$BASENAME
+	COUNT=0
+		while [ -e ~/.Trash/$NAME ]
+		do
+			COUNT=$(($COUNT+1))
+			NAME="$BASENAME.$COUNT"
+		done
 
-    command /bin/mv $1 ~/.Trash/$NAME
+	command /bin/mv $1 ~/.Trash/$NAME
 else
-    echo "No such file or directory: $file"
+	echo "No such file or directory: $file"
 fi
 }
 
@@ -915,18 +914,18 @@ fi
 #[ -f ~/dotfiles/.zshrc.alias ] && source ~/dotfiles/.zshrc.alias
 
 case "${OSTYPE}" in
-    # Mac(Unix)
-    darwin*)
-    # ここに設定
-    [ -f ~/.zshrc.osx ] && source ~/.zshrc.osx
-    #[ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
-    ;;
-    # Linux
-    linux*)
-    # ここに設定
-    [ -f ~/.zshrc.linux ] && source ~/.zshrc.linux
-    #[ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
-    ;;
+# Mac(Unix)
+darwin*)
+	# ここに設定
+	[ -f ~/.zshrc.osx ] && source ~/.zshrc.osx
+	#[ -f ~/dotfiles/.zshrc.osx ] && source ~/dotfiles/.zshrc.osx
+	;;
+	# Linux
+	linux*)
+	# ここに設定
+	[ -f ~/.zshrc.linux ] && source ~/.zshrc.linux
+	#[ -f ~/dotfiles/.zshrc.linux ] && source ~/dotfiles/.zshrc.linux
+	;;
 esac
 
 ## local固有設定
@@ -939,11 +938,11 @@ esac
 # 自動的に消費時間の統計情報を表示する
 REPORTTIME=10                    # CPUを10秒以上使った時は time を表示(FormatはTIMEFMTで指定)
 TIMEFMT="\
-    The name of this job.             :%J
-    CPU seconds spent in user mode.   :%U
-    CPU seconds spent in kernel mode. :%S
-    Elapsed time in seconds.          :%E
-    The  CPU percentage.              :%P"
+	The name of this job.             :%J
+	CPU seconds spent in user mode.   :%U
+	CPU seconds spent in kernel mode. :%S
+	Elapsed time in seconds.          :%E
+	The  CPU percentage.              :%P"
 
 # watch
 watch=(notme) # (all:全員、notme:自分以外、ユーザ名,@ホスト名、%端末名
@@ -955,20 +954,20 @@ log           # ログイン時にはすぐに表示
 # Functions ============================================================== {{{1
 # CPU 使用率の高いプロセス10個
 function psc() {
-  ps auxww | head -n 1
-  ps auxww | sort -r -n -k3,3 | grep -v "ps auxww" | grep -v grep | head
+	ps auxww | head -n 1
+	ps auxww | sort -r -n -k3,3 | grep -v "ps auxww" | grep -v grep | head
 }
 
 # メモリ占有率の高いプロセス10個
 function psm() {
-  ps auxww | head -n 1
-  ps auxww | sort -r -n -k4,4 | grep -v "ps auxww" | grep -v grep | head
+	ps auxww | head -n 1
+	ps auxww | sort -r -n -k4,4 | grep -v "ps auxww" | grep -v grep | head
 }
 
 # プロセスをgrepする
 function psg() {
-  ps auxww | head -n 1
-  ps auxww | grep $* | grep -v "ps auxww" | grep -v grep
+	ps auxww | head -n 1
+	ps auxww | grep $* | grep -v "ps auxww" | grep -v grep
 }
 
 # ls結果をlessでみる
@@ -1053,17 +1052,17 @@ function zh() {
 
 # グーグル検索 (要w3m)
 function google() {
-  local str opt 
-  if [ $# != 0 ]; then # 引数が存在すれば
-    for i in $*; do
-      str="$str+$i"
-    done    
-    str=`echo $str | sed 's/^\+//'` #先頭の「+」を削除
-    opt='search?num=50&hl=ja&ie=euc-jp&oe=euc-jp&lr=lang_ja'
-    opt="${opt}&q=${str}"
-  fi
-  w3m http://www.google.co.jp/$opt #引数がなければ $opt は空になる
-  # mozilla -remote openURL\(http::/www.google.co.jp/$opt\) # 未テスト
+	local str opt 
+	if [ $# != 0 ]; then # 引数が存在すれば
+		for i in $*; do
+			str="$str+$i"
+		done
+	str=`echo $str | sed 's/^\+//'` #先頭の「+」を削除
+	opt='search?num=50&hl=ja&ie=euc-jp&oe=euc-jp&lr=lang_ja'
+	opt="${opt}&q=${str}"
+	fi
+	w3m http://www.google.co.jp/$opt #引数がなければ $opt は空になる
+	# mozilla -remote openURL\(http::/www.google.co.jp/$opt\) # 未テスト
 }
 alias ggl=google
 
@@ -1089,14 +1088,14 @@ function ssha() {
 # SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
 agent="$HOME/tmp/ssh-agent-$USER"
 if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-        /tmp/*/agent.[0-9]*)
-            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
+	case $SSH_AUTH_SOCK in
+		/tmp/*/agent.[0-9]*)
+			ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+	esac
 elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
+	export SSH_AUTH_SOCK=$agent
 else
-    echo "no ssh-agent"
+	echo "no ssh-agent"
 fi
 
 # ssh-agent実行
@@ -1105,11 +1104,11 @@ fi
 # Attache tmux
 #env | grep -i TMUX > /dev/null 2>&1
 #if [ $? -ne 0 ]; then
-#  if $(tmux has-session); then
-#    tmux attach
-#  else
-#    tmux
-#  fi
+#	if $(tmux has-session); then
+#		tmux attach
+#	else
+#		tmux
+#	fi
 #fi
 
 # }}}1
