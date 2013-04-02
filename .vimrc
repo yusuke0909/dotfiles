@@ -1051,6 +1051,7 @@ NeoBundle 'tyru/eskk.vim'
 NeoBundle 'tyru/skkdict.vim'
 NeoBundle 'kana/vim-textobj-user'
 NeoBundle 'nelstrom/vim-textobj-rubyblock'
+NeoBundle 'thinca/vim-splash'			"Vim を引数なしで起動した場合に任意のテキストファイル(defaultではVim Girl)を表示, 作業中は :Splashで表示可 
 " }}}2
 
 filetype on
