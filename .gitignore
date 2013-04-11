@@ -2,9 +2,16 @@
 \#*#
 *#
 .#*
+.*
 .*~
 *~
 .DS_Store
+.AppleDouble
+.LSOverride
+.Spotlight-V100
+Icon
+._*
+.Trashes
 *.sw[po]
 tags
 TAGS

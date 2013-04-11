@@ -23,11 +23,15 @@
 [pull]
   rebase = true
 [alias]
-  s   = status
-  st  = status
-  ss  = status -s
-  sh  = show
-  so  = remote show origin
+  alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\\t => \\2/' | sort | less
+  s    = status
+  st   = status
+  ss   = status -s
+  sh   = show
+  so   = remote show origin
+  info = remote show origin
+  su   = submodule update
+  # ignore = !([ ! -e .gitignore ] && touch .gitignore) | echo $1 >> .gitignore
   # pull/push/fetch
   ft  = fetch
   ftp = fetch --prune
@@ -159,6 +163,28 @@
 
 [http]
   sslVerify = false
+
+
+# git-browse-remote
+# http://subtech.g.hatena.ne.jp/motemen/20120917/1347889804
+ [web]
+    browser = google-chrome
+[browse-remote "github.com"]
+    top = https://{host}/{path}
+    ref = https://{host}/{path}/tree/{short_ref}
+    rev = https://{host}/{path}/commit/{commit}
+[browse-remote "github.dev.cybozu.co.jp"]
+    top = https://{host}/{path}
+    ref = https://{host}/{path}/tree/{short_ref}
+    rev = https://{host}/{path}/commit/{commit}
+[browse-remote "git.dev.cybozu.co.jp"]
+    top = http://{host}/graph/{path[1]}
+    ref = http://{host}/changelog/~br={short_ref}/{path[1]}
+    rev = http://{host}/changelog/{path[1]}?cs={commit}
+[browse-remote "review.dev.cybozu.co.jp"]
+    top = http://{host}/graph/{path[1]}
+    ref = http://{host}/changelog/~br={short_ref}/{path[1]}
+    rev = http://{host}/changelog/{path[1]}?cs={commit}
 
 [tig "bind"]
   generic = g move-first-line
