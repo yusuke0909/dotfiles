@@ -1066,6 +1066,11 @@ function google() {
 }
 alias ggl=google
 
+# 現在のネットワーク環境でのグローバルIP表示
+function gip() {
+	w3m -dump http://www.cman.jp/network/support/go_access.cgi | grep DNS | head -1 | awk '{print $2}'
+}
+
 # exit (kill ssh-agent)
 #function exit() {
 #	if [ -n "$SSH_AGENT_PID" ]; then
