@@ -10,6 +10,7 @@ eval `dircolors $HOME/.dircolors`
 alias ls='ls -aCF --color=auto --show-control-char'
 alias la='ls -aCF --color=auto --show-control-char'
 alias ll='ls -alFhtr --color=auto --show-control-char'
+alias k2pdfopt='~/bin/k2pdfopt.linux'
 #alias vi='/usr/local/bin/vim'
 #alias view='/usr/local/bin/vim -R'
 #alias vim='/usr/local/bin/vim'
@@ -40,3 +41,4 @@ if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 
 export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
 export PATH=/opt/firefox:$PATH
+

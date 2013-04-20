@@ -9,6 +9,8 @@ export PATH=/opt/local/bin:/opt/local/sbin/:~/bin:$PATH
 alias pbc='pbcopy'                   # クリップボードへコピー
 alias pbp='pbpaste'                  # クリップボードからペースト
 alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "select LSQuarantineDataURLString from LSQuarantineEvent"'   # Download履歴の表示
+alias k2pdfopt='~/bin/k2pdfopt.mac'
+
 #osx suffix alias
 alias -s {png,jpg,bmp,PNG,JPG,BMP}=/Applications/Preview.app/Contents/MacOS/Preview
 
