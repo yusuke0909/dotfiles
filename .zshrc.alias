@@ -217,3 +217,23 @@ function rpmip() {
     fi
 }
 
+# MySQLのbinlogからqueryを抽出
+function mysqlbinlog_query() {
+        BINLOG=$1
+        DB=$2
+        if [ -z $BINLOG ]; then
+                echo "binlogが指定されていません。"
+                echo "Usage: $0 binlog_filename [ DATABASE_NAME ]"
+    elif [ -z $DB ]; then
+                echo "==========================="
+                echo "BINLOG : $BINLOG"
+                echo "==========================="
+                mysqlbinlog $BINLOG | perl -e 'while(<>){ chomp; next if m!^#!; if ( m{/\*!\*/;$} ) { $p .= $_; print "$p\n"; $p="" } else { $p .= $_." "} }'| perl -nle 'm!^(DELETE FROM|REPLACE INTO|INSERT INTO|UPDATE|ALTER)\s+([^ ]+)!i && print "$1 $2"' | sort |uniq -c | sort -nr
+        else
+                echo "==========================="
+                echo "BINLOG : $BINLOG"
+                echo "DATABASE : $DB"
+                echo "==========================="
+                mysqlbinlog ${BINLOG} --database=${DB}| perl -e 'while(<>){ chomp; next if m!^#!; if ( m{/\*!\*/;$} ) { $p .= $_; print "$p\n"; $p="" } else { $p .= $_." "} }'| perl -nle 'm!^(DELETE FROM|REPLACE INTO|INSERT INTO|UPDATE|ALTER)\s+([^ ]+)!i && print "$1 $2"' | sort |uniq -c | sort -nr
+    fi
+}
