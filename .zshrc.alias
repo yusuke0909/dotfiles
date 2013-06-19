@@ -80,7 +80,7 @@ alias cdh='cd /Volumes/My\ Book\ Thunderbolt\ Duo'      #My Mac
 ##---------------------------------
 alias help='run-help' # builtin command help
 alias hist='history'
-alias history='history 1'
+alias history='history -ni 0'
 alias psa='ps auxww'
 alias bell="echo '\a'"
 alias dirs='dirs -p'
