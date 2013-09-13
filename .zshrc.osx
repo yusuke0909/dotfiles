@@ -119,8 +119,11 @@ export PATH=/usr/local/share/python:$PATH
 # Ruby
 # if [[ -s /Users/yusuke/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 # eval "$(rbenv init -)"
-
 export REFE_DATA_DIR=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/share/refe
+if [ -d $HOME/.rbenv/shims ]; then
+    export RBENV_ROOT=$HOME/.rbenv/shims
+    export PATH="$RBENV_ROOT:$PATH"
+fi
 
 # Go Lang
 export GOROOT=$HOME/dev/go
