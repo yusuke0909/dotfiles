@@ -118,7 +118,7 @@ export PATH=/usr/local/share/python:$PATH
 
 # Ruby
 # if [[ -s /Users/yusuke/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
-#eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 
 export REFE_DATA_DIR=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/share/refe
 
