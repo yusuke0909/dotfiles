@@ -108,7 +108,7 @@ alias -g V='| view -'
 alias -g EV="| xargs --verbose sh -c 'vim \"\$@\" < /dev/tty'"
 alias -g ...='../..'
 alias -g ....='../../..'
-alias dstat ='dstat -Tclmdrna'
+alias dstat='dstat -Tclmdrna'
 
 # colorized cat
 alias ccat='pygmentize -O style=vim -f console256 -g'
