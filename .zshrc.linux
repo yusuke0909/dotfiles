@@ -18,7 +18,7 @@ alias k2pdfopt='~/bin/k2pdfopt.linux'
 # rpm関連
 #alias rpmi='rpm -qilvvR --changelog --scripts'           # RPM Packageの詳細表示(インストール済みのRPMを確認するとき用)
 #alias rpmip='rpm -qpilvvR --changelog --scripts'         # RPM Packageの詳細表示(手元にあるRPMを確認するとき用)
-alias dstat='dstat -Tclmdrna'
+alias dstat='dstat --top-cpu --top-cputime -cTpilmsdrnt'
 
 # PATH
 export PATH
