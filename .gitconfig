@@ -1,6 +1,9 @@
-[user]
-  name = oasis0909
-  email =  yusuke.liveforever@gmail.com
+#user設定は別ファイルからincludeするように変更
+#[user]
+#  name = oasis0909
+#  email =  yusuke.liveforever@gmail.com
+[include]
+  path = .gitconfig.user
 [color]
   # colorの設定(以下のコマンドは自動で色つける)
   status = auto
@@ -191,3 +194,4 @@
   generic = G move-last-line
   generic = ^F move-page-down
   generic = ^B move-page-up
+
