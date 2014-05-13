@@ -1068,7 +1068,8 @@ alias ggl=google
 
 # 現在のネットワーク環境でのグローバルIP表示
 function gip() {
-	w3m -dump http://www.cman.jp/network/support/go_access.cgi | grep DNS | head -1 | awk '{print $2}'
+	#w3m -dump http://www.cman.jp/network/support/go_access.cgi | grep DNS | head -1 | awk '{print $2}'
+	curl -s ifconfig.me
 }
 
 # exit (kill ssh-agent)
