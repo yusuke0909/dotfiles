@@ -433,8 +433,8 @@ bindkey "\\ep" history-beginning-search-backward-end
 bindkey "\\en" history-beginning-search-forward-end
 
 # ctrl-f, ctrl-bキーで単語移動
-bindkey '^F' forward-word
-bindkey '^B' backward-word
+# bindkey '^F' forward-word
+# bindkey '^B' backward-word
  
 
 # 単語単位移動での単語に含める文字
