@@ -82,6 +82,7 @@ alias help='run-help' # builtin command help
 alias hist='history'
 alias history='history -ni 0'
 alias psa='ps auxww'
+alias pstart='ps -eo lstart,pid,args'                   #Process starting date
 alias bell="echo '\a'"
 alias dirs='dirs -p'
 alias mcpan='sudo perl -MCPAN -e shell'
