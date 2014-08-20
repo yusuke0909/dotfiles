@@ -102,6 +102,10 @@ export PATH=$PATH:$GAEJ_HOME/bin
 
 # Perl
 # alias perl='/opt/local/bin/perl'
+if [ -d $HOME/.plenv/shims ]; then
+    export PLENV_ROOT=$HOME/.plenv/shims
+    export PATH="$PLENV_ROOT:$PATH"
+fi
 
 # Python
 alias python='/usr/local/bin/python'
