@@ -23,9 +23,11 @@ alias duh='du -h ./ --max-depth=1'
 # su
 #alias su='su -l'
 # vim
+alias vim='vim "+VimFiler -split -simple -winwidth=40 -no-quit"'
 alias v='vim'
 alias vi='vim'
 alias view='vim -R'
+alias rvim='vim -R'
 alias svi='sudo vim'
 alias 'src'='exec zsh'
 # git
