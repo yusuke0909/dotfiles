@@ -24,14 +24,16 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 
 # vim
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
-alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias view='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias rvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
+#alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
+alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@" "+VimFiler -split -simple -winwidth=40 -no-quit"'
+alias vi='vim'
+alias view='vim -R'
+alias rvim='vim -R'
+#alias view='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
+#alias rvim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim -R "$@"'
 #alias vi='/usr/local/bin/vim'
-#alias view='/usr/local/bin/vim -R'
 #alias vim='/usr/local/bin/vim'
-#alias rvim='/usr/local/bin/vim -R'
+#alias view='/usr/local/bin/vim -R'
 
 # SVN
 # UTF-8.MAC用のパッチ当てた
