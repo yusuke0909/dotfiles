@@ -509,7 +509,7 @@ vnoremap <silent> <space>ud :call UrlEscapeTheSelectedTextLiteraly(2)<CR>
 "nnoremap ?  :set noincsearch<CR>?
 
 " textobj-datetimeの設定
-" silent! call textobj#datetime#default_mappings(1)
+silent! call textobj#datetime#default_mappings(1)
 
 "ScreenのキーバインドでC-Tを割り当てているため、タグジャンプの戻るはc-[に割り当てる。
 nnoremap <M-]> :pop<CR>
@@ -757,7 +757,7 @@ NeoBundle 'textobj-user'
 NeoBundle 'kana/vim-textobj-syntax.git'
 
 " vim-textobj-plugins : いろんなものをtext-objectにする
-NeoBundle 'thinca/vim-textobj-plugins.git'
+" NeoBundle 'thinca/vim-textobj-plugins.git'
 
 " vim-textobj-lastpat : 最後に検索されたパターンをtext-objectに
 NeoBundle 'kana/vim-textobj-lastpat.git'
