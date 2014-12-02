@@ -569,6 +569,19 @@ noremap ms <Plug>QuickFixSave
 autocmd FileType scheme :let is_gauche=1
 autocmd FileType scheme :setlocal dictionary+=~/.vim/dict/gosh_completions.dict
 
+" for golang
+" :Fmt などで gofmt の代わりに goimports を使う
+let g:gofmt_command = 'goimports'
+
+" Go に付属の plugin と gocode を有効にする
+set rtp^=${GOROOT}/misc/vim
+set rtp^=${GOPATH}/src/github.com/nsf/gocode/vim
+
+" 保存時に :Fmt する
+au BufWritePre *.go Fmt
+au BufNewFile,BufRead *.go set sw=4 noexpandtab ts=4
+au FileType go compiler go
+
 " QuicRun ----------------------------------------------------- {{{2
 nnoremap <Space>e :QuickRun<CR>
 let g:quickrun_config = {}
@@ -751,7 +764,7 @@ NeoBundle 'operator-camelize'
 NeoBundle 'operator-replace'
 
 " textobj-user : 簡単にVimエディタのテキストオブジェクトをつくれる
-NeoBundle 'textobj-user'
+" NeoBundle 'textobj-user'
 
 " vim-textobj-syntax : syntax highlightされたものをtext-objectに
 NeoBundle 'kana/vim-textobj-syntax.git'
@@ -904,6 +917,11 @@ NeoBundle 'yuroyoro/vim-python'
 " scala
 NeoBundle 'yuroyoro/vim-scala'
 
+" golang
+NeoBundle 'google/vim-ft-go'
+" NeoBundle 'dgryski/vim-godef' "vim-ft-goは最新版のvimを使えない場合のみ
+NeoBundle 'vim-jp/vim-go-extra'
+
 " clojure
 NeoBundle 'jondistad/vimclojure'
 
@@ -1054,9 +1072,9 @@ NeoBundle 'nelstrom/vim-textobj-rubyblock'
 NeoBundle 'thinca/vim-splash'			"Vim を引数なしで起動した場合に任意のテキストファイル(defaultではVim Girl)を表示, 作業中は :Splashで表示可 
 " }}}2
 
-filetype on
-filetype plugin on
-filetype indent on
+filetype plugin indent on
+syntax on
+NeoBundleCheck
 runtime macros/matchit.vim
 
 
