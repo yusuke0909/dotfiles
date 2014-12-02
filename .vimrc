@@ -1717,12 +1717,39 @@ nnoremap <silent> <Leader>fi :<C-u>VimFilerBufferDir -split -simple -winwidth=35
 
 " デフォルトのキーマッピングを変更
 augroup vimrc
-  autocmd FileType vimfiler call s:vimfiler_my_settings()
+	autocmd FileType vimfiler call s:vimfiler_my_settings()
 augroup END
 function! s:vimfiler_my_settings()
-  nmap <buffer> q <Plug>(vimfiler_exit)
-  nmap <buffer> Q <Plug>(vimfiler_hide)
+	nmap <buffer> q <Plug>(vimfiler_exit)
+	nmap <buffer> Q <Plug>(vimfiler_hide)
 endfunction
+
+command! VimFilerTree call VimFilerTree()
+function VimFilerTree()
+	exec ':VimFiler -buffer-name=explorer -split -simple -winwidth=45 -toggle -no-quit'
+	wincmd t
+	setl winfixwidth
+endfunction
+autocmd! FileType vimfiler call g:my_vimfiler_settings()
+function! g:my_vimfiler_settings()
+	nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
+	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
+	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
+endfunction
+
+let my_action = {'is_selectable' : 1}
+function! my_action.func(candidates)
+	wincmd p
+	exec 'split '. a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_split', my_action)
+
+let my_action = {'is_selectable' : 1}
+function! my_action.func(candidates)
+	wincmd p
+	exec 'vsplit '. a:candidates[0].action__path
+endfunction
+call unite#custom_action('file', 'my_vsplit', my_action)
 
 "}}}2
 
