@@ -132,9 +132,10 @@ if [ -d $HOME/.rbenv/shims ]; then
 fi
 
 # Go Lang
-export GOROOT=$HOME/dev/go
+export GOROOT=/usr/local/opt/go/libexec
+export GOPATH=$HOME/dev/go
 export GOOS=darwin
-export GOARCH=386
+export GOARCH=amd64
 export PATH=$PATH:$GOROOT/bin
 
 # Node.js
