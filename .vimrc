@@ -152,8 +152,8 @@ endif
 " }}}1
 " Options: オプション設定 ============================================= {{{1
 
-syntax enable                            " ハイライト on
-set nocompatible                         " vi互換にしない
+syntax on                                " ハイライト on
+"set nocompatible                        " vi互換にしない
 set ffs=unix,dos,mac                     " 改行文字
 "set ffs=unix                            " 改行コードをLFにする(default: unix,dos)
 "set encoding=utf-8                      " デフォルトエンコーディング
@@ -699,23 +699,36 @@ let g:scratch_buffer_name = "Scratch"
 " NeoBundle: Plugin設定 =============================================== {{{1
 "Absorb vimrc/.vim in Windows 
 if has('win32') || has ('win64')
-    set shellslash
-    let $VIMFILES = $USERPROFILE.'\git\config\vim\dot.vim'
+	set shellslash
+	let $VIMFILES = $USERPROFILE.'\git\config\vim\dot.vim'
 else
-    let $VIMFILES = $HOME."/.vim"
+	let $VIMFILES = $HOME."/.vim"
 endif
 
 if has('vim_starting') && (has('win32') || has('win64'))
-    set runtimepath+=~/git/config/vim/dot.vim
+	set runtimepath+=~/git/config/vim/dot.vim
 endif
 
-" Bundle
-filetype off
+" Configure bundles
+" Note: Skip initialization for vim-tiny or vim-small."
+if !1 | finish | endif
+
 if has('vim_starting')
-    set runtimepath+=$VIMFILES/neobundle.vim
-    call neobundle#rc(expand('~/.vim/bundle'))
+	if &compatible
+		set nocompatible
+	endif
+	set runtimepath+=$VIMFILES/bundle/neobundle.vim
 endif
-NeoBundle 'Shougo/neobundle.vim'
+
+call neobundle#begin(expand('~/.vim/bundle'))
+
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" My Bundles here:
+" Refer to |:NeoBundle-examples|.
+" Note: You don't set neobundle setting in .gvimrc!
+call neobundle#end()
 
 " Edit {{{2
 " NERD_commenter.vim :最強コメント処理 (<Leader>c<space>でコメントをトグル)
@@ -819,7 +832,7 @@ NeoBundle 'Shougo/neosnippet'
 
 " for rsense
 NeoBundle 'm2ym/rsense'
-NeoBundle 'taichouchou2/vim-rsense'
+" NeoBundle 'taichouchou2/vim-rsense'
 
 " rubyでrequire先を補完する
 NeoBundle 'ujihisa/neco-ruby'
@@ -1073,9 +1086,11 @@ NeoBundle 'thinca/vim-splash'			"Vim を引数なしで起動した場合に任�
 " }}}2
 
 filetype plugin indent on
-syntax on
-NeoBundleCheck
 runtime macros/matchit.vim
+
+" If there are uninstalled bundles found on startup,
+" this will conveniently prompt you to install them.
+NeoBundleCheck
 
 
 " Color: 色設定 ======================================================= {{{1
@@ -1343,7 +1358,7 @@ endfunction
 "---------------------------------
 " 最後に選択したテキストを取得する
 "-----------------------------
-function! x:selected_text()
+function! s:selected_text()
 	let [visual_p, pos, r_, r0] = [mode() =~# "[vV\<C-v>]", getpos('.'), @@, @0]
 
 if visual_p
@@ -1730,8 +1745,8 @@ function VimFilerTree()
 	wincmd t
 	setl winfixwidth
 endfunction
-autocmd! FileType vimfiler call g:my_vimfiler_settings()
-function! g:my_vimfiler_settings()
+autocmd! FileType vimfiler call s:my_vimfiler_settings()
+function! s:my_vimfiler_settings()
 	nmap     <buffer><expr><CR> vimfiler#smart_cursor_map("\<Plug>(vimfiler_expand_tree)", "\<Plug>(vimfiler_edit_file)")
 	nnoremap <buffer>s          :call vimfiler#mappings#do_action('my_split')<CR>
 	nnoremap <buffer>v          :call vimfiler#mappings#do_action('my_vsplit')<CR>
