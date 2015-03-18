@@ -180,6 +180,7 @@ export PATH=$PATH:$MIRAH_HOME/bin
 
 
 # tmux
+alias tmux='TERM=screen-256color-bce tmux -2'
 #alias tmux='tmuxx'
 #alias tm='tmuxx'
 #alias tma='\tmux attach'
