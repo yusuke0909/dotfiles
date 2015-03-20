@@ -136,7 +136,7 @@ export GOROOT=/usr/local/opt/go/libexec
 export GOPATH=$HOME/dev/go
 export GOOS=darwin
 export GOARCH=amd64
-export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # Node.js
 #[[ -s ~/.nvm/nvm.sh ]] && . ~/.nvm/nvm.sh # This loads NVM
