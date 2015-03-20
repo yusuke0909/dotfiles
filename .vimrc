@@ -933,6 +933,7 @@ NeoBundle 'yuroyoro/vim-scala'
 " golang
 NeoBundle 'google/vim-ft-go'
 " NeoBundle 'dgryski/vim-godef' "vim-ft-goは最新版のvimを使えない場合のみ
+NeoBundle 'fatih/vim-go'
 NeoBundle 'vim-jp/vim-go-extra'
 
 " clojure
