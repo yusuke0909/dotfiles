@@ -728,7 +728,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " My Bundles here:
 " Refer to |:NeoBundle-examples|.
 " Note: You don't set neobundle setting in .gvimrc!
-call neobundle#end()
 
 " Edit {{{2
 " NERD_commenter.vim :最強コメント処理 (<Leader>c<space>でコメントをトグル)
@@ -1093,6 +1092,7 @@ runtime macros/matchit.vim
 " this will conveniently prompt you to install them.
 NeoBundleCheck
 
+call neobundle#end()
 
 " Color: 色設定 ======================================================= {{{1
 " 特定の文字を視覚化。この例では全角スペース
