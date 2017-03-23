@@ -43,3 +43,5 @@ if [[ -s $HOME/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 export PATH=$PATH:$HOME/.gem/ruby/1.8/bin
 export PATH=/opt/firefox:$PATH
 
+# 簡易Markdownビューワー  perl-Text-Markdown必要
+function markdown-viewer() { perl -M'Text::Markdown qw(markdown)' -0pe '$_=markdown($_)' $@ | w3m -S -T text/html; }
