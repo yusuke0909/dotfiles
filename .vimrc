@@ -162,6 +162,7 @@ set completeopt=menuone,preview          " 入力モードでの補完につい�
 set complete+=k                          " 辞書ファイルからの単語補間
 set nrformats=""                         " 8進数はインクリメントしない
 set autoindent                           " オートインデント
+set noundofile                           " undoファイルの無効化
 set noerrorbells                         " エラー時にベルを鳴らさない
 "set novisualbell                        " ヴィジュアルベルを使わない
 "set vb t_vb=                            " ビープをならさない
