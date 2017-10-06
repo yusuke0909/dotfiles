@@ -113,7 +113,7 @@ prompt_bar_right="-[%{%B%K{cyan}%F{white}%}%d%{%f%k%b%}]-"
 ###     %j: 実行中のジョブ数
 ###   %{%B%}...%{%b%}: 「...」を太字にする
 ###   %#: 一般ユーザなら「%」、rootユーザなら「#」になる
-prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%} "
+prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%}"
 
 ## プロンプトフォーマットを展開した後の文字数を返す
 ## 日本語未対応
@@ -209,91 +209,6 @@ esac
 
 ## コマンド実行前に呼び出されるフック
 precmd_functions=($precmd_functions update_prompt)
-
-
-
-
-#        #
-#        # Color
-#        #
-#        DEFAULT=$'%{\e[1;0m%}'
-#        RESET="%{${reset_color}%}"
-#        GREEN="%{${fg[green]}%}"
-#        BLUE="%{${fg[blue]}%}"
-#        RED="%{${fg[red]}%}"
-#        CYAN="%{${fg[cyan]}%}"
-#        WHITE="%{${fg[white]}%}"
-#        #POH="( ꒪⌓꒪) $"
-#        POH="$"
-#
-#        #
-#        # Prompt
-#        #
-#        PROMPT='%{$fg_bold[blue]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}'
-#        RPROMPT='${RESET}${WHITE}[${BLUE}%(5~,%-2~/.../%2~,%~)% ${WHITE}]${RESET}'
-#
-#        #
-#        # Vi入力モードでPROMPTの色を変える
-#        # http://memo.officebrook.net/20090226.html
-#        function zle-line-init zle-keymap-select {
-#        case $KEYMAP in
-#            vicmd)
-#                PROMPT="%{$fg_bold[cyan]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}"
-#                ;;
-#            main|viins)
-#                PROMPT="%{$fg_bold[blue]%}${USER}@%m ${RESET}${WHITE}${POH} ${RESET}"
-#                ;;
-#        esac
-#        zle reset-prompt
-#    }
-#    zle -N zle-line-init
-#    zle -N zle-keymap-select
-
-    # Show git branch when you are in git repository
-    # http://d.hatena.ne.jp/mollifier/20100906/p1
-
-#    autoload -Uz add-zsh-hook
-#    autoload -Uz vcs_info
-#
-#    zstyle ':vcs_info:*' enable git svn hg bzr
-#    zstyle ':vcs_info:*' formats '(%s)-[%b]'
-#    zstyle ':vcs_info:*' actionformats '(%s)-[%b|%a]'
-#    zstyle ':vcs_info:(svn|bzr):*' branchformat '%b:r%r'
-#    zstyle ':vcs_info:bzr:*' use-simple true
-#
-#    autoload -Uz is-at-least
-#    if is-at-least 4.3.10; then
-#        # この check-for-changes が今回の設定するところ
-#        zstyle ':vcs_info:git:*' check-for-changes true
-#        zstyle ':vcs_info:git:*' stagedstr "+"    # 適当な文字列に変更する
-#        zstyle ':vcs_info:git:*' unstagedstr "-"  # 適当の文字列に変更する
-#        zstyle ':vcs_info:git:*' formats '(%s)-[%c%u%b]'
-#        zstyle ':vcs_info:git:*' actionformats '(%s)-[%c%u%b|%a]'
-#    fi
-#
-#    function _update_vcs_info_msg() {
-#    psvar=()
-#    LANG=en_US.UTF-8 vcs_info
-#    psvar[2]=$(_git_not_pushed)
-#    [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
-#}
-#add-zsh-hook precmd _update_vcs_info_msg
-#
-## show status of git pushed to HEAD in prompt
-#function _git_not_pushed()
-#{
-#    if [ "$(git rev-parse --is-inside-work-tree 2>/dev/null)" = "true" ]; then
-#        head="$(git rev-parse HEAD)"
-#        for x in $(git rev-parse --remotes)
-#        do
-#            if [ "$head" = "$x" ]; then
-#                return 0
-#            fi
-#        done
-#        echo "|?"
-#    fi
-#    return 0
-#}
 
 # git のブランチ名 *と作業状態* を zsh の右プロンプトに表示＋ status に応じて色もつけてみた - Yarukidenized:ヤルキデナイズド :
 # http://d.hatena.ne.jp/uasi/20091025/1256458798
@@ -782,89 +697,6 @@ bindkey "^J"  accept-line # no magic
 bindkey " "   magic-abbrev-expand-and-insert
 bindkey "."   magic-abbrev-expand-and-insert
 bindkey "^x " no-magic-abbrev-expand
-
-# Incremental completion on zsh
-# http://mimosa-pudica.net/src/incr-0.2.zsh
-# やっぱりauto_menu使いたいのでoff
-# source ~/.zsh/incr*.zsh
-
-# auto-fuの設定。^PとかのHistory検索と相性が悪いのでひとまず無効
-# http://d.hatena.ne.jp/tarao/20100531/1275322620
-# incremental completion
-# if is-at-least 4.3.10; then
-# function () { # precompile
-# local A
-# A=~/.zsh/auto-fu.zsh/auto-fu.zsh
-# [[ -e "${A:r}.zwc" ]] && [[ "$A" -ot "${A:r}.zwc" ]] ||
-    # zsh -c "source $A; auto-fu-zcompile $A ${A:h}" >/dev/null 2>&1
-# }
-# source ~/.zsh/auto-fu.zsh/auto-fu; auto-fu-install
-# function zle-line-init () { auto-fu-init }
-# zle -N zle-line-init
-# zstyle ':auto-fu:highlight' input bold
-# zstyle ':auto-fu:highlight' completion fg=white
-# zstyle ':auto-fu:var' postdisplay ''
-# function afu+cancel () {
-# afu-clearing-maybe
-# ((afu_in_p == 1)) && { afu_in_p=0; BUFFER="$buffer_cur"; }
-# }
-# function bindkey-advice-before () {
-# local key="$1"
-# local advice="$2"
-# local widget="$3"
-# [[ -z "$widget" ]] && {
-# local -a bind
-# bind=(`bindkey -M main "$key"`)
-# widget=$bind[2]
-# }
-# local fun="$advice"
-# if [[ "$widget" != "undefined-key" ]]; then
-# local code=${"$(<=(cat <<"EOT"
-# function $advice-$widget () {
-# zle $advice
-# zle $widget
-# }
-# fun="$advice-$widget"
-# EOT
-# ))"}
-# eval "${${${code//\$widget/$widget}//\$key/$key}//\$advice/$advice}"
-# fi
-# zle -N "$fun"
-# bindkey -M afu "$key" "$fun"
-# }
-# bindkey-advice-before "^G" afu+cancel
-# bindkey-advice-before "^[" afu+cancel
-# bindkey-advice-before "^J" afu+cancel afu+accept-line
-
-# # delete unambiguous prefix when accepting line
-# function afu+delete-unambiguous-prefix () {
-# afu-clearing-maybe
-# local buf; buf="$BUFFER"
-# local bufc; bufc="$buffer_cur"
-# [[ -z "$cursor_new" ]] && cursor_new=-1
-# [[ "$buf[$cursor_new]" == ' ' ]] && return
-# [[ "$buf[$cursor_new]" == '/' ]] && return
-# ((afu_in_p == 1)) && [[ "$buf" != "$bufc" ]] && {
-# # there are more than one completion candidates
-# zle afu+complete-word
-# [[ "$buf" == "$BUFFER" ]] && {
-# # the completion suffix was an unambiguous prefix
-# afu_in_p=0; buf="$bufc"
-# }
-# BUFFER="$buf"
-# buffer_cur="$bufc"
-# }
-# }
-# zle -N afu+delete-unambiguous-prefix
-# function afu-ad-delete-unambiguous-prefix () {
-# local afufun="$1"
-# local code; code=$functions[$afufun]
-# eval "function $afufun () { zle afu+delete-unambiguous-prefix; $code }"
-# }
-# afu-ad-delete-unambiguous-prefix afu+accept-line
-# afu-ad-delete-unambiguous-prefix afu+accept-line-and-down-history
-# afu-ad-delete-unambiguous-prefix afu+accept-and-hold
-# fi
 
 ## 履歴JUMP
 #_Z_CMD=j
