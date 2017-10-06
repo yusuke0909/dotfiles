@@ -74,9 +74,9 @@ bg256()
 ## バージョン管理システムの情報も表示する
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats \
-	'(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}]'
+	'%F{white}(%{%F{black}%K{yellow}%}%s%{%f%k%})-[%{%F{white}%K{red}%}%b%{%f%k%}]'
 zstyle ':vcs_info:*' actionformats \
-	'(%{%F{white}%K{green}%}%s%{%f%k%})-[%{%F{white}%K{blue}%}%b%{%f%k%}|%{%F{white}%K{red}%}%a%{%f%k%}]'
+	'%F{white}(%{%F{black}%K{yellow}%}%s%{%f%k%})-[%{%F{white}%K{red}%}%b%{%f%k%}|%{%F{white}%K{red}%}%a%{%f%k%}]'
 
 ### プロンプトバーの左側
 ###   %{%B%}...%{%b%}: 「...」を太字にする
@@ -87,14 +87,14 @@ zstyle ':vcs_info:*' actionformats \
 ###   %{%f%}: 文字の色を元に戻す
 ###   %{%b%}: 太字を元に戻す
 ###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
-prompt_bar_left_self="%{%B%}%F{yellow}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{yellow}%m%{%b%}"
-prompt_bar_left_date="<%{%B%}%F{yellow}%D{%Y/%m/%d %H:%M}%{%b%}>"
+prompt_bar_left_self="%{%B%}%F{white}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{white}%m%{%b%}"
+prompt_bar_left_date="<%{%B%}%F{white}%D{%Y/%m/%d %H:%M}%{%b%}>"
 prompt_bar_left="${prompt_bar_left_self}-${prompt_bar_left_date}-"
 ### プロンプトバーの右側
 ###   %{%B%K{magenta}%F{white}%}...%{%f%k%b%}:
 ###       「...」を太字のマゼンタ背景の白文字にする。
 ###   %d: カレントディレクトリのフルパス（省略しない）
-prompt_bar_right="-[%{%B%K{magenta}%F{white}%}%d%{%f%k%b%}]-"
+prompt_bar_right="-[%{%B%K{cyan}%F{white}%}%d%{%f%k%b%}]-"
 
 ### 2行目左にでるプロンプト
 ###   %{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%f%k%b%}:
@@ -185,7 +185,7 @@ update_prompt()
 	#   %{%B%F{white}%K{green}}...%{%k%f%b%}:
 	#       「...」を太字で緑背景の白文字にする
 	#   %~: カレントディレクトリのフルパス（可能なら「~」で省略する）
-	RPROMPT="[%{%B%F{white}%K{magenta}%}%~%{%k%f%b%}]"
+	RPROMPT="%{%B%F{white}[%K{cyan}%}%~%{%k%f%b%}%B%F{white}]"
 	case "$TERM_PROGRAM" in
 		Apple_Terminal)
 		# Mac OS Xのターミナルでは$COLUMNSに右余白が含まれていないので
