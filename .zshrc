@@ -87,7 +87,7 @@ zstyle ':vcs_info:*' actionformats \
 ###   %{%f%}: 文字の色を元に戻す
 ###   %{%b%}: 太字を元に戻す
 ###   %D{%Y/%m/%d %H:%M}: 日付「年/月/日 時:分」というフォーマット
-prompt_bar_left_self="%{%B%}%F{white}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{white}%m%{%b%}"
+prompt_bar_left_self="%{%B%}%F{blue}%n%{%b%}%{%F{red}%}@%{%f%}%{%B%}%F{white}%m%{%b%}"
 prompt_bar_left_date="<%{%B%}%F{white}%D{%Y/%m/%d %H:%M}%{%b%}>"
 prompt_bar_left="${prompt_bar_left_self}-${prompt_bar_left_date}-"
 ### プロンプトバーの右側
