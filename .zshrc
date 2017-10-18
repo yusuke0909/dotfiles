@@ -113,7 +113,7 @@ prompt_bar_right="-[%{%B%K{cyan}%F{white}%}%d%{%f%k%b%}]-"
 ###     %j: 実行中のジョブ数
 ###   %{%B%}...%{%b%}: 「...」を太字にする
 ###   %#: 一般ユーザなら「%」、rootユーザなら「#」になる
-prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%}"
+prompt_left="(%{%B%F{white}%(?.%K{green}.%K{red})%}%?%{%k%f%b%})-[%h]%(1j,(%j),)%{%B%}%F{yellow}%#%{%b%} "
 
 ## プロンプトフォーマットを展開した後の文字数を返す
 ## 日本語未対応
@@ -185,7 +185,7 @@ update_prompt()
 	#   %{%B%F{white}%K{green}}...%{%k%f%b%}:
 	#       「...」を太字で緑背景の白文字にする
 	#   %~: カレントディレクトリのフルパス（可能なら「~」で省略する）
-	RPROMPT="%{%B%F{white}[%K{cyan}%}%~%{%k%f%b%}%B%F{white}]"
+	RPROMPT="%{%B%F{white}[%K{cyan}%}%~%{%k%f%b%}%B%F{white}]- "
 	case "$TERM_PROGRAM" in
 		Apple_Terminal)
 		# Mac OS Xのターミナルでは$COLUMNSに右余白が含まれていないので
