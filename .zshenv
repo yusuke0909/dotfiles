@@ -12,4 +12,5 @@ if [ -d ${HOME}/.anyenv ] ; then
   done
 fi
 
-
+# direnv
+eval "$(direnv hook zsh)"
