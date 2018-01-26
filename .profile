@@ -1,4 +1,5 @@
 #/bin/sh
+# for linux
 
 #---------------------------------
 # Environment variables
@@ -29,7 +30,6 @@ alias rm='rm -i'
 #alias vdir='ls --color=auto --format=long'
 alias grep='grep --color'                               # show differences in colour
 alias vi='vim'
-#alias vim='/usr/local/bin/vim'
 alias view='vim -R'
 alias rvim='vim -R'
 alias svi='sudo vim'
