@@ -1,0 +1,3 @@
+# brew install sshrc
+#
+source $SSHHOME/.sshrc.d/.profile

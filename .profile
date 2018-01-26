@@ -5,8 +5,8 @@
 #---------------------------------
 LS_COLORS="no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32::*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31::*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31::*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:"
 export LSCOLORS=exfxcxdxbxegedabagacad
-export PS1="\[\e[1;38m\][\u@Mac:\w]\$\[\e[00m\] "       #ユーザ@Mac:カレントディレクトリ 
-#export PS1="\[\e[1;32m\][\u@\h:\w]\$\[\e[00m\] "       #ユーザ@ホスト名:カレントディレクトリ
+#export PS1="\[\e[1;38m\][\u@Mac:\w]\$\[\e[00m\] "       #ユーザ@Mac:カレントディレクトリ 
+export PS1="\[\e[1;32m\][\u@\h:\w]\$\[\e[00m\] "       #ユーザ@ホスト名:カレントディレクトリ
 TERM=xterm; export TERM
 
 
@@ -207,26 +207,26 @@ function ssha() {
 # SSHのForwardAgentを有効にした際にログイン先でscreen/tmuxを使用後detacheするとSSH_AUTH_SOCKの値は更新されない→都度設定するのが手間
 # SSH_AUTH_SOCKが直接UNIXドメインソケットを指し示すのではなく、UNIXドメインソケットを指し示すシンボリックリンクを作成しておいて、
 # SSH_AUTH_SOCKにはこのシンボリックリンクのパス名を設定する
-agent="$HOME/tmp/ssh-agent-$USER"
-if [ -S "$SSH_AUTH_SOCK" ]; then
-    case $SSH_AUTH_SOCK in
-        /tmp/*/agent.[0-9]*)
-            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
-    esac
-elif [ -S $agent ]; then
-    export SSH_AUTH_SOCK=$agent
-else
-    echo "no ssh-agent"
-fi
+#agent="$HOME/tmp/ssh-agent-$USER"
+#if [ -S "$SSH_AUTH_SOCK" ]; then
+#    case $SSH_AUTH_SOCK in
+#        /tmp/*/agent.[0-9]*)
+#            ln -snf "$SSH_AUTH_SOCK" $agent && export SSH_AUTH_SOCK=$agent
+#    esac
+#elif [ -S $agent ]; then
+#    export SSH_AUTH_SOCK=$agent
+#else
+#    echo "no ssh-agent"
+#fi
 
 
 # exit (kill ssh-agent)
-function exit() {
-	if [ -n "$SSH_AGENT_PID" ]; then
-		eval `ssh-agent -k`
-	fi
-	builtin exit
-}
+#function exit() {
+#	if [ -n "$SSH_AGENT_PID" ]; then
+#		eval `ssh-agent -k`
+#	fi
+#	builtin exit
+#}
 
 
 # 半角カナへ変換
