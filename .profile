@@ -1,4 +1,5 @@
 #/bin/sh
+# for linux
 
 #---------------------------------
 # Environment variables
@@ -28,16 +29,11 @@ alias rm='rm -i'
 #alias dir='ls --color=auto --format=vertical'
 #alias vdir='ls --color=auto --format=long'
 alias grep='grep --color'                               # show differences in colour
-alias vi='/usr/local/bin/vim'
-alias vim='/usr/local/bin/vim'
-#alias vi='vim'
-alias view='/usr/local/bin/vim -R'
-alias rvim='/usr/local/bin/vim -R'
-#alias view='vim -R'
-alias svi='sudo /usr/local/bin/vim'
-alias svim='sudo /usr/local/bin/vim'
-#alias svi="sudo vim"
-#alias svim="sudo vim"
+alias vi='vim'
+alias view='vim -R'
+alias rvim='vim -R'
+alias svi='sudo vim'
+alias svim='sudo vim'
 alias less='less -cr -x4 -RM'
 # alias whence='type -a'                                # where, of a sort
 alias sedd='sed -e '/^$/d' -e '/^#/d''                  #ファイルの空行/コメント行を除いて表示
@@ -63,9 +59,6 @@ alias mcpan='sudo perl -MCPAN -e shell'
 #alias g='grep'
 #alias c='cat'
 #alias j='jobs'
-alias cdd='cd ~/Desktop'
-alias cdp='cd /Volumes/Pogoplug'                        #My Mac
-alias cdh='cd /Volumes/My\ Book\ Thunderbolt\ Duo'      #My Mac
 
 
 #---------------------------------
@@ -76,7 +69,7 @@ set -o notify                           # バックグラウンドのジョブ�
 set -o noclobber                        # リダイレクト(>, >&, <>)で既存ファイルを上書きしない
 shopt -s cdspell                        # directory移動時の小さなtypoを修正
 shopt -s checkhash                      # ハッシュ表にあるコマンドについて実際に存在するかを確認
-shopt -s checkwinsize           		# 端末のウィンドウサイズを${COLUMNS}と${LINES}に反映
+shopt -s checkwinsize                   # 端末のウィンドウサイズを${COLUMNS}と${LINES}に反映
 shopt -s cmdhist                        # 複数行のコマンドの全ての行を1つの履歴エントリに保存
 shopt -s histappend                     # 履歴を上書きせず追加のみ行う(手元の環境ではデフォルト)
 shopt -s histverify                     # 実行するまえに必ず展開結果を確認できるようにする
