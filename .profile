@@ -6,8 +6,23 @@
 #---------------------------------
 LS_COLORS="no=00:fi=00:di=00;34:ln=00;36:pi=40;33:so=00;35:bd=40;33;01:cd=40;33;01:or=01;05;37;41:mi=01;05;37;41:ex=00;32::*.cmd=00;32:*.exe=00;32:*.com=00;32:*.btm=00;32:*.bat=00;32:*.sh=00;32:*.csh=00;32:*.tar=00;31::*.tgz=00;31:*.arj=00;31:*.taz=00;31:*.lzh=00;31:*.zip=00;31:*.z=00;31:*.Z=00;31:*.gz=00;31:*.bz2=00;31::*.bz=00;31:*.tz=00;31:*.rpm=00;31:*.cpio=00;31:*.jpg=00;35:*.gif=00;35:*.bmp=00;35:*.xbm=00;35:*.xpm=00;35:*.png=00;35:*.tif=00;35:"
 export LSCOLORS=exfxcxdxbxegedabagacad
-#export PS1="\[\e[1;38m\][\u@Mac:\w]\$\[\e[00m\] "       #ユーザ@Mac:カレントディレクトリ 
-export PS1="\[\e[1;32m\][\u@\h:\w]\$\[\e[00m\] "       #ユーザ@ホスト名:カレントディレクトリ
+#export PS1="\[\e[0;32m\][\u@\h \e[00m\]:\w]\$\[\e[00m\] "       #ユーザ@ホスト名 :カレントディレクトリ
+export PS1="\[\033[1;32m\]\$(date +%Y/%m/%d_%H:%M:%S)\[\033[0m\] \[\033[33m\]\H:\w\n\[\033[0m\][\u@ \W]\[\033[36m\]\$(__git_ps1)\[\033[00m\]\$ "
+
+#
+# git-completion.bash / git-prompt.sh  @sshrc
+#
+if [ -f $SSHHOME/.sshrc.d/git-completion.bash ]; then
+    source $SSHHOME/.sshrc.d/git-completion.bash
+fi
+if [ -f $SSHHOME/.sshrc.d/git-prompt.sh ]; then
+    source $SSHHOME/.sshrc.d/git-prompt.sh
+fi
+GIT_PS1_SHOWDIRTYSTATE=true
+GIT_PS1_SHOWUNTRACKEDFILES=true
+GIT_PS1_SHOWSTASHSTATE=true
+GIT_PS1_SHOWUPSTREAM=auto
+
 TERM=xterm; export TERM
 
 
