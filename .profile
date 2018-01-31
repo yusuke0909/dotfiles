@@ -206,6 +206,13 @@ function gj() {
 #}
 
 
+# LLDPで自身のインタフェースの対向機器を表示
+function lldp() {
+  INTERFACE=$1
+  sudo lldptool get-tlv -i $INTERFACE -n
+}
+
+
 # ssh-agent
 function ssha() {
 	eval `ssh-agent`;
