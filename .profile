@@ -49,6 +49,7 @@ alias view='vim -R'
 alias rvim='vim -R'
 alias svi='sudo vim'
 alias svim='sudo vim'
+alias sview='sudo view'
 alias less='less -cr -x4 -RM'
 # alias whence='type -a'                                # where, of a sort
 alias sedd='sed -e '/^$/d' -e '/^#/d''                  #ファイルの空行/コメント行を除いて表示
