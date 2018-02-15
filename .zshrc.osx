@@ -40,6 +40,11 @@ alias rvim='vim -R'
 # UTF-8.MAC用のパッチ当てた
 #alias svn='/usr/local/bin/svn'
 
+# Git
+alias cdghqroot='cd $(ghq root)'
+alias repo_cd='cd $(ghq root)/$(ghq list | peco)'
+alias repo_browse='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
+
 # Java #
 #Java7
 export JAVA_HOME=/Library/Java/JavaVirtualMachines/1.7.0.jdk/Contents/Home

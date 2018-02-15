@@ -951,8 +951,8 @@ fi
 
 # }}}1
 # Syntax-Highlighting ==================================================== {{{1
-# https://github.com/zsh-users/zsh-syntax-highlighting
-source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/zsh-syntax-highlighting
+source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # }}}1
 
