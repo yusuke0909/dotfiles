@@ -516,6 +516,9 @@ autoload run-help
 autoload -U zmv
 alias mmv='noglob zmv -W'
 
+# Z setting
+source ~/.zsh/z.sh
+
 # }}}1
 # Alias Configuration ==================================================== {{{1
 #---------------------------------
