@@ -75,8 +75,8 @@ alias 'm'='make'
 alias 'mn'='make native-code'
 alias 'mc'='make clean'
 # cdショートカット
-alias cdd='cd ~/Desktop'
-alias cdot='cd ~/dotfiles'
+alias cdd='cd ~/Downloads'
+alias cdot='cd $(ghq root)/$(ghq list | grep yusuke0909/dotfiles | peco)'
 alias cdp='cd /Volumes/Pogoplug'                        #My Mac
 alias cdh='cd /Volumes/My\ Book\ Thunderbolt\ Duo'      #My Mac
 ##---------------------------------
