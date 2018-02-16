@@ -213,6 +213,13 @@ function lldp() {
 }
 
 
+# SSL証明書の有効期限を表示
+openssl_expire() {
+  DOMAIN=$1
+  openssl s_client -connect ${DOMAIN}:443 < /dev/null 2> /dev/null | openssl x509 -text | grep 'Not After'
+}
+
+
 # ssh-agent
 function ssha() {
 	eval `ssh-agent`;
