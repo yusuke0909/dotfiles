@@ -22,5 +22,10 @@
 
     "C-m": "peco.Finish",
     "C-j": "peco.Finish"
+  },
+  "Style": {
+    "Query": ["yellow", "bold"],
+    "Selected": ["underline", "on_bold", "on_red", "black"],
+    "Matched": ["underline", "bold", "white"]
   }
 }
