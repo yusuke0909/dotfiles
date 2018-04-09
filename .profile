@@ -220,6 +220,14 @@ openssl_expire() {
 }
 
 
+# 指定したログの検索文字列が含まれる行をカラーリング
+function tailf_color() {
+  LOG=$1
+  WORD=$2
+  sudo tail -f ${LOG} | perl -pe 's/.*'${WORD}'.*/\033\[0;31m$&\033\[0m/gi'
+}
+
+
 # ssh-agent
 function ssha() {
 	eval `ssh-agent`;
