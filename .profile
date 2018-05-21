@@ -29,11 +29,10 @@ TERM=xterm; export TERM
 #---------------------------------
 # alias
 #---------------------------------
-alias ls='ls -aG'
+alias ls='ls -aG --color=auto'
 alias ll='ls -lGa'
 alias la="ls -GaF"
 alias lta="ls -GlthraF"
-#alias ls='ls --color=auto'
 #alias ls="ls -aFh --color=auto"
 #alias la='ls -alg --color=auto'
 #alias lh='ls -lh --color=auto'
