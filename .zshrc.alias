@@ -244,3 +244,15 @@ function mysqlbinlog_query() {
 		mysqlbinlog ${BINLOG} --database=${DB}| perl -e 'while(<>){ chomp; next if m!^#!; if ( m{/\*!\*/;$} ) { $p .= $_; print "$p\n"; $p="" } else { $p .= $_." "} }'| perl -nle 'm!^(DELETE FROM|REPLACE INTO|INSERT INTO|UPDATE|ALTER)\s+([^ ]+)!i && print "$1 $2"' | sort |uniq -c | sort -nr
 	fi
 }
+
+# 外部サービスにファイル転送->共有
+function transfer() {
+  FILE=$1
+  PROXY=$2
+  if [ -n "$PROXY" ]; then
+    curl -x ${PROXY} --progress-bar --upload-file ${FILE} https://transfer.sh/$(basename ${FILE}) | tee /dev/null;
+  else
+    curl --progress-bar --upload-file ${FILE} https://transfer.sh/$(basename ${FILE}) | tee /dev/null;
+  fi
+}
+

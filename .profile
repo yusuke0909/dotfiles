@@ -227,6 +227,18 @@ function tailf_color() {
 }
 
 
+# 外部サービスにファイル転送->共有
+function transfer() {
+  FILE=$1
+  PROXY=$2
+  if [ -n "$PROXY" ]; then
+    curl -x ${PROXY} --progress-bar --upload-file ${FILE} https://transfer.sh/$(basename ${FILE}) | tee /dev/null;
+  else
+    curl --progress-bar --upload-file ${FILE} https://transfer.sh/$(basename ${FILE}) | tee /dev/null;
+  fi
+}
+
+
 # ssh-agent
 function ssha() {
 	eval `ssh-agent`;
