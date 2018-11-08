@@ -6,9 +6,9 @@
 # for fileutils (required yinst-ports/fileutils)
 ##---------------------------------
 # ls
-alias ls='ls -aGF'
-alias la='\ls -aGF'
-alias ll='ls -alGFthr'
+alias ls='ls -aF'
+alias la='\ls -aF'
+alias ll='ls -alFthr'
 #alias ls='ls -CF --color=auto --show-control-char'
 #alias ll='ls -alF --color=auto --show-control-char'
 alias rm 'rm -i'
