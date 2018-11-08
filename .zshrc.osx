@@ -3,7 +3,7 @@
 ##---------------------------------
 
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
-export PATH=/opt/local/bin:/opt/local/sbin/:~/bin:$PATH
+export PATH=$PATH:/opt/local/bin:/opt/local/sbin/:~/bin
 
 # osx alias
 alias pbc='pbcopy'                   # クリップボードへコピー
