@@ -1,7 +1,7 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 THIS_BASENAME=$(basename "$0")
-TMUX_SESSION_NAME=$THIS_BASENAME
+TMUX_SESSION_NAME="tmux-cssh"
 HOSTS=""
 USER=""
 IDENTITY=""
@@ -13,12 +13,12 @@ TMUX_LAYOUT="tiled"
 
 # Config-file in home directory
 CONFIG_FILENAME=".tmux-cssh"
-HOME_CONFIG_FILENAME="$(echo ~)/${CONFIG_FILENAME}"
+USE_CONFIG_FILENAME="$(echo ~)/${CONFIG_FILENAME}"
 CONFIG_SETTING_NAME=""
 
 # Outputs script syntax and help
 syntax() {
-	echo "Syntax: ${THIS_BASENAME} [-h|-u [user]|-c|--certificate|-i|--identity [path to certificate-/identity-file]|-sc [ssh-server-connect-string]|-sa [additional ssh arguments]|-ss,-csc [ssh-command]|-ts [session-name]|-ns|-tl [tmux-layout]|-set|-q|-f [filename]|-cs [name of config-parameters to use]|[-dc,-ds]]"
+	echo "Syntax: ${THIS_BASENAME} [-h|-u [user]|-c|--certificate|-i|--identity [path to certificate-/identity-file]|-sc [ssh-server-connect-string]|-sa [additional ssh arguments]|-ss,-csc [ssh-command]|-ts [session-name]|-ns|-tl [tmux-layout]|-set|-q|-f [filename]|-cs [name of config-parameters to use]|[-dc,-ds][-cf config-file]]"
 	echo
 
 	echo "-h | --help                                This help."
@@ -59,11 +59,14 @@ syntax() {
 	echo "-f | --filename                            Filename of textfile to get -sc connection-strings from, line separated, multiple."
 	echo
 
-	echo "-cs | --config-setting                     Name of config-settings which should be gotten from config-file '${HOME_CONFIG_FILENAME}'. This can be a grep-regular expression to find the name(s), multiple."
+	echo "-cs | --config-setting                     Name of config-settings which should be gotten from config-file '${USE_CONFIG_FILENAME}'. This can be a grep-regular expression to find the name(s), multiple."
 	echo
 
 	echo "-dc | --dont-clusterize                    Don't clusterize ..."
 	echo "-ds | --dont-synchronize                   Don't synchronize keyboard in panes, default: tmux should synchronize."
+	echo
+
+	echo "-cf | --config-file                        Config-file to use, (Default ${USE_CONFIG_FILENAME}), Designed for option to switch between multiples config-files via one tmux-cssh call."
 	echo
 
 	echo "* Other arguments will be interpreted as '-sc'."
@@ -83,14 +86,14 @@ output() {
 # Analyse given parameter into environment
 analyseParameters() {
 	# Walk through parameters
-	for param in "$@"; do
+	while [ $# -gt 0 ]; do
 		case "$1" in
 			-h|--help) syntax; exit;;
 			-u|--user) USER="$2"; shift;;
 			-c|--certificate|-i|--identity) IDENTITY="$2"; shift;;
 			-sc|--ssh-server-connect-string)
 				if [ "$2" != "" ]; then
-					if [ "$HOSTS" == "" ]; then
+					if [ -z $HOSTS ]; then
 						HOSTS="$2"
 					else
 						HOSTS="${HOSTS},$2"
@@ -98,7 +101,7 @@ analyseParameters() {
 				fi
 				shift;;
 			-sa|--ssh_args) SSH_ARGS="${SSH_ARGS} $2"; shift;;
-			-ss|-csc|--ssh_command,--custom-ssh-command) SSH_COMMAND="$2"; shift;;
+			-ss|-csc|--ssh_command|--custom-ssh-command) SSH_COMMAND="$2"; shift;;
 			-ts|--tmux-session-name) TMUX_SESSION_NAME="$2"; shift;;
 			-tl|--tmuxlayout)
 				case "$2" in
@@ -116,9 +119,10 @@ analyseParameters() {
 				get_parameters_from_config_settings_name "$2"
 				shift;;
 			-dc|--dont-clusterize|-ds|--dont-synchronize) SYNCHRONIZE_PANES="false";;
+			-cf|--config-file) USE_CONFIG_FILENAME="$2"; shift;;
 			*)
 				if [ "$1" != "" ]; then
-					if [ "$HOSTS" == "" ]; then
+					if [ -z "$HOSTS" ]; then
 						HOSTS="$1"
 					else
 						HOSTS="${HOSTS},$1"
@@ -137,7 +141,7 @@ get_parameters_from_config_settings_name() {
 	# Check if a config-settings name is given
 	if [ "${configSettingName}" != "" ]; then
 		# If home-config-file available
-		if [ -f "${HOME_CONFIG_FILENAME}" ]; then
+		if [ -f "${USE_CONFIG_FILENAME}" ]; then
 			output "* Searching for config setting name '${configSettingName}' ..."
 
 			# Read every line from config-settings file
@@ -146,7 +150,7 @@ get_parameters_from_config_settings_name() {
 			while read configSettingsRow; do
 				# Seperate Name and parameters
 				configSettingsName=$(echo ${configSettingsRow} | cut -d ":" -f 1)
-				configSettingsParameters=$(echo ${configSettingsRow} | cut -d ":" -f 2)
+				configSettingsParameters=$(echo ${configSettingsRow} | cut -d ":" -f 2-)
 
 				# Match name against given settings-name
 				matched=$(echo ${configSettingsName} | grep "^${configSettingName}$")
@@ -156,14 +160,14 @@ get_parameters_from_config_settings_name() {
 					output "* Matched config-settings '${matched}', analysing parameters, ${configSettingsParameters} ..."
 					analyseParametersString="${analyseParametersString} ${configSettingsParameters}"
 				fi
-			done < "${HOME_CONFIG_FILENAME}"
+			done < "${USE_CONFIG_FILENAME}"
 
 			# Analyse parameters string
 			if [ "${analyseParametersString}" != "" ]; then
 					analyseParameters ${analyseParametersString}
 			fi
 		else
-			output "No config-settings-file '${HOME_CONFIG_FILENAME}' available."
+			output "No config-file '${USE_CONFIG_FILENAME}' available."
 		fi
 	fi
 }
@@ -173,7 +177,7 @@ get_parameters_from_config_settings_name() {
 #            $2 = TMUX-Session-Name
 synchronizePanes() {
 	# Set pane synchronisation
-	if [ "$1" == "true" ]; then
+	if [ "$1" = "true" ]; then
 		syncValue='on'
 	else
 		syncValue='off'
@@ -183,7 +187,7 @@ synchronizePanes() {
 }
 
 # Check if tmux is available
-if [ "$(which tmux)" == "" ]; then
+if [ -z "$(which tmux)" ]; then
 	echo "${THIS_BASENAME}"
 	echo
 
@@ -197,7 +201,7 @@ fi
 analyseParameters "$@"
 
 # Check if SSH-Command is available
-if [ "$(which ${SSH_COMMAND})" == "" ]; then
+if [ -z "$(which ${SSH_COMMAND})" ]; then
 	echo "SSH-Command '${SSH_COMMAND}' not found via 'which'."
 
 	exit
@@ -220,7 +224,7 @@ if [ "$FILENAME" != "" ]; then
 fi
 
 # Check if tmux-session is available
-if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) > 0 )) ; then
+if tmux ls 2> /dev/null | grep -q "${TMUX_SESSION_NAME}"; then
 	# Setup synchronizing panes
 	synchronizePanes ${SYNCHRONIZE_PANES} ${TMUX_SESSION_NAME}
 
@@ -230,7 +234,7 @@ if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) > 0 )) ; the
 fi
 
 # Hosts available ?
-if [ "${HOSTS}" == "" ]; then
+if [ -z "${HOSTS}" ]; then
 	output "* Hosts not given."
 
 	syntax
@@ -241,9 +245,9 @@ fi
 initTmuxCall="true"
 
 # Walk through hosts
-IFS=","
+HOSTS=$(echo $HOSTS | tr , ' ')
 
-for host in ${HOSTS[@]}; do
+for host in ${HOSTS}; do
 	connectString=""
 	hostname=""
 	port=""
@@ -251,11 +255,11 @@ for host in ${HOSTS[@]}; do
 	# Separate host and port, if given
 	if echo ${host} | grep -q ':'; then
 		# Remove port from string
-		hostname=${host/:*}
+		hostname=$(echo $host | cut -d: -f1)
 		connectString=${hostname}
 
 		# Remove host from string
-		port=${host/*:}
+		port=$(echo $host | cut -d: -f2)
 	else
 		connectString=${host}
 	fi
@@ -287,12 +291,12 @@ for host in ${HOSTS[@]}; do
 	output "* Connecting '${connectString}'"
 
 	# First Call, inits the tmux-session
-	if [ "${initTmuxCall}" == "true" ]; then
+	if [ "${initTmuxCall}" = "true" ]; then
 		tmux new-session -d -s "${TMUX_SESSION_NAME}" "${connectString}"
 
     # If our initial ssh connection has failed, do not mark initTmuxCall as false since tmux will have aborted.
     # We'll need to try to start a new tmux session for the next host.
-    if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) > 0 )) ; then
+    if tmux ls 2> /dev/null | grep -q "${TMUX_SESSION_NAME}"; then
 		  initTmuxCall="false"
     fi
 	else
@@ -301,10 +305,8 @@ for host in ${HOSTS[@]}; do
 	fi
 done
 
-unset IFS
-
 # If no session was able to start, say so and just exit.
-if (( $(tmux ls 2> /dev/null | grep "${TMUX_SESSION_NAME}" | wc -l) == 0 )) ; then
+if ! tmux ls 2> /dev/null | grep -q "${TMUX_SESSION_NAME}"; then
   echo "All connections have failed."
   exit 1
 fi
