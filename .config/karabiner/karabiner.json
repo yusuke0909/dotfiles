@@ -1063,14 +1063,6 @@
                     "simple_modifications": [
                         {
                             "from": {
-                                "key_code": "pause"
-                            },
-                            "to": {
-                                "consumer_key_code": "eject"
-                            }
-                        },
-                        {
-                            "from": {
                                 "key_code": "caps_lock"
                             },
                             "to": {
@@ -1127,18 +1119,34 @@
                         },
                         {
                             "from": {
-                                "key_code": "print_screen"
+                                "key_code": "pause"
                             },
                             "to": {
-                                "consumer_key_code": "volume_decrement"
+                                "consumer_key_code": "eject"
                             }
                         },
                         {
                             "from": {
-                                "key_code": "scroll_lock"
+                                "key_code": "grave_accent_and_tilde"
                             },
                             "to": {
-                                "consumer_key_code": "volume_increment"
+                                "key_code": "escape"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "escape"
+                            },
+                            "to": {
+                                "key_code": "mission_control"
+                            }
+                        },
+                        {
+                            "from": {
+                                "key_code": "f3"
+                            },
+                            "to": {
+                                "key_code": "dashboard"
                             }
                         }
                     ]
