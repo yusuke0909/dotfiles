@@ -116,9 +116,9 @@ if [ -d $HOME/.plenv/shims ]; then
 fi
 
 # Python
-alias python='/usr/local/bin/python'
-alias easy_install='/usr/local/bin/easy_install'
-export PATH=/usr/local/share/python:$PATH
+# alias python='/usr/local/bin/python'
+# alias easy_install='/usr/local/bin/easy_install'
+# export PATH=/usr/local/share/python:$PATH
 # alias easy_install='/Library/Frameworks/Python.framework/Versions/2.5/bin/easy_install-2.5'
 # export DEFALUT_PYTHON_HOME=~/dev/python/python2.6.6
 # export WORKON_HOME=$HOME/.virtualenvs
@@ -131,11 +131,11 @@ export PATH=/usr/local/share/python:$PATH
 # Ruby
 # if [[ -s /Users/yusuke/.rvm/scripts/rvm ]] ; then source $HOME/.rvm/scripts/rvm ; fi
 # eval "$(rbenv init -)"
-export REFE_DATA_DIR=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/share/refe
-if [ -d $HOME/.rbenv/shims ]; then
-    export RBENV_ROOT=$HOME/.rbenv/shims
-    export PATH="$RBENV_ROOT:$PATH"
-fi
+# export REFE_DATA_DIR=/System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/share/refe
+# if [ -d $HOME/.rbenv/shims ]; then
+#    export RBENV_ROOT=$HOME/.rbenv/shims
+#    export PATH="$RBENV_ROOT:$PATH"
+# fi
 
 # Go Lang
 export GOROOT=/usr/local/opt/go/libexec
