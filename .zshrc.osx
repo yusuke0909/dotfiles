@@ -2,7 +2,7 @@
 ## alias : osx
 ##---------------------------------
 
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+export PATH=~/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH
 export PATH=$PATH:/opt/local/bin:/opt/local/sbin/:~/bin
 
 # osx alias

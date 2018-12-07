@@ -1,0 +1,31 @@
+{
+  "segments": [
+    "username",
+    "hostname",
+    "ssh",
+    "cwd",
+    "git",
+    "git_stash",
+    "jobs",
+    "exit_code",
+    "root"
+  ],
+  "mode": "patched",
+  "cwd": {
+    "mode": "plain",
+    "max_depth":5,
+    "max_dirsize":5,
+    "full_cwd":true
+  },
+  "hostname": {
+    "colorize": "true"
+  },
+  "time": {
+    "format": "%H:%M:%S",
+    "colorize": "true"
+  },
+  "vcs": {
+    "show_symbol": "true"
+  },
+  "theme": "gruvbox"
+}

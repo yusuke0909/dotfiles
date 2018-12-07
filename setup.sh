@@ -8,5 +8,5 @@ do
     ln -s ${DIR}/${file} $HOME/${file}
 done
 
-# .config/karabiner/karabiner.jsonをシンボリックリンクしてもaplicationから設定いじるとリンク解除されてしまうのでcopyとした
+# copy .config/* to home directory
 cp -r ${DIR}/.config $HOME/.config
