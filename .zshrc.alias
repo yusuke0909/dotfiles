@@ -66,8 +66,8 @@ alias more="$PAGER"
 alias -g L="| $PAGER"
 alias -g M="| $PAGER"
 # grep
-alias grep='gr'
-alias gr='grep -i --color=auto'
+alias grep='grep -i --color=auto'
+#alias grep='gr'
 #alias gr='grep --color=auto -ERUIn'
 # make
 #alias make='make -j1'
