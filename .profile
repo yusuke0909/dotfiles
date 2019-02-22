@@ -74,6 +74,7 @@ alias mcpan='sudo perl -MCPAN -e shell'
 #alias g='grep'
 #alias c='cat'
 #alias j='jobs'
+alias gp='git pull'
 
 
 #---------------------------------
