@@ -2,6 +2,8 @@
   "segments": [
     "username",
     "hostname",
+    "virtual_env",
+    "aws_profile",
     "ssh",
     "cwd",
     "git",
