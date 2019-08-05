@@ -197,4 +197,4 @@
   generic = ^B move-page-up
 
 [ghq]
-  root = ~/work/ghq
+  root = ~/.ghq
