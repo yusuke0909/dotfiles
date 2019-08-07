@@ -185,7 +185,7 @@ extract () {
 alias -s {tar.bz2,tar.gz,tar.xz,bz2,rar,gz,tar,tbz2,tgz,zip,Z,7z,lzma,xz}=extract
 alias ex='extract'
 
-alias myv='vim ~/dotfiles/.vimrc'
+alias myv='vim $(ghq root)/github.com/yusuke0909/dotfiles/.vimrc'
 #alias be='bundle exec'
 
 grepvim() {
