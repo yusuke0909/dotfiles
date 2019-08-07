@@ -1128,6 +1128,11 @@ hi CursorLine cterm=underline gui=underline     " 下線
 "highlight CursorLine cterm=underline ctermfg=NONE ctermbg=NONE
 highlight SpecialKey term=underline ctermfg=white guifg=white
 
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight SpecialKey ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
+
 ""行頭のスペースの連続をハイライトさせる
 ""Tab文字も区別されずにハイライトされるので、区別したいときはTab文字の表示を別に
 ""設定する必要がある。
