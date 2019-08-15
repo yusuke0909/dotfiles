@@ -412,6 +412,7 @@ zle -N self-insert url-quote-magic
 #Additional completion definitions for Zsh. 以下git clone
 #git clone git://github.com/zsh-users/zsh-completions.git ~/.zsh/completions
 fpath=(~/.zsh/completions/src ${fpath})
+fpath=(~/.zsh/completion $fpath)
 
 autoload -U compinit; compinit -u   # 初期化
 autoload -U colors                  # ${fg[red]}形式のカラー書式を有効化
@@ -477,6 +478,12 @@ zstyle ':completion:*:options' description 'yes'
 
 # オブジェクトファイルとか中間ファイルとかはfileとして補完させない
 zstyle ':completion:*:*files' ignored-patterns '*?.o' '*?~' '*\#'
+
+# Dockerコマンド補完
+# curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
+# curl -L https://raw.githubusercontent.com/docker/cli/master/contrib/completion/zsh/_docker > ~/.zsh/completion/_docker
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
 
 #
 #zstyle ':completion:*:messages' format $YELLOW'%d'$DEFAULT
