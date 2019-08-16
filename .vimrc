@@ -820,6 +820,7 @@ NeoBundle 'sudo.vim'
 
 " terraform : シンタックスハイライト、ファイル保存時の自動フォーマット
 NeoBundle 'hashivim/vim-terraform'
+let g:terraform_fmt_on_save = 1
 
 " terraform : リソースタイプやパラメータ名などのオムニ補完
 NeoBundle 'juliosueiras/vim-terraform-completion'
@@ -835,6 +836,7 @@ NeoBundle 'Shougo/neocomplcache'
 
 " neocomplcacheのsinpet補完
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 
 " for rsense
 NeoBundle 'm2ym/rsense'
