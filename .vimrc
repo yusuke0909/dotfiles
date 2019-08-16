@@ -824,8 +824,6 @@ let g:terraform_fmt_on_save = 1
 
 " terraform : リソースタイプやパラメータ名などのオムニ補完
 NeoBundle 'juliosueiras/vim-terraform-completion'
-
-
 " }}}2
 
 
