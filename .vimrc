@@ -817,6 +817,12 @@ NeoBundle 'sudo.vim'
 " コマンドラインから実行: vim sudo:<filename>
 " 複数のファイルを開く時にsudo対象のファイルを選択: vim <filename> sudo:<filename> <filename>
 " 現在開いているファイルをsudoを実行して開く :e sudo:%
+
+" terraform : シンタックスハイライト、ファイル保存時の自動フォーマット
+NeoBundle 'hashivim/vim-terraform'
+
+" terraform : リソースタイプやパラメータ名などのオムニ補完
+NeoBundle 'juliosueiras/vim-terraform-completion'
 " }}}2
 
 
