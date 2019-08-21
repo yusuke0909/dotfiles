@@ -818,12 +818,6 @@ NeoBundle 'sudo.vim'
 " 複数のファイルを開く時にsudo対象のファイルを選択: vim <filename> sudo:<filename> <filename>
 " 現在開いているファイルをsudoを実行して開く :e sudo:%
 
-" terraform : シンタックスハイライト、ファイル保存時の自動フォーマット
-NeoBundle 'hashivim/vim-terraform'
-let g:terraform_fmt_on_save = 1
-
-" terraform : リソースタイプやパラメータ名などのオムニ補完
-NeoBundle 'juliosueiras/vim-terraform-completion'
 " }}}2
 
 
@@ -850,7 +844,7 @@ NeoBundle 'ujihisa/neco-look'
 " }}}2
 
 
-" Searching/Moving{{{2
+" Searching/Moving {{{2
 " smooth_scroll.vim : スクロールを賢く
 NeoBundle 'Smooth-Scroll'
 
@@ -950,8 +944,8 @@ NeoBundle 'jondistad/vimclojure'
 " ghc-mod
 NeoBundle 'eagletmt/ghcmod-vim'
 
-" syntax checking plugins exist for eruby, haml, html, javascript, php, python, ruby and sass.
-NeoBundle 'scrooloose/syntastic'
+" syntax checking plugins
+NeoBundle 'vim-syntastic/syntastic'
 " }}}2
 
 
@@ -977,17 +971,17 @@ NeoBundle 'banyan/recognize_charcode.vim'
 
 " Utility {{{2
 " vimshell : vimのshell
-NeoBundle 'Shougo/vimshell'
+" NeoBundle 'Shougo/vimshell'
 
-" vimproc : vimから非同期実行。vimshelleで必要
-NeoBundle 'Shougo/vimproc', {
-  \ 'build' : {
-    \ 'windows' : 'make -f make_mingw32.mak',
-    \ 'cygwin' : 'make -f make_cygwin.mak',
-    \ 'mac' : 'make -f make_mac.mak',
-    \ 'unix' : 'make -f make_unix.mak',
-  \ },
-\ }
+" vimproc : vimから非同期実行。vimshellで必要
+" NeoBundle 'Shougo/vimproc', {
+"   \ 'build' : {
+"     \ 'windows' : 'make -f make_mingw32.mak',
+"     \ 'cygwin' : 'make -f make_cygwin.mak',
+"     \ 'mac' : 'make -f make_mac.mak',
+"     \ 'unix' : 'make -f make_unix.mak',
+"   \ },
+" \ }
 
 " vim上でのファイル操作
 NeoBundle 'Shougo/vimfiler'
@@ -1040,7 +1034,7 @@ NeoBundle 'kana/vim-metarw-git'
 " }}}2
 
 
-" ColorSchema{{{2
+" ColorSchema {{{2
 " color schema 256
 NeoBundle 'desert256.vim'
 NeoBundle 'mrkn256.vim'
@@ -1072,6 +1066,21 @@ NeoBundle 'choplin/unite-vim_hacks'
 NeoBundle 'ujihisa/unite-colorscheme'
 NeoBundle 'basyura/unite-rails'
 NeoBundle 'ujihisa/unite-gem'
+" }}}2
+
+
+" HashicorpTools {{{2
+NeoBundle 'hashivim/vim-hashicorp-tools'
+
+" packer command
+NeoBundle 'hashivim/vim-packer'
+
+" terraform : シンタックスハイライト、ファイル保存時の自動フォーマット
+NeoBundle 'hashivim/vim-terraform'
+let g:terraform_fmt_on_save = 1
+
+" terraform : リソースタイプやパラメータ名などのオムニ補完
+NeoBundle 'juliosueiras/vim-terraform-completion'
 " }}}2
 
 
