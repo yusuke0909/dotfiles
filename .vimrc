@@ -1507,7 +1507,7 @@ function! SearchDotGitPath(search_path)
     endif
 endfunction
 " }}}1
-" Envroiments: 環境固有設定 =========================================== {{{1
+" Environments: 環境固有設定 =========================================== {{{1
 
 ""Screenの場合にvimを使用した時にスクリーンタブ名を書き換える
 if &term =~ "screen"
