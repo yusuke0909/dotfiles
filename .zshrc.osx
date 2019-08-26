@@ -234,3 +234,7 @@ if [ -d ${HOME}/.anyenv ] ; then
       export PATH="$HOME/.anyenv/envs/$D/shims:$PATH"
   done
 fi
+
+# terraform completion
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
