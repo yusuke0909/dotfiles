@@ -26,7 +26,7 @@ export LSCOLORS=ExFxCxDxBxegedabagacad
 # vim
 export EDITOR=/Applications/MacVim.app/Contents/MacOS/Vim
 #alias vi='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@"'
-alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@" "+VimFiler -split -simple -winwidth=40 -no-quit"'
+alias vim='env LANG=ja_JP.UTF-8 /Applications/MacVim.app/Contents/MacOS/Vim "$@" "+VimFilerExplorer -split -simple -winwidth=40 -no-quit"'
 alias vi='vim'
 alias view='vim -R'
 alias rvim='vim -R'
@@ -35,10 +35,6 @@ alias rvim='vim -R'
 #alias vi='/usr/local/bin/vim'
 #alias vim='/usr/local/bin/vim'
 #alias view='/usr/local/bin/vim -R'
-
-# SVN
-# UTF-8.MAC用のパッチ当てた
-#alias svn='/usr/local/bin/svn'
 
 # Git
 alias cdghqroot='cd $(ghq root)'
