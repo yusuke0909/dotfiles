@@ -60,11 +60,17 @@
   c   = commit
   ci  = commit -a           # modifiedなファイルを全てstageへ
   cam = commit -a --amend   # 直前のcommitを修正
+  # checkout/switch
   co  = checkout
   cb  = checkout -b         # branch切ってcheckoutする
   ct  = checkout --track    # remoteのbranchを追跡
   cm  = checkout master
   cd  = checkout develop
+  sw  = switch
+  swc = switch -c
+  # restore
+  rs  = restore
+  rss = restore --staged
   # branch関連
   br  = branch
   ba  = branch -a           # originも含めた全てのbranchを表示
