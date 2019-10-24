@@ -1,6 +1,5 @@
 {
   "segments": [
-    "uptime",
     "username",
     "virtual_env",
     "aws_profile",
