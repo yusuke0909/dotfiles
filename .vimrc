@@ -177,7 +177,7 @@ set ignorecase                           " 検索文字列が小文字の場合�
 set smartcase                            " 検索文字列に大文字が含まれている場合は区別して検索する
 set wrapscan                             " 検索時に最後まで行ったら最初に戻る
 set shortmess=t                          " 'Press RETURN or enter command to continue' を表示しない
-set noincsearch                          " 検索文字列入力時に順次対象文字列にヒットさせない
+set incsearch                            " 検索文字列入力時に順次対象文字列にヒットさせる
 set showcmd                              " 入力中のコマンドをステータスに表示する
 set showmatch                            " 括弧入力時の対応する括弧を表示
 set showmode                             " 現在のモードを表示
