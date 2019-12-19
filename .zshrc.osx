@@ -194,6 +194,9 @@ alias tmux='TERM=screen-256color-bce tmux -2'
 
 
 # Functions
+alias jsonf='(){echo $1 | jq}'
+alias sqlf='(){echo $1 | npx sql-formatter-cli}'
+
 function peco-z-search
 {
   which peco z > /dev/null
