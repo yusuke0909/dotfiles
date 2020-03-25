@@ -14,3 +14,6 @@ for dir in ${DOT_CONFIG_DIR[@]}
 do
     \cp -rf ${DIR}/.config/${dir} $HOME/.config/
 done
+
+# copy awscli config
+\cp -rf .aws $HOME/.aws
