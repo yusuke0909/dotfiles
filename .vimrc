@@ -922,6 +922,8 @@ NeoBundle 'nginx.vim'
 
 " markdown
 NeoBundle 'tpope/vim-markdown'
+NeoBundle 'kannokanno/previm'
+NeoBundle 'tyru/open-browser.vim'
 
 " coffee script
 NeoBundle 'kchmck/vim-coffee-script'
