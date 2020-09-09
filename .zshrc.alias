@@ -260,18 +260,10 @@ function transfer() {
 # github cli
 # pr view
 function gh-pr-view() {
-  gh pr list | \
-  fzf-tmux --prompt "pr preview>" --preview "echo {} | \
-  awk '{print \$1}' | \
-  xargs gh pr view" | \
-  xargs gh pr view --web
+  gh pr list | fzf-tmux --prompt "pr preview>" --preview "echo {} | awk '{print \$1}' | xargs gh pr view" | awk '{print $1}' | xargs gh pr view --web
 }
 function gh-pr-view-closed() {
-  gh pr list --state closed | \
-  fzf-tmux --prompt "pr preview>" --preview "echo {} | \
-  awk '{print \$1}' | \
-  xargs gh pr view" | \
-  xargs gh pr view --web
+  gh pr list --state closed | fzf-tmux --prompt "pr preview>" --preview "echo {} | awk '{print \$1}' | xargs gh pr view" | awk '{print $1}' | xargs gh pr view --web
 }
 #alias gh_pr_view=gh-pr-view
 #alias gh_pr_view_closed=gh-pr-view-closed
