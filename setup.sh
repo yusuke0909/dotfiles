@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DIR=$(pwd)
-DOT_FILES=( .zshrc .zshenv .zshrc.alias .zshrc.linux .zshrc.osx .gitconfig .gitignore .tigrc .vimrc .tmux.conf .peco .sshrc .sshrc.d .dircolors bin )
+DOT_FILES=( .zshrc .zshenv .zshrc.alias .zshrc.linux .zshrc.osx .git-templates .gitconfig .gitignore .tigrc .vimrc .tmux.conf .peco .sshrc .sshrc.d .dircolors bin )
 DOT_CONFIG_DIR=( karabiner powerline-shell )
 
 for file in ${DOT_FILES[@]}
