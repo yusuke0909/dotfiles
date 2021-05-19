@@ -194,7 +194,7 @@ alias tmux='TERM=screen-256color-bce tmux -2'
 
 # awsp(aws profile switch)
 # ghq get git@github.com:itouuuuuuuuu/awsp.git && cd $(ghq root)/github.com/itouuuuuuuuu/awsp && npm i
-alias awsp='cd $(ghq root)/github.com/itouuuuuuuuu/awsp && source ./run.sh'
+alias awsp='cd $(ghq root)/github.com/itouuuuuuuuu/awsp && source ./run.sh && cd - >/dev/null 2>&1'
 
 # Functions
 alias jsonf='(){echo $1 | jq}'
