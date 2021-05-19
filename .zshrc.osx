@@ -192,6 +192,9 @@ alias tmux='TERM=screen-256color-bce tmux -2'
 #alias tml='\tmux list-sessions'
 #alias tmlw='\tmux list-window'
 
+# awsp(aws profile switch)
+# ghq get git@github.com:itouuuuuuuuu/awsp.git && cd $(ghq root)/github.com/itouuuuuuuuu/awsp && npm i
+alias awsp='cd $(ghq root)/github.com/itouuuuuuuuu/awsp && source ./run.sh'
 
 # Functions
 alias jsonf='(){echo $1 | jq}'
