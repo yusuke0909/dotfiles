@@ -11,6 +11,11 @@ alias pbp='pbpaste'                  # クリップボードからペースト
 alias dlist='sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* "select LSQuarantineDataURLString from LSQuarantineEvent"'   # Download履歴の表示
 alias k2pdfopt='~/bin/k2pdfopt.mac'
 alias ssh='sshrc -A'
+if [[ -x $(which colordiff) ]]; then
+  alias diff='colordiff -u'
+else
+  alias diff='diff -u'
+fi
 
 #osx suffix alias
 alias -s {png,jpg,bmp,PNG,JPG,BMP}=/Applications/Preview.app/Contents/MacOS/Preview
