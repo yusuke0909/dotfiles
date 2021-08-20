@@ -97,6 +97,10 @@ export AIR_HOME=~/dev/air
 export FLEX_HOME=~/dev/flex
 export PATH=$PATH:$AIR_HOME/bin:$FLEX_HOME/bin
 
+# Google Cloud SDK
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
+source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+
 # Google App Engine SDK for python
 export GAE_SDK_VERSION=1.3.4
 GAE_SDK_INSTALLED_DIR=~/sandbox/GoogleAppEngine/sdk
