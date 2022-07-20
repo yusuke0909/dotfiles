@@ -984,3 +984,6 @@ fi
 source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # }}}1
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /Users/osada/.anyenv/envs/tfenv/versions/0.14.2/terraform terraform
