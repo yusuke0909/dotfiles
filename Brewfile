@@ -109,6 +109,7 @@ brew "pcre"
 brew "peco"
 brew "perl"
 brew "podman"
+brew "pre-commit"
 brew "pwgen"
 brew "python@3.8"
 brew "rain"
@@ -189,6 +190,7 @@ cask "libreoffice-language-pack", args: { language: "ja" }
 cask "ngrok"
 cask "notion"
 cask "polar-bookshelf"
+cask "powershell"
 cask "scroll-reverser"
 cask "sequel-ace"
 cask "sequel-pro"
@@ -202,6 +204,7 @@ cask "typora"
 cask "vagrant"
 #cask "virtualbox"
 cask "visual-studio-code"
+cask "zoom"
 
 # mas
 mas "GarageBand", id: 682658836
